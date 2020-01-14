@@ -1,10 +1,12 @@
-FROM node:12.14.1
 
-WORKDIR /app
+FROM node:12.14.1 as build
 
-COPY package*.json ./
-COPY public ./
+WORKDIR /usr/src/app
 
-# RUN npm install
+COPY package*.json /usr/src/app/
 
-# ENTRYPOINT ["npm", "start"]
+RUN npm install --silent
+
+COPY . /usr/src/app
+
+RUN npm run build
