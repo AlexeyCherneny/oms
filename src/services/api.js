@@ -1,7 +1,7 @@
 import apisauce from "apisauce";
 
 const DEVELOPMENT_URL = "http://localhost:3000/";
-const PRODUCTION_URL = "https://0.0.0.0:3000/";
+const PRODUCTION_URL = "https://192.168.0.197:3000/";
 
 let hostURL;
 

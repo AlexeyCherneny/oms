@@ -1,10 +1,10 @@
 FROM node:12.14.1
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 COPY public ./
 
-RUN npm install --silent
+# RUN npm install
 
-CMD ["npm", "start"]
+# ENTRYPOINT ["npm", "start"]
