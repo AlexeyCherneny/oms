@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { replace } from "connected-react-router";
+import qs from "qs";
 
 import {
   setApiAuthorizationHeader,
@@ -13,21 +14,9 @@ import actions from "../actions";
 
 function* signIn(api, action) {
   try {
-    // const response = yield call(api.signIn, action.payload);
-
-    const response = {
-      status: 200,
-      data: {
-        user: {
-          first_name: "Alexey",
-          last_name: "Cherneny",
-          id: 1,
-          role: "hr"
-        },
-        token: "ejej"
-      }
-    };
-    debugger;
+    // const reqParams = new FormData(qs.stringify(action.payload));
+    console.log("qs.stringify(action.payload) :", qs.stringify(action.payload));
+    const response = yield call(api.signIn, qs.stringify(action.payload));
 
     if (response.status === 200) {
       yield put(actions.signInSuccess(response.data));

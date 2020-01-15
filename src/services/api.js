@@ -1,7 +1,7 @@
 import apisauce from "apisauce";
 
-const DEVELOPMENT_URL = "http://localhost:3000/";
-const PRODUCTION_URL = "https://192.168.0.197:3000/";
+const DEVELOPMENT_URL = "/";
+const PRODUCTION_URL = "/";
 
 let hostURL;
 
@@ -11,12 +11,13 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   hostURL = PRODUCTION_URL;
 }
 
-const create = (baseURL = `${hostURL}/api/v1/`) => {
+const create = (baseURL = `${hostURL}api/`) => {
   const api = apisauce.create({
     baseURL,
 
     headers: {
-      "Cache-Control": "no-cache"
+      "Cache-Control": "no-cache",
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
 
     timeout: 10000
@@ -25,7 +26,7 @@ const create = (baseURL = `${hostURL}/api/v1/`) => {
   return {
     data: api,
 
-    signIn: args => api.post("auth/login", args),
+    signIn: args => api.post("login", args),
     checkPassword: args => api.post("auth/password", args),
     logout: args => api.post("auth/logout", args),
 
