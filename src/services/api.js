@@ -1,7 +1,7 @@
 import apisauce from "apisauce";
 
 const DEVELOPMENT_URL = "/";
-const PRODUCTION_URL = "https://www.backend.oms.com/";
+const PRODUCTION_URL = "http://www.backend.oms.com/";
 
 let hostURL;
 
