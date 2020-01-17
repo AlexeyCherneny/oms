@@ -46,18 +46,12 @@ function* signIn(api, action) {
 
 function* logout(api) {
   try {
-    const response = yield call(api.logout);
-
-    // if (/^200|201$/.test(response.status)) {
     cleanAuthToken();
     cleanUser();
 
-    yield put(actions.logoutSuccess(response.data));
-    yield put(actions.resetUser(response.data));
+    yield put(actions.logoutSuccess());
+    yield put(actions.resetUser());
     yield put(replace("/app/sign-in"));
-    // } else {
-    //   throw response;
-    // }
   } catch (error) {
     const errorMessage = "Error while logout";
 
