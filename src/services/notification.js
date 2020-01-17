@@ -1,7 +1,7 @@
 import { notification } from 'antd';
 
 const notificationProps = {
-  placement: 'bottomRight',
+  placement: 'topRight',
   duration: 8,
   style: {
     borderRadius: 5

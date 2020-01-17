@@ -4,30 +4,34 @@ import { NavLink } from "react-router-dom";
 
 import UsersTable from "../Containers/UsersTable";
 import { BASE_URL, allowedRoles } from "../constants";
+import { isPermitted } from "../../../services/formatters";
 
-const Users = ({ role }) => (
+const Users = ({ roles }) => (
   <Layout style={{ maxWidth: 1024, margin: "auto" }}>
-    <Card style={{ minHeight: 640 }}>
-      <Row gutter={12} type="flex" justify="end" style={{ marginBottom: 20, minHeight: 32 }}>
-        {allowedRoles.includes(role) && (
+    <Card>
+      {/* {isPermitted(allowedRoles, roles) && ( */}
+        <Row
+          gutter={12}
+          type="flex"
+          justify="end"
+          style={{ marginBottom: 20, minHeight: 32 }}
+        >
           <>
-            <Col>
+            {/* <Col>
               <NavLink to={`${BASE_URL}/plan`}>
-                <Button icon="usergroup-add">
-                  Планировать численность
-            </Button>
+                <Button icon="usergroup-add">Планировать численность</Button>
               </NavLink>
-            </Col>
+            </Col> */}
             <Col>
-              <NavLink to={`${BASE_URL}/invite`}>
+              <NavLink to={`${BASE_URL}/create`}>
                 <Button icon="user-add" type="primary">
-                  Пригласить участника
-            </Button>
+                  Добавить сотрудника
+                </Button>
               </NavLink>
             </Col>
           </>
-        )}
-      </Row>
+        </Row>
+      {/* )} */}
 
       <UsersTable />
     </Card>

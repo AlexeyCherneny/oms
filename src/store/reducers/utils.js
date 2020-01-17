@@ -105,10 +105,10 @@ export const createCRUDReducer = (
       updateItemInArray(
         data,
         payload.item,
-        (a, b) => String(a.id) === String(b.id)
+        (a, b) => String(a.uuid) === String(b.uuid)
       ),
     onDeleteDataMap = (data, payload) =>
-      removeItemFromArray(data, payload, (itemA, itemB) => itemA.id !== itemB)
+      removeItemFromArray(data, payload, (itemA, itemB) => itemA.uuid !== itemB)
   } = {}
 ) => {
   const upperName = name.toUpperCase();

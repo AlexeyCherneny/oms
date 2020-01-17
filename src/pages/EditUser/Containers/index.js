@@ -7,7 +7,7 @@ import drawerWrapper from "../../../Components/HOC/DrawerLayout";
 import Authenticated from "../../../Components/HOC/Authenticated";
 import actions from "../../../store/actions";
 import ProfilePage from "../Components";
-import { BASE_URL } from '../../Users/constants';
+import { BASE_URL } from "../../Users/constants";
 
 const mapState = state => ({
   getUserById: selectors.getUserById(state),
@@ -24,7 +24,7 @@ const ProfilePageContainer = compose(
   withRouter,
   drawerWrapper({
     title: "Пользователь",
-    width: 640,
+    width: 450,
     defaultBackLocation: BASE_URL
   }),
   connect(mapState, mapDispatch),
@@ -39,13 +39,13 @@ const ProfilePageContainer = compose(
     return {
       initialValues: user,
       disabled,
-      isUpdating
+      isLoading: isUpdating
     };
   }),
   withHandlers({
     handleSubmit: ({ updateUser, history, match }) => params => {
       const meta = {
-        onSuccess: () => history.push(BASE_URL),
+        onSuccess: () => history.push(BASE_URL)
       };
       updateUser(
         {

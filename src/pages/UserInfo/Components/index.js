@@ -13,7 +13,7 @@ const UserInfo = props => {
       <Row style={{ marginBottom: 15 }}>
         <Col span={6}>
           <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            src={user.photo}
             size={64}
           />
         </Col>

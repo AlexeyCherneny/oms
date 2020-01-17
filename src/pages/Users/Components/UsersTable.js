@@ -11,28 +11,28 @@ const UserActions = props => {
     isUserDeleting
   } = props;
 
-  const isUpdating = isUserUpdating(user.id);
-  const isDeleting = isUserDeleting(user.id);
+  const isUpdating = isUserUpdating(user.uuid);
+  const isDeleting = isUserDeleting(user.uuid);
 
   const isDisabled = isUpdating || isDeleting;
 
   return (
     <>
       <Button
-        onClick={() => handleUserEdit(user.id)}
+        onClick={() => handleUserEdit(user.uuid)}
         icon="edit"
         disabled={isDisabled}
         loading={isUpdating}
         style={{ marginRight: 8 }}
       />
       <Button
-        onClick={() => handleUserInfo(user.id)}
+        onClick={() => handleUserInfo(user.uuid)}
         disabled={isDisabled}
         icon="info-circle"
         style={{ marginRight: 8 }}
       />
       <Button
-        onClick={() => handleUserDelete(user.id, { user })}
+        onClick={() => handleUserDelete(user.uuid, { user })}
         disabled={isDisabled}
         loading={isDeleting}
         icon="delete"

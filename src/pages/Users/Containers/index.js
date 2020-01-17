@@ -7,7 +7,7 @@ import Users from "../Components";
 import actions from "../../../store/actions";
 
 const mapState = ({ authorization }) => ({
-  role: authorization.user && authorization.user.role,
+  roles: authorization.user && authorization.user.roles
 });
 
 const mapDispatch = {

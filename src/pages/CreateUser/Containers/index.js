@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import actions from "../../../store/actions";
 
 import drawerWrapper from "../../../Components/HOC/DrawerLayout";
-import InviteUser from "../Components";
+import CreateUser from "../Components";
 import { BASE_URL } from "../../Users/constants";
 
 const mapState = ({ users }) => ({
@@ -13,25 +13,25 @@ const mapState = ({ users }) => ({
 });
 
 const mapDispatch = {
-  inviteUser: actions.createUserRequest
+  createUser: actions.createUserRequest
 };
 
-const InviteUserContainer = compose(
+const CreateUserContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
   drawerWrapper({
     title: "Пригласить пользователя",
-    width: 640,
+    width: 450,
     defaultBackLocation: BASE_URL
   }),
   withHandlers({
-    invitePerson: ({ inviteUser, history }) => params => {
+    handleSubmit: ({ createUser, history }) => params => {
       const meta = {
         onSuccess: () => history.push(BASE_URL)
       };
-      inviteUser({ params }, meta);
+      createUser({ params }, meta);
     }
   })
-)(InviteUser);
+)(CreateUser);
 
-export default InviteUserContainer;
+export default CreateUserContainer;
