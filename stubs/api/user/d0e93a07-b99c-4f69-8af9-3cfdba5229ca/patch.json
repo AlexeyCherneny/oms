@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+    "email": "email3@gmail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "first_name": "Charlotte",
+    "last_name": "Medhurst",
+    "middle_name": "Abe",
+    "birthday": "30/07/1989",
+    "skype": "wyundt",
+    "telegram": "madyson10",
+    "github": null,
+    "phone": "(963) 807-7587 x333",
+    "photo": null
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

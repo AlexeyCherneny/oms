@@ -2,7 +2,6 @@
   "name": "oms-dev-server",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://www.backend.oms.com",
   "dependencies": {
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
@@ -13,6 +12,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.6.1",
     "firebase": "^7.6.0",
+    "http-proxy-middleware": "^0.20.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
@@ -33,9 +33,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:stub": "npm run stub & npm start -- --stubs",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stub": "stubby --watch -d stubs/config.yaml -s 3100 -a 3101"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "stubby": "^4.1.1"
   }
 }

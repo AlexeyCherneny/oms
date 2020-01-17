@@ -1,0 +1,10 @@
+{
+  "data": null,
+  "errors": [
+    "User not found"
+  ],
+  "error": "User not found",
+  "meta": {
+    "generated": 1579249069
+  }
+}

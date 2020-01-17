@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "30b582c5-11ed-4d4b-96c1-e4edda4f8a0f",
+    "email": "email4@gmail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "first_name": "Sonny",
+    "last_name": "Walker",
+    "middle_name": "Jamil",
+    "birthday": "09/12/1997",
+    "skype": "ddickens",
+    "telegram": "neil.mccullough",
+    "github": null,
+    "phone": "729.887.7824",
+    "photo": null
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579268196
+  }
+}

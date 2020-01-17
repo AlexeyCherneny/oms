@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
+    "email": "email1@gmail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "first_name": "Abel",
+    "last_name": "Wolf",
+    "middle_name": "Thad",
+    "birthday": "28/11/1984",
+    "skype": "wunsch.adrianna",
+    "telegram": "ibuckridge",
+    "github": null,
+    "phone": "253.376.2018 x193",
+    "photo": null
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269833
+  }
+}

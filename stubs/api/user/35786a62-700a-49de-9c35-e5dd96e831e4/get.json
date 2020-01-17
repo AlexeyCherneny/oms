@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "35786a62-700a-49de-9c35-e5dd96e831e4",
+    "email": "hr@gmail.com",
+    "roles": [
+      "ROLE_HR"
+    ],
+    "first_name": "Angelita",
+    "last_name": "Luettgen",
+    "middle_name": "Luis",
+    "birthday": "03\/11\/1981",
+    "skype": "iking",
+    "telegram": "delilah04",
+    "github": null,
+    "phone": "976-330-0766 x0681",
+    "photo": null
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579267583
+  }
+}
