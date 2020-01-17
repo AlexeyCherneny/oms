@@ -1,5 +1,6 @@
 import { call, put, delay } from "redux-saga/effects";
 import { defaultTo, get } from "lodash";
+import qs from "qs";
 
 import actions from "../actions";
 import Notification from "../../services/notification";
@@ -7,20 +8,20 @@ import { handleSagaError } from "./utils";
 
 function* createUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
   try {
-    const response = yield call(api.createUser, payload);
+    const response = yield call(api.createUser, qs.stringify(payload));
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
-      yield put(actions.createUserSuccess(response.data));
-      if (meta.onSuccess) meta.onSuccess(response.data);
-      Notification.success('Сотрудники', 'Приглашение успешно отправлено.');
+      yield put(actions.createUserSuccess(response.data.data));
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
+      Notification.success("Внимание", "Пользователь успешно создан.");
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while creating user";
-    Notification.error('Сотрудники', 'Не удалось отправить приглашение.');
+    Notification.error("Внимание", "Не удалось создать пользователя.");
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, actions.createUserFailure);
@@ -38,14 +39,14 @@ function* readUsers(
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
 
-      yield put(actions.usersSuccess(response.data));
-      if (meta.onSuccess) meta.onSuccess(response.data);
+      yield put(actions.usersSuccess(response.data.data));
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while fetching users list";
-    Notification.error('Сотрудники', 'Не удалось загрузить данные.');
+    Notification.error("Сотрудники", "Не удалось загрузить данные.");
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, actions.usersFailure);
@@ -54,7 +55,11 @@ function* readUsers(
 
 function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
   try {
-    const response = yield call(api.updateUser, payload);
+    const response = yield call(api.updateUser, {
+      ...payload,
+      params: qs.stringify(payload.params)
+    });
+
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
 
@@ -66,25 +71,33 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
       );
       if (meta.onSuccess) meta.onSuccess(response.data);
       const { first_name, last_name } = response.data;
-      Notification.success('Сотрудники', `Информция о сотруднике ${first_name || ''} ${last_name || ''} успешно обновлена.`);
+      Notification.success(
+        "Сотрудники",
+        `Информция о сотруднике ${first_name || ""} ${last_name ||
+          ""} успешно обновлена.`
+      );
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while updating user";
     const { first_name, last_name } = payload.params;
-    Notification.error('Сотрудники', `Ошибка обновления информации о сотруднике ${first_name || ''} ${last_name || ''}.`);
+    Notification.error(
+      "Сотрудники",
+      `Ошибка обновления информации о сотруднике ${first_name ||
+        ""} ${last_name || ""}.`
+    );
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, () =>
-      actions.updateUserFailure({ id: get(payload, "id") })
+      actions.updateUserFailure(payload)
     );
   }
 }
 
 function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
-  const firstName = get(meta.user, 'first_name') || '';
-  const lastName = get(meta.user, 'last_name') || '';
+  const firstName = get(meta.user, "first_name") || "";
+  const lastName = get(meta.user, "last_name") || "";
   try {
     const response = yield call(api.deleteUser, payload);
 
@@ -92,17 +105,23 @@ function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
       yield delay(1000);
       yield put(actions.deleteUserSuccess(payload));
       if (meta.onSuccess) meta.onSuccess(response.data);
-      Notification.success('Сотрудники', `Cотрудник ${firstName} ${lastName} успешно удален.`);
+      Notification.success(
+        "Сотрудники",
+        `Cотрудник ${firstName} ${lastName} успешно удален.`
+      );
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while deleting users list";
-    Notification.error('Сотрудники', `Не удалось удалить сотрудника ${firstName} ${lastName}.`);
+    Notification.error(
+      "Сотрудники",
+      `Не удалось удалить сотрудника ${firstName} ${lastName}.`
+    );
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, () =>
-      actions.deleteUserFailure({ id: get(payload, "id") })
+      actions.deleteUserFailure(payload)
     );
   }
 }

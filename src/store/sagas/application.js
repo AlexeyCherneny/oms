@@ -32,17 +32,17 @@ function* initializeApplication(api, action) {
 
     setApiAuthorizationHeader(api, token);
 
-    const response = yield call(api.fetchUser, user.id);
+    const response = yield call(api.readUser, user.uuid);
 
     if (response.status === 200) {
-      yield put(actions.setUser({ user: response.data }));
+      yield put(actions.setUser({ user: response.data.data }));
 
       yield delay(1000);
-      // yield put(replace("/app/cabinet/"));
       yield put(actions.initializeApplicationSuccess());
     } else if (response.status === 401) {
       cleanAuthToken();
       cleanUser();
+
       yield put(replace("/app/sign-in"));
 
       yield put(actions.initializeApplicationSuccess());

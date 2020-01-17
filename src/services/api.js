@@ -17,7 +17,7 @@ const create = (baseURL = `${hostURL}api/`) => {
 
     headers: {
       "Cache-Control": "no-cache",
-      'Content-Type': 'application/x-www-form-urlencoded'
+      "Content-Type": "application/x-www-form-urlencoded"
     },
 
     timeout: 10000
@@ -30,11 +30,11 @@ const create = (baseURL = `${hostURL}api/`) => {
     checkPassword: args => api.post("auth/password", args),
     logout: args => api.post("auth/logout", args),
 
-    createUser: ({ params }) => api.post(`users/invite`, params),
-    fetchUser: id => api.get(`users/${id}`),
-    readUsers: ({ search }) => api.get(`users${search}`),
-    updateUser: ({ id, params }) => api.put(`users/${id}`, params),
-    deleteUser: id => api.delete(`users/${id}`),
+    createUser: params => api.put(`user`, params),
+    readUser: id => api.get(`user/${id}`),
+    readUsers: ({ search }) => api.get(`user${search}`),
+    updateUser: ({ id, params }) => api.patch(`user/${id}`, params),
+    deleteUser: id => api.delete(`user/${id}`),
 
     createEvent: args => api.post(`events`, args),
     fetchEvent: args => api.get(`events/${args.id}`),
@@ -52,7 +52,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     updatePayment: args => api.put(`payments`, args),
     deletePayment: args => api.delete(`payments`, args),
 
-    fetchDocuments: () => api.get('documents'),
+    fetchDocuments: () => api.get("documents"),
     updateDocument: args => api.put(`documents/${args.id}`, args)
   };
 };

@@ -4,9 +4,9 @@ import UsersPlan from "./UsersPlan";
 import Events from "./Events";
 import Profile from "./Profile";
 import Salaries from "./Salaries";
-import InviteUser from "./InviteUser";
+import CreateUser from "./CreateUser";
 import UserInfo from "./UserInfo";
-import UpdateUser from "./UpdateUser";
+import EditUser from "./EditUser";
 import Home from "./Home";
 import Payments from "./Payments";
 // import Documents from "./Documents";
@@ -24,9 +24,9 @@ export {
   Profile,
   Salaries,
   EditSalary,
-  InviteUser,
+  CreateUser,
   UserInfo,
-  UpdateUser,
+  EditUser,
   Home,
   Payments,
   ApplicationLoader,

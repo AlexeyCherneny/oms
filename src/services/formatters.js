@@ -45,3 +45,8 @@ export const formatPaymentType = type => {
       return type;
   }
 };
+
+export const isPermitted = (availableRoles = [], roles = []) =>
+  availableRoles.some(availableRole =>
+    roles.some(role => availableRole === role)
+  );

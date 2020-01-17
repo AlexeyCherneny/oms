@@ -11,9 +11,9 @@ import {
   Salaries,
   CreateSalary,
   EditSalary,
-  InviteUser,
+  CreateUser,
   UserInfo,
-  UpdateUser,
+  EditUser,
   Payments,
   Home,
   UpdatePayment,
@@ -60,11 +60,11 @@ const Cabinet = () => (
             />
             <Route path="/app/cabinet/users/">
               <Users />
-              <Route path="/app/cabinet/users/invite" component={InviteUser} />
+              <Route path="/app/cabinet/users/create" component={CreateUser} />
               <Route path="/app/cabinet/users/:id/info" component={UserInfo} />
               <Route
                 path="/app/cabinet/users/:id/edit"
-                component={UpdateUser}
+                component={EditUser}
               />
             </Route>
           </Switch>

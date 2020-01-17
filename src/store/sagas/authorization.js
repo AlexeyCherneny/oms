@@ -14,22 +14,28 @@ import actions from "../actions";
 
 function* signIn(api, action) {
   try {
-    // const reqParams = new FormData(qs.stringify(action.payload));
-    console.log("qs.stringify(action.payload) :", qs.stringify(action.payload));
-    const response = yield call(api.signIn, qs.stringify(action.payload));
+    const authResponse = yield call(api.signIn, qs.stringify(action.payload));
 
-    if (response.status === 200) {
-      yield put(actions.signInSuccess(response.data));
-      yield put(actions.setUser(response.data));
+    if (authResponse.status === 200) {
+      const { token, uuid } = authResponse.data.data;
+      setApiAuthorizationHeader(api, token);
+      saveAuthToken(token);
 
-      setApiAuthorizationHeader(api, response.data.token);
+      const userResponse = yield call(api.readUser, uuid);
+      if (userResponse.status === 200) {
+        const { data: user } = userResponse.data;
 
-      saveAuthToken(response.data.token);
-      saveUser(response.data.user);
+        yield put(actions.signInSuccess());
+        yield put(actions.setUser({ user }));
+
+        saveUser(user);
+      } else {
+        throw userResponse;
+      }
 
       yield put(replace("/app/cabinet/"));
     } else {
-      throw response;
+      throw authResponse;
     }
   } catch (error) {
     const errorMessage = "Error while sign in";
@@ -40,18 +46,12 @@ function* signIn(api, action) {
 
 function* logout(api) {
   try {
-    const response = yield call(api.logout);
-
-    // if (/^200|201$/.test(response.status)) {
     cleanAuthToken();
     cleanUser();
 
-    yield put(actions.logoutSuccess(response.data));
-    yield put(actions.resetUser(response.data));
+    yield put(actions.logoutSuccess());
+    yield put(actions.resetUser());
     yield put(replace("/app/sign-in"));
-    // } else {
-    //   throw response;
-    // }
   } catch (error) {
     const errorMessage = "Error while logout";
 

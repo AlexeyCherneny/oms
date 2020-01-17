@@ -82,7 +82,7 @@ export const cleanUser = () => {
 
 export const setApiAuthorizationHeader = (api, authToken) => {
   try {
-    api.data.setHeader("Authorization", `Bearer ${authToken}`);
+    api.data.setHeader("token", authToken);
   } catch (error) {
     const errorMessage = "Error while setting api authorization header";
     handleError(error, errorMessage);
