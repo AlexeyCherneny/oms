@@ -1,5 +1,6 @@
 import React from "react";
-import {  Table, Button,  } from "antd";
+import { Table, Button } from "antd";
+import { ROLES } from "../../../services/constants";
 
 const UserActions = props => {
   const {
@@ -8,8 +9,11 @@ const UserActions = props => {
     handleUserEdit,
     isUserUpdating,
     handleUserDelete,
-    isUserDeleting
+    isUserDeleting,
+    accountRoles
   } = props;
+
+  const isHR = accountRoles.includes(ROLES.HR);
 
   const isUpdating = isUserUpdating(user.uuid);
   const isDeleting = isUserDeleting(user.uuid);
@@ -18,25 +22,29 @@ const UserActions = props => {
 
   return (
     <>
-      <Button
-        onClick={() => handleUserEdit(user.uuid)}
-        icon="edit"
-        disabled={isDisabled}
-        loading={isUpdating}
-        style={{ marginRight: 8 }}
-      />
+      {isHR && (
+        <Button
+          onClick={() => handleUserEdit(user.uuid)}
+          icon="edit"
+          disabled={isDisabled}
+          loading={isUpdating}
+          style={{ marginRight: 8 }}
+        />
+      )}
       <Button
         onClick={() => handleUserInfo(user.uuid)}
         disabled={isDisabled}
         icon="info-circle"
         style={{ marginRight: 8 }}
       />
-      <Button
-        onClick={() => handleUserDelete(user.uuid, { user })}
-        disabled={isDisabled}
-        loading={isDeleting}
-        icon="delete"
-      />
+      {isHR && (
+        <Button
+          onClick={() => handleUserDelete(user.uuid, { user })}
+          disabled={isDisabled}
+          loading={isDeleting}
+          icon="delete"
+        />
+      )}
     </>
   );
 };

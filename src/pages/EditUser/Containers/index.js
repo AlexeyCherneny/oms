@@ -5,9 +5,11 @@ import { withRouter } from "react-router-dom";
 import selectors from "../../../store/selectors";
 import drawerWrapper from "../../../Components/HOC/DrawerLayout";
 import Authenticated from "../../../Components/HOC/Authenticated";
+import withRole from "../../../Components/HOC/withRole";
 import actions from "../../../store/actions";
 import ProfilePage from "../Components";
 import { BASE_URL } from "../../Users/constants";
+import { allowedRoles } from "../constants";
 
 const mapState = state => ({
   getUserById: selectors.getUserById(state),
@@ -21,6 +23,10 @@ const mapDispatch = {
 
 const ProfilePageContainer = compose(
   Authenticated,
+  withRole({
+    defaultUrl: BASE_URL,
+    allowedRoles
+  }),
   withRouter,
   drawerWrapper({
     title: "Пользователь",
