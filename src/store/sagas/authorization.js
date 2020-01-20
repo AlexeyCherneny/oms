@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { replace } from "connected-react-router";
 import qs from "qs";
 
@@ -61,12 +61,14 @@ function* logout(api) {
 
 function* publicAccess(api, action) {
   try {
-    const response = yield call(api.checkPassword, action.payload);
+    const userEmail = yield select(state => state.authorization.user.email);
+    const requestData = { email: userEmail, ...action.payload };
+    const authResponse = yield call(api.signIn, qs.stringify(requestData));
 
-    if (/^200|201$/.test(response.status)) {
+    if (/^200|201$/.test(authResponse.status)) {
       yield put(actions.publicAccessSuccess(true));
     } else {
-      throw response;
+      throw authResponse;
     }
   } catch (error) {
     const errorMessage = "Error while publicAccess";
