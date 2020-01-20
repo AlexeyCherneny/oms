@@ -11,14 +11,15 @@ import {
   programDateFormat
 } from "../../services/formatters";
 import Avatar from "../FormElements/Avatar/Avatar";
+import { ROLES } from "../../services/constants";
 
 const formItemLayout = {
   style: { marginBottom: 0 }
 };
 
 const roles = [
-  { label: "HR", value: "ROLE_HR" },
-  { label: "Пользователь", value: "ROLE_USER" }
+  { label: "HR", value: ROLES.HR },
+  { label: "Пользователь", value: ROLES.EMPLOYEE }
 ];
 
 const inputs = initialValues => ({
@@ -26,7 +27,7 @@ const inputs = initialValues => ({
     name: "role",
     mode: "multiple",
     placeholder: "Пользователь",
-    options: [...roles],
+    options: roles,
     settings: {
       initialValue: get(initialValues, "role", []),
       rules: [
