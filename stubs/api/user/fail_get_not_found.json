@@ -1,0 +1,13 @@
+{
+  "data": null,
+  "errors": [
+    "User not found"
+  ],
+  "error": {
+    "message": null,
+    "type": "not_found"
+  },
+  "meta": {
+    "generated": 1579266489
+  }
+}

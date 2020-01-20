@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+    "email": "email2@gmail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "first_name": "Emmanuelle",
+    "last_name": "Bechtelar",
+    "middle_name": "Coy",
+    "birthday": "30/08/1988",
+    "skype": "123",
+    "telegram": "123",
+    "github": "123",
+    "phone": "123",
+    "photo": "123"
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

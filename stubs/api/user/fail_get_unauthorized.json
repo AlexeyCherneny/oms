@@ -1,0 +1,13 @@
+{
+  "data": null,
+  "errors": [
+    "authentication_required"
+  ],
+  "error": {
+    "message": null,
+    "type": "authentication_required"
+  },
+  "meta": {
+    "generated": 1579266489
+  }
+}
