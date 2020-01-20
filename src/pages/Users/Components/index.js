@@ -5,11 +5,15 @@ import { NavLink } from "react-router-dom";
 import UsersTable from "../Containers/UsersTable";
 import { BASE_URL, allowedRoles } from "../constants";
 import { isPermitted } from "../../../services/formatters";
+import { ROLES } from "../../../services/constants";
 
-const Users = ({ roles }) => (
-  <Layout style={{ maxWidth: 1024, margin: "auto" }}>
-    <Card>
-      {/* {isPermitted(allowedRoles, roles) && ( */}
+const Users = ({ roles }) => {
+  const isHR = roles.includes(ROLES.HR);
+
+  return (
+    <Layout style={{ maxWidth: 1024, margin: "auto" }}>
+      <Card>
+        {/* {isPermitted(allowedRoles, roles) && ( */}
         <Row
           gutter={12}
           type="flex"
@@ -22,20 +26,23 @@ const Users = ({ roles }) => (
                 <Button icon="usergroup-add">Планировать численность</Button>
               </NavLink>
             </Col> */}
-            <Col>
-              <NavLink to={`${BASE_URL}/create`}>
-                <Button icon="user-add" type="primary">
-                  Добавить сотрудника
-                </Button>
-              </NavLink>
-            </Col>
+            {isHR && (
+              <Col>
+                <NavLink to={`${BASE_URL}/create`}>
+                  <Button icon="user-add" type="primary">
+                    Добавить сотрудника
+                  </Button>
+                </NavLink>
+              </Col>
+            )}
           </>
         </Row>
-      {/* )} */}
+        {/* )} */}
 
-      <UsersTable />
-    </Card>
-  </Layout>
-);
+        <UsersTable />
+      </Card>
+    </Layout>
+  );
+};
 
 export default Users;

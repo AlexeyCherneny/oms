@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, withProps } from "recompose";
-import { defaultTo } from "lodash";
+import { defaultTo, get } from "lodash";
 
 import selectors from "../../../store/selectors";
 import actions from "../../../store/actions";
@@ -9,6 +9,7 @@ import UsersTable from "../Components/UsersTable";
 import { BASE_URL } from "../constants";
 
 const mapState = state => ({
+  accountRoles: get(state.authorization, "user.roles", []),
   users: selectors.getUsers(state),
   isDownloading: selectors.isUsersDownloading(state),
   isUserDeleting: selectors.isUserDeleting(state),
