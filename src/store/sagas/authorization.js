@@ -61,14 +61,14 @@ function* logout(api) {
 
 function* publicAccess(api, action) {
   try {
-    const userEmail = yield select(state => state.authorization.user.email);
-    const requestData = { email: userEmail, ...action.payload };
-    const authResponse = yield call(api.signIn, qs.stringify(requestData));
+    const email = yield select(state => state.authorization.user.email);
+    const requestData = { email, ...action.payload };
+    const response = yield call(api.signIn, qs.stringify(requestData));
 
-    if (/^200|201$/.test(authResponse.status)) {
+    if (/^200|201$/.test(response.status)) {
       yield put(actions.publicAccessSuccess(true));
     } else {
-      throw authResponse;
+      throw response;
     }
   } catch (error) {
     const errorMessage = "Error while publicAccess";
