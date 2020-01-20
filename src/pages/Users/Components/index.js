@@ -3,8 +3,7 @@ import { Row, Card, Layout, Col, Button } from "antd";
 import { NavLink } from "react-router-dom";
 
 import UsersTable from "../Containers/UsersTable";
-import { BASE_URL, allowedRoles } from "../constants";
-import { isPermitted } from "../../../services/formatters";
+import { BASE_URL } from "../constants";
 import { ROLES } from "../../../services/constants";
 
 const Users = ({ roles }) => {
