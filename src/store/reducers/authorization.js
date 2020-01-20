@@ -29,7 +29,8 @@ const initialState = {
     isLoading: false,
     isLoaded: true,
     isError: false
-  }
+  },
+  settings: {},
 };
 
 const reducer = createReducer(
@@ -59,6 +60,7 @@ const reducer = createReducer(
     }),
 
     [actions.setUser]: (state, data) => ({ ...state, user: data.user }),
+    [actions.setUserSettings]: (state, data) => data ? { ...state, settings: { ...state.settings, ...data }} : state,
     [actions.resetUser]: () => ({ ...initialState }),
   },
   initialState

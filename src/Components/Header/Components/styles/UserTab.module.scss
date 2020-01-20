@@ -1,0 +1,22 @@
+.containerCollapsed {
+  position: relative;
+
+  .avatar {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+  }
+
+  .menuItem {
+    display: none;
+  }
+}
+
+.avatar {
+  text-align: center;
+}
+
+.menuItem {
+  color: #fff;
+}

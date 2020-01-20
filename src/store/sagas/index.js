@@ -1,4 +1,4 @@
-import { takeLatest, takeEvery, all } from "redux-saga/effects";
+import { takeLatest, takeEvery, all, fork } from "redux-saga/effects";
 
 import API from "../../services/api";
 import actions from "../actions";
@@ -16,35 +16,10 @@ const rootSaga = function* root() {
   const api = API.create();
 
   // APPLICATION ACTIONS
-  yield all([
-    takeLatest(
-      actions.initializeApplicationRequest,
-      applicationSagas.initializeApplication,
-      api
-    )
-  ]);
+  yield fork(applicationSagas, api);
 
   // AUTHORIZATION ACTIONS
-  yield all([
-    takeLatest(actions.signInRequest, authorizationSagas.signIn, api)
-  ]);
-  yield all([
-    takeLatest(actions.logoutRequest, authorizationSagas.logout, api)
-  ]);
-  yield all([
-    takeLatest(
-      actions.publicAccessRequest,
-      authorizationSagas.publicAccess,
-      api
-    )
-  ]);
-  yield all([
-    takeLatest(
-      actions.saveFCMTokenRequest,
-      authorizationSagas.saveFCMToken,
-      api
-    )
-  ]);
+  yield fork(authorizationSagas, api);
 
   // USERS ACTIONS
   yield all([takeEvery(actions.createUserRequest, usersSagas.createUser, api)]);
@@ -52,7 +27,7 @@ const rootSaga = function* root() {
   yield all([takeEvery(actions.updateUserRequest, usersSagas.updateUser, api)]);
   yield all([takeEvery(actions.deleteUserRequest, usersSagas.deleteUser, api)]);
 
-  yield usersPlanSagas(api);
+  yield fork(usersPlanSagas, api);
 
   // EVENTS ACTIONS
   yield all([

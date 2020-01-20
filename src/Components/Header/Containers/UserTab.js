@@ -5,7 +5,10 @@ import { compose, withProps } from "recompose";
 import UserTab from "../Components/UserTab";
 import actions from "../../../store/actions";
 
-const mapState = ({ authorization }) => ({ user: authorization.user });
+const mapState = ({ authorization }) => ({ 
+  user: authorization.user,
+  isMenuCollapsed: get(authorization, 'settings.isMenuCollapsed', false),
+});
 
 const mapDispatch = {
   logout: actions.logoutRequest
