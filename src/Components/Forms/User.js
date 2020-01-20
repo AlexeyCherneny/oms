@@ -4,18 +4,40 @@ import { get } from "lodash";
 import moment from "moment";
 
 import FormInput from "../FormElements/Input/Input";
+import FormSelect from "../FormElements/Select/Select";
 import FormDatepicker from "../FormElements/Datepicker/Datepicker";
 import {
   displayDateFormat,
   programDateFormat
 } from "../../services/formatters";
 import Avatar from "../FormElements/Avatar/Avatar";
+import { ROLES } from "../../services/constants";
 
 const formItemLayout = {
   style: { marginBottom: 0 }
 };
 
+const roles = [
+  { label: "HR", value: ROLES.HR },
+  { label: "Пользователь", value: ROLES.EMPLOYEE }
+];
+
 const inputs = initialValues => ({
+  role: {
+    name: "role",
+    mode: "multiple",
+    placeholder: "Пользователь",
+    options: roles,
+    settings: {
+      initialValue: get(initialValues, "role", []),
+      rules: [
+        {
+          required: true,
+          message: "Обязательное поле"
+        }
+      ]
+    }
+  },
   email: {
     name: "email",
     placeholder: "a.cherneny@gmail.com",
@@ -130,6 +152,14 @@ class CreateUser extends React.Component {
             />
           </Col>
         </Row>
+
+        <Form.Item {...formItemLayout} label="Роль">
+          <FormSelect
+            form={form}
+            {...inputs(initialValues).role}
+            disabled={isLoading}
+          />
+        </Form.Item>
 
         <Form.Item {...formItemLayout} label="Email">
           <FormInput
