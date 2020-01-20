@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { isEmpty } from "lodash";
 
 const withRole = ({
   allowedRoles = [],
@@ -20,7 +19,7 @@ const withRole = ({
 
     get isAllowedRole() {
       const { roles } = this.props.user;
-      return !isEmpty(roles.filter(role => allowedRoles.includes(role)));
+      return Boolean(roles.find(role => allowedRoles.includes(role)));
     }
 
     checkRole = () => {
