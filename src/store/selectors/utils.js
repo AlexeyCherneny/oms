@@ -46,7 +46,10 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
           return null;
         }
 
-        return data.find(item => String(item.uuid) === String(id));
+        return data.find(
+          item =>
+            String(item.uuid) === String(id) || String(item.id) === String(id)
+        );
       } catch (error) {
         console.error(error);
         return false;

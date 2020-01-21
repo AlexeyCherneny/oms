@@ -9,20 +9,20 @@ import applicationReducer from "./application";
 import usersPlanReducer from "./usersPlan";
 import eventsReducer from "./events";
 import paymentsReducer from "./payments";
-import documentsReducer from "./documents";
 
-const usersReducer = createReducer(createCRUDReducer("user"), CRUDState);
-const salariesReducer = createReducer(createCRUDReducer("salary"), CRUDState);
+const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
+const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
+const documentReducer = createReducer(createCRUDReducer("document"), CRUDState);
 
 const createRootReducer = history =>
   combineReducers({
     application: applicationReducer,
     authorization: authorizationReducer,
-    users: usersReducer,
+    users: userReducer,
     events: eventsReducer,
-    salaries: salariesReducer,
+    salaries: salaryReducer,
     payments: paymentsReducer,
-    documents: documentsReducer,
+    documents: documentReducer,
 
     usersPlan: usersPlanReducer,
     router: connectRouter(history)

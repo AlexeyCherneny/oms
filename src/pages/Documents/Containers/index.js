@@ -1,18 +1,19 @@
-import React from "react";
-import { compose, lifecycle } from "recompose";
+import { compose, lifecycle, withProps } from "recompose";
 import { connect } from "react-redux";
 
 import Authenticated from "../../../Components/HOC/Authenticated";
+import { tree } from "../../../helpers";
 import actions from "../../../store/actions";
+import selectors from "../../../store/selectors";
 
 import DocumentsPage from "../Components";
 
-const mapState = ({ documents }) => ({
-  ...documents
+const mapState = state => ({
+  documents: selectors.getDocuments(state)
 });
 
 const mapDispatch = {
-  fetchDocumentsList: actions.documentsListRequest,
+  readDocuments: actions.documentsRequest
 };
 
 const DocumentsPageContainer = compose(
@@ -20,9 +21,9 @@ const DocumentsPageContainer = compose(
   connect(mapState, mapDispatch),
   lifecycle({
     componentDidMount() {
-      const { fetchDocumentsList } = this.props;
+      const { readDocuments } = this.props;
 
-      fetchDocumentsList();
+      readDocuments();
     }
   })
 )(DocumentsPage);

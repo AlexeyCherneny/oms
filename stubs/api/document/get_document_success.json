@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "title": "Документ 0",
+      "content": "<p>Тело документа 0</p>",
+      "access": [],
+      "private": false,
+      "parent_document": null,
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 1,
+      "title": "Документ 1",
+      "content": "<p>Тело документа 1</p>",
+      "access": [],
+      "private": false,
+      "parent_document": 0,
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 2,
+      "title": "Документ 2",
+      "content": "<p>Тело документа 2</p>",
+      "access": [],
+      "private": false,
+      "parent_document": 1,
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 3,
+      "title": "Документ 3",
+      "content": "<p>Тело документа 3</p>",
+      "access": [],
+      "private": false,
+      "parent_document": null,
+      "createdAt": "",
+      "updatedAt": ""
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579268196
+  }
+}

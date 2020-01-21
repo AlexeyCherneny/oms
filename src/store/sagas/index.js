@@ -97,10 +97,7 @@ const rootSaga = function* root() {
 
   // DOCUMENTS SAGAS
   yield all([
-    takeLatest(actions.documentsListRequest, documentsSagas.fetchDocumentsList, api)
-  ]);
-  yield all([
-    takeLatest(actions.updateListRequest, documentsSagas.updateDocumentsList, api)
+    takeEvery(actions.documentsRequest, documentsSagas.readDocuments, api)
   ]);
 };
 

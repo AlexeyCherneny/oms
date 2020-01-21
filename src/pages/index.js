@@ -9,7 +9,7 @@ import UserInfo from "./UserInfo";
 import EditUser from "./EditUser";
 import Home from "./Home";
 import Payments from "./Payments";
-// import Documents from "./Documents";
+import Documents from "./Documents";
 import EditSalary from "./EditSalary";
 import CreateSalary from "./CreateSalary";
 import { CreatePayment, UpdatePayment, PaymentInfo } from "./Payment";
@@ -33,6 +33,6 @@ export {
   CreatePayment,
   UpdatePayment,
   PaymentInfo,
-  // Documents,
+  Documents,
   CreateSalary
 };
