@@ -17,7 +17,7 @@ const Header = props => {
       overlay={
         <Menu style={{ padding: 0 }}>
           <Menu.Item style={{ padding: 0 }}>
-            <Card style={{ padding: 15, width: 300 }} bodyStyle={{ padding: 0 }}>
+            <Card style={{ padding: 15, width: '100%', margin: '10px 0' }} bodyStyle={{ padding: 0 }}>
               <Input
                 name="password"
                 placeholder="Пароль"

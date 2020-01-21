@@ -20,6 +20,7 @@ export const resetPublicAccess = createAction("RESET_PUBLIC_ACCESS");
 
 export const setUser = createAction("SET_USER");
 export const resetUser = createAction("RESET_USER");
+export const setUserSettings = createAction("SET_USER_SETTINGS");
 
 export default {
   signInRequest,
@@ -41,5 +42,7 @@ export default {
   resetPublicAccess,
 
   setUser,
-  resetUser
+  resetUser,
+  setUserSettings,
+
 };

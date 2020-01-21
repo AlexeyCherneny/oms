@@ -1,4 +1,4 @@
-import { call, put, delay } from "redux-saga/effects";
+import { call, put, delay, all, takeLatest } from "redux-saga/effects";
 import { replace } from "connected-react-router";
 
 import { handleSagaError } from "./utils";
@@ -9,7 +9,8 @@ import {
   getUser,
   cleanAuthToken,
   cleanUser,
-  setApiAuthorizationHeader
+  setApiAuthorizationHeader,
+  loadSettings, 
 } from "./utils";
 
 function* initializeApplication(api, action) {
@@ -36,6 +37,9 @@ function* initializeApplication(api, action) {
 
     if (response.status === 200) {
       yield put(actions.setUser({ user: response.data.data }));
+
+      const settings = loadSettings();
+      yield put(actions.setUserSettings(settings));
 
       yield delay(1000);
       yield put(actions.initializeApplicationSuccess());
@@ -108,4 +112,8 @@ function* initializeApplication(api, action) {
 //   }
 // }
 
-export default { initializeApplication };
+export default function*(api) {
+  yield all([
+    takeLatest(actions.initializeApplicationRequest, initializeApplication, api),
+  ]);
+}

@@ -74,6 +74,7 @@ export const getUser = () => {
 export const cleanUser = () => {
   try {
     localStorage.setItem("user", "");
+    localStorage.removeItem("settings");
   } catch (error) {
     const errorMessage = "Error while cleaning user to local storage";
     handleError(error, errorMessage);
@@ -88,3 +89,23 @@ export const setApiAuthorizationHeader = (api, authToken) => {
     handleError(error, errorMessage);
   }
 };
+
+export const saveSettings = settings => {
+  try {
+    localStorage.setItem("settings", JSON.stringify(settings));
+  } catch (error) {
+    const errorMessage = "Error while saving user settings to local storage";
+    handleError(error, errorMessage);
+  }
+} 
+
+export const loadSettings = () => {
+  try {
+    const settings = JSON.parse(localStorage.getItem("settings"));
+    return settings;
+  } catch (error) {
+    const errorMessage = "Error while loading user settings to local storage";
+    handleError(error, errorMessage);
+    return null;
+  }
+} 

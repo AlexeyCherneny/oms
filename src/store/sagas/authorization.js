@@ -1,4 +1,5 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, put, delay, select, takeLatest, all } from "redux-saga/effects";
+import { get } from 'lodash';
 import { replace } from "connected-react-router";
 import qs from "qs";
 
@@ -8,7 +9,8 @@ import {
   cleanAuthToken,
   saveUser,
   cleanUser,
-  handleSagaError
+  handleSagaError,
+  saveSettings,
 } from "./utils";
 import actions from "../actions";
 
@@ -93,4 +95,18 @@ function* saveFCMToken(api, action) {
   }
 }
 
-export default { signIn, logout, publicAccess, saveFCMToken };
+function* updateUserLocalSettings() {
+  yield delay(1000);
+  const settings = yield select(state => get(state, 'authorization.settings', {}));
+  saveSettings(settings);
+}
+
+export default function*(api) {
+  yield all([
+    takeLatest(actions.signInRequest, signIn, api),
+    takeLatest(actions.logoutRequest, logout, api),
+    takeLatest(actions.publicAccessRequest, publicAccess, api),
+    takeLatest(actions.saveFCMTokenRequest, saveFCMToken, api),
+    takeLatest(actions.setUserSettings, updateUserLocalSettings),
+  ]);
+}

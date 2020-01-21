@@ -1,0 +1,15 @@
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 0;
+}
+
+.permissionBox {
+  margin-top: auto;
+  padding: 20px;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+  min-width: 80px;
+}
