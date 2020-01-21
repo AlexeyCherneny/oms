@@ -134,8 +134,8 @@ function* deleteUsersPlan(
   }
 }
 
-export default function*(api) {
-  yield all([
+export default function(api) {
+  return all([
     takeLatest(actions.usersPlansRequest, loadUsersPlans, api),
     takeLatest(actions.createUsersPlanRequest, createUsersPlan, api),
     takeLatest(actions.updateUsersPlanRequest, updateUsersPlan, api),

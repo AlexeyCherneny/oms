@@ -103,3 +103,13 @@
     headers:
         content-type: application/json
     file: api/user/fail_get_unauthorized.json
+
+
+### Document API
+- request:
+    url: ^/api/document$
+    method: get
+  response:
+    headers:
+      content-type: application/json
+    file: api/document/get_document_success.json

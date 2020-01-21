@@ -52,8 +52,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     updatePayment: args => api.put(`payments`, args),
     deletePayment: args => api.delete(`payments`, args),
 
-    fetchDocuments: () => api.get("documents"),
-    updateDocument: args => api.put(`documents/${args.id}`, args)
+    readDocuments: () => api.get("document"),
   };
 };
 

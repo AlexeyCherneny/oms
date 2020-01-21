@@ -37,11 +37,11 @@ const navigationTabs = [
   //   path: "/app/cabinet/payments",
   //   forRoles: [ROLES.HR, ROLES.EMPLOYEE]
   // },
-  // {
-  //   title: "Документы",
-  //   path: "/app/cabinet/documents",
-  //   forRoles: [ROLES.HR, ROLES.EMPLOYEE]
-  // }
+  {
+    title: "Документы",
+    path: "/app/cabinet/documents",
+    forRoles: [ROLES.HR]
+  }
 ];
 
 const mapState = ({ authorization }) => ({

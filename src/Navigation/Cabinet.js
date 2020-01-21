@@ -18,8 +18,8 @@ import {
   Home,
   UpdatePayment,
   CreatePayment,
-  PaymentInfo
-  // Documents,
+  PaymentInfo,
+  Documents,
 } from "../pages";
 
 const { Content } = Layout;
@@ -94,10 +94,10 @@ const Cabinet = () => (
           />
         </Route>
 
-        {/* <Route path="/app/cabinet/documents">
+        <Route path="/app/cabinet/documents">
           <Documents />
-          <Route path="/app/cabinet/documents" component={Documents} />
-        </Route> */}
+          {/* <Route path="/app/cabinet/documents" component={Documents} /> */}
+        </Route>
 
         <Redirect to="/app/cabinet/" />
       </Switch>
