@@ -9,10 +9,10 @@ import applicationReducer from "./application";
 import usersPlanReducer from "./usersPlan";
 import eventsReducer from "./events";
 import paymentsReducer from "./payments";
+import documentReducer from "./documents";
 
 const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
 const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
-const documentReducer = createReducer(createCRUDReducer("document"), CRUDState);
 
 const createRootReducer = history =>
   combineReducers({

@@ -53,7 +53,10 @@ const create = (baseURL = `${hostURL}api/`) => {
     updatePayment: args => api.put(`payments`, args),
     deletePayment: args => api.delete(`payments`, args),
 
-    readDocuments: () => api.get("document")
+    readDocuments: () => api.get('documents'),
+    createDocument: args => api.post('documents', args),
+    updateDocument: ({ id, params }) => api.patch(`documents/${id}`, params),
+    deleteDocument: id => api.delete(`documents/${id}`),
   };
 };
 

@@ -39,6 +39,16 @@
       "parent_document": null,
       "createdAt": "",
       "updatedAt": ""
+    },
+    {
+      "id": 4,
+      "title": "Документ 4",
+      "content": "<p>Тело документа 4</p>",
+      "access": [],
+      "private": false,
+      "parent_document": 1,
+      "createdAt": "",
+      "updatedAt": ""
     }
   ],
   "errors": [],

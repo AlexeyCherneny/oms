@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": 0,
+    "title": "Документ 0",
+    "content": "<p>Тело документа 0</p>",
+    "access": [],
+    "private": false,
+    "parent_document": null,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

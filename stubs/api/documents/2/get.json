@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": 2,
+    "title": "Документ 2",
+    "content": "<p>Тело документа 2</p>",
+    "access": [],
+    "private": false,
+    "parent_document": 1,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

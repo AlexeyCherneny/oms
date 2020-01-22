@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Avatar, Dropdown } from "antd";
+import { Menu, Avatar } from "antd";
 import cn from 'classnames';
 
 import * as styles from './styles/UserTab.module.scss';

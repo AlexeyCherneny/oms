@@ -47,7 +47,7 @@ const navigationTabs = [
   {
     title: "Документы",
     path: "/app/cabinet/documents",
-    icon: "book",
+    icon: "snippets",
     forRoles: [ROLES.HR]
   }
 ];
@@ -69,7 +69,6 @@ const HeaderContainer = compose(
       tab.forRoles.some(forRole =>
         roles.some(userRole => userRole === forRole)
       );
-
     const tabs = navigationTabs.filter(isTabAvailable);
     const activeTab = tabs.map(tab => tab.path).find(item => item.includes(location.pathname));
 

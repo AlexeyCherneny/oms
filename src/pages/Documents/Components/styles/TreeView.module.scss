@@ -1,13 +1,34 @@
-.treeElement {
-  position: relative;
+.container {
+  background: #fff; 
+  display: flex; 
+  flex-direction: column;
+  height: 100%;
+
+  .nodeTitle {
+    padding: 2px 0;
+  }
+
+  li.treeNode {
+    padding: 2px 0;
+
+    &:first-child {
+      padding-top: 4px;
+    }
+  }
+}
+
+.treeHader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #001529;
+
+  .title {
+    margin: 10px;
+    color: rgba(255, 255, 255, .65);
+  }
 }
 
 .btnWrapper {
-  position: absolute;
-  top: 0;
-  right: -65px;
-}
-
-.btn {
-  margin-left: 5px;
+  margin-left: 10px;
 }

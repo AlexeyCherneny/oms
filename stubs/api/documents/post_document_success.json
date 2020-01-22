@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": 5,
+    "title": "Созданный документ",
+    "content": "<p>If you are reading this text, creating document was completed successful.</p>",
+    "access": [],
+    "private": false,
+    "parent_document": null,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579268196
+  }
+}
