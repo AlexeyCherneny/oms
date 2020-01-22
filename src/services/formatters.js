@@ -1,6 +1,20 @@
 export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
 
+export const formatBirthdayForCalendar = arrayOfBirthday => {
+  const year = new Date().getFullYear();
+
+  return arrayOfBirthday.map(birthday => {
+    const startDate = birthday.date
+      .split("/")
+      .reverse()
+      .slice(1, 3);
+    const formattedStartDate = [year, ...startDate].join("-");
+    const title = `День рождения: ${birthday.name}`;
+    return { ...birthday, start: formattedStartDate, title };
+  });
+};
+
 export const formatCurrency = (num, curr) => {
   const count = parseFloat(num).toLocaleString("de-De", {
     minimumFractionDigits: 0,
