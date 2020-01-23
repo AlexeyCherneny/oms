@@ -1,38 +1,21 @@
-import { put, delay } from "redux-saga/effects";
-import { get } from "lodash";
+import { put, delay, call } from "redux-saga/effects";
+import { get, defaultTo } from "lodash";
 
 import { handleSagaError } from "./utils";
 import actions from "../actions";
-
-const salaries = [
-  { id: 1, userId: 2, value: 100, currency: "USD", date: "2019-01-01" },
-  { id: 2, userId: 2, value: 140, currency: "USD", date: "2019-02-01" },
-  { id: 3, userId: 2, value: 160, currency: "USD", date: "2019-03-01" },
-  { id: 4, userId: 2, value: 200, currency: "USD", date: "2019-04-01" },
-  { id: 5, userId: 2, value: 200, currency: "USD", date: "2019-05-01" },
-  { id: 6, userId: 2, value: 303, currency: "USD", date: "2019-06-01" },
-  { id: 7, userId: 2, value: 303, currency: "USD", date: "2019-07-01" },
-  { id: 8, userId: 2, value: 500, currency: "USD", date: "2019-08-01" },
-  { id: 9, userId: 2, value: 500, currency: "USD", date: "2019-09-01" },
-  { id: 10, userId: 2, value: 500, currency: "USD", date: "2019-10-01" }
-];
 
 function* createSalary(
   api,
   { payload, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    // const response = yield call(api.createSalary, payload);
+    const response = yield call(api.createSalary, payload);
 
-    const response = {
-      status: 200,
-      data: { id: 10, value: 10, currency: "USD", date: "2020-01-01" }
-    };
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
 
-      yield put(actions.createSalarySuccess(response.data));
-      if (meta.onSuccess) meta.onSuccess(response.data);
+      yield put(actions.createSalarySuccess(response.data.data));
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;
     }
@@ -49,19 +32,13 @@ function* readSalaries(
   { payload = {}, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    // const search = defaultTo(payload.search, "");
-    // const response = yield call(api.readSalaries, { search });
-
-    const response = {
-      status: 200,
-      data: salaries
-    };
+    const response = yield call(api.readSalaries);
 
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
 
-      yield put(actions.salariesSuccess(response.data));
-      if (meta.onSuccess) meta.onSuccess(response.data);
+      yield put(actions.salariesSuccess(response.data.data));
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;
     }
@@ -78,12 +55,7 @@ function* updateSalary(
   { payload, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    // const response = yield call(api.updateSalary, payload);
-
-    const response = {
-      status: 200,
-      data: { id: 1, value: 10, currency: "USD", date: "2020-01-01" }
-    };
+    const response = yield call(api.updateSalary, payload);
 
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
@@ -91,10 +63,10 @@ function* updateSalary(
       yield put(
         actions.updateSalarySuccess({
           id: payload.id,
-          item: response.data
+          item: response.data.data
         })
       );
-      if (meta.onSuccess) meta.onSuccess(response.data);
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;
     }
@@ -113,18 +85,13 @@ function* deleteSalary(
   { payload, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    // const response = yield call(api.deleteSalary, payload);
-
-    const response = {
-      status: 200,
-      data: { id: 1, value: 10, currency: "USD", date: "2020-01-01" }
-    };
+    const response = yield call(api.deleteSalary, payload);
 
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
 
       yield put(actions.deleteSalarySuccess(payload));
-      if (meta.onSuccess) meta.onSuccess(response.data);
+      if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;
     }

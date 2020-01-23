@@ -42,17 +42,18 @@ const create = (baseURL = `${hostURL}api/`) => {
     updateEvent: args => api.put(`events/${args.id}`, args),
     deleteEvent: args => api.delete(`events/${args.id}`),
 
-    createSalary: ({ params }) => api.post(`salaries`, params),
-    readSalaries: ({ search }) => api.get(`salaries${search}`),
-    updateSalary: ({ id, params }) => api.put(`salaries/${id}`, params),
-    deleteSalary: id => api.delete(`salaries/${id}`),
+    createSalary: ({ params }) => api.post(`salary`, params),
+    readSalary: id => api.get(`salary/${id}`),
+    readSalaries: () => api.get(`salary`),
+    updateSalary: ({ id, params }) => api.put(`salary/${id}`, params),
+    deleteSalary: id => api.delete(`salary/${id}`),
 
     fetchPayments: query => api.get(`payments${query ? query : ""}`),
     createPayment: args => api.post(`payments`, args),
     updatePayment: args => api.put(`payments`, args),
     deletePayment: args => api.delete(`payments`, args),
 
-    readDocuments: () => api.get("document"),
+    readDocuments: () => api.get("document")
   };
 };
 

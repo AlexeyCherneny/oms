@@ -5,9 +5,8 @@
     post: email=hr%40gmail.com&password=123456
   response:
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/login/success_hr.json
-
 
 - request:
     url: ^/api/login$
@@ -15,9 +14,8 @@
     post: email=user0%40gmail.com&password=Asd123456
   response:
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/login/success_user.json
-
 
 - request:
     url: ^/api/login$
@@ -26,9 +24,8 @@
   response:
     status: 400
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/login/fail_wrong_password.json
-
 
 - request:
     url: ^/api/login$
@@ -36,59 +33,54 @@
   response:
     status: 400
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/login/fail_not_found.json
-
 
 ### USER API
 - request:
     url: ^/api/user$
     method: GET
-    headers: 
+    headers:
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
   response:
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/user/success_get.json
-
 
 - request:
     url: ^/api/user$
     method: PUT
-    headers: 
+    headers:
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
   response:
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/user/success_put.json
-
 
 - request:
     url: ^/api/user/(35786a62-700a-49de-9c35-e5dd96e831e4|c4397d7c-8f8d-4b61-a760-f05f983b7144|74523e04-debe-47f1-a90a-5fec3f0cc75c|d0e93a07-b99c-4f69-8af9-3cfdba5229ca|30b582c5-11ed-4d4b-96c1-e4edda4f8a0f)$
     method: GET
-    headers: 
+    headers:
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
   response:
     - headers:
         content-type: application/json
       file: api/user/<% url[1] %>/get.json
 
-
 - request:
     url: ^/api/user/(35786a62-700a-49de-9c35-e5dd96e831e4|c4397d7c-8f8d-4b61-a760-f05f983b7144|74523e04-debe-47f1-a90a-5fec3f0cc75c|d0e93a07-b99c-4f69-8af9-3cfdba5229ca|30b582c5-11ed-4d4b-96c1-e4edda4f8a0f)$
     method: PATCH
-    headers: 
+    headers:
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
   response:
     - headers:
         content-type: application/json
       file: api/user/<% url[1] %>/patch.json
 
-
 - request:
     url: ^/api/user/([\da-zA-Z\-]+)$
     method: GET
-    headers: 
+    headers:
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9
   response:
     - headers:
@@ -96,14 +88,12 @@
       code: 404
       file: api/user/fail_get_not_found.json
 
-
 - request:
     url: ^/api/user
   response:
     headers:
-        content-type: application/json
+      content-type: application/json
     file: api/user/fail_get_unauthorized.json
-
 
 ### Document API
 - request:
@@ -113,3 +103,44 @@
     headers:
       content-type: application/json
     file: api/document/get_document_success.json
+
+### Salary API
+- request:
+    url: ^/api/salary$
+    method: get
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/get_salaries_success.json
+
+- request:
+    url: ^/api/salary/.$
+    method: get
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/get_user_salary_success.json
+
+- request:
+    url: ^/api/salary/.$
+    method: put
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/update_salary_success.json
+
+- request:
+    url: ^/api/salary/.$
+    method: delete
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/delete_salary_success.json
+
+- request:
+    url: ^/api/salary
+    method: post
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/create_salary_success.json
