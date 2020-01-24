@@ -1,58 +1,68 @@
-import { compose, withProps } from "recompose";
+import { compose, withProps, withHandlers } from "recompose";
 import { connect } from "react-redux";
 import { get, defaultTo } from "lodash";
 import { push } from "connected-react-router";
 import { withRouter } from "react-router-dom";
 import qs from "qs";
-import moment from "moment";
 
+import actions from "../../../store/actions";
+import { programDateFormat } from "../../../services/formatters";
 import Filter from "../Components/Filter";
 
 const mapState = ({ users }) => ({ users });
 
-const mapDispatch = { push };
+const mapDispatch = { push, readSalaries: actions.salariesRequest };
 
 const FilterContainer = compose(
   connect(mapState, mapDispatch),
   withRouter,
-  withProps(({ users, location, push }) => {
+  withHandlers({
+    updateQuery: ({ history }) => search =>
+      history.push({ pathName: "salaries", search }),
+
+    handleDateChange: ({
+      readSalaries,
+      history,
+      location
+    }) => name => value => {
+      const queryObject = qs.parse(location.search, {
+        ignoreQueryPrefix: true
+      });
+
+      queryObject[name] = value.format(programDateFormat);
+      const query = qs.stringify(queryObject);
+
+      history.push({ pathName: "salaries", search: query });
+
+      readSalaries({ search: `?${query}` });
+    },
+    handleUsersChange: ({
+      readSalaries,
+      history,
+      location
+    }) => name => value => {
+      const queryObject = qs.parse(location.search, {
+        ignoreQueryPrefix: true
+      });
+
+      queryObject[name] = value;
+      const query = qs.stringify(queryObject);
+
+      history.push({ pathName: "salaries", search: query });
+
+      readSalaries({ search: `?${query}` });
+    }
+  }),
+  withProps(({ users, location }) => {
     const usersOptions = defaultTo(get(users, "data", []), []).map(user => ({
-      label: `${user.first_name} ${user.last_name}`,
-      value: String(user.id)
+      label: `${user.first_name[0]}. ${user.last_name}`,
+      value: String(user.uuid)
     }));
 
     const searchObject = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-    const handleChange = search => {
-      push({
-        pathName: "salaries",
-        search
-      });
-    };
-
-    const handleReset = () => {
-      push({
-        pathName: "salaries",
-        search: ""
-      });
-    };
-
-    const handleDateChange = name => value => {
-      searchObject[name] = moment(value).format("YYYY-MM-DD");
-      handleChange(qs.stringify(searchObject));
-    };
-
-    const handleSelectChange = name => value => {
-      searchObject[name] = value;
-
-      handleChange(qs.stringify(searchObject));
-    };
-
     return {
       usersOptions,
-      handleDateChange,
-      handleSelectChange,
-      handleReset,
       values: searchObject
     };
   })

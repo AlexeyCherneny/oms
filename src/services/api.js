@@ -44,7 +44,7 @@ const create = (baseURL = `${hostURL}api/`) => {
 
     createSalary: ({ params }) => api.post(`salary`, params),
     readSalary: id => api.get(`salary/${id}`),
-    readSalaries: () => api.get(`salary`),
+    readSalaries: ({ search }) => api.get(`salary${search}`),
     updateSalary: ({ id, params }) => api.put(`salary/${id}`, params),
     deleteSalary: id => api.delete(`salary/${id}`),
 

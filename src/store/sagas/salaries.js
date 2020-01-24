@@ -32,7 +32,8 @@ function* readSalaries(
   { payload = {}, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const response = yield call(api.readSalaries);
+    const search = defaultTo(payload.search, "");
+    const response = yield call(api.readSalaries, { search });
 
     if (/200|201|204/.test(response.status)) {
       yield delay(1000);
