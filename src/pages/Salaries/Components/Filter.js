@@ -1,52 +1,64 @@
 import React from "react";
-import { Card, Select, DatePicker, Form, Button } from "antd";
+import { Select, DatePicker, Form, Row, Col } from "antd";
 import moment from "moment";
 
+import { displayDateFormat } from "../../../services/formatters";
+
 const Filter = props => (
-  <Card title="Фильтр">
-    <Form.Item label="Пользователи" style={{ marginBottom: 0 }}>
-      <Select
-        mode="multiple"
-        style={{ width: "100%" }}
-        onChange={props.handleSelectChange("users")}
-        placeholder="Работники"
-        value={props.values.users}
-      >
-        {props.usersOptions.map(option => (
-          <Select.Option value={option.value} key={option.value}>
-            {option.label}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-    <Form.Item label="Дата начала" style={{ marginBottom: 0 }}>
-      <DatePicker.MonthPicker
-        format={["YYYY-MM-DD"]}
-        style={{ width: "100%" }}
-        onChange={props.handleDateChange("start_date")}
-        placeholder="Начальная дата"
-        value={
-          props.values.start_date
-            ? moment(props.values.start_date, "YYYY-MM-DD")
-            : null
-        }
-      />
-    </Form.Item>
-    <Form.Item label="Дата окончания" style={{ marginBottom: 10 }}>
-      <DatePicker.MonthPicker
-        format={["YYYY-MM-DD"]}
-        style={{ width: "100%" }}
-        onChange={props.handleDateChange("end_date")}
-        placeholder="Конечная дата"
-        value={
-          props.values.end_date
-            ? moment(props.values.end_date, "YYYY-MM-DD")
-            : null
-        }
-      />
-    </Form.Item>
-    <Button onClick={props.handleReset}>Сбросить</Button>
-  </Card>
+  <Form layout="inline">
+    <Row>
+      <Col>
+        <Form.Item label="C" style={{ marginBottom: 0 }}>
+          <DatePicker.MonthPicker
+            format={[displayDateFormat]}
+            style={{ width: 130 }}
+            size="small"
+            onChange={props.handleDateChange("startDate")}
+            placeholder="Начальная дата"
+            value={
+              props.values.startDate
+                ? moment(props.values.startDate, "YYYY-MM-DD")
+                : null
+            }
+          />
+        </Form.Item>
+        <Form.Item label="По" style={{ marginBottom: 0 }}>
+          <DatePicker.MonthPicker
+            format={[displayDateFormat]}
+            style={{ width: 130 }}
+            size="small"
+            onChange={props.handleDateChange("endDate")}
+            placeholder="Конечная дата"
+            value={
+              props.values.endDate
+                ? moment(props.values.endDate, "YYYY-MM-DD")
+                : null
+            }
+          />
+        </Form.Item>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form.Item label="Пользователи" style={{ marginBottom: 0 }}>
+          <Select
+            mode="multiple"
+            onChange={props.handleUsersChange("users")}
+            placeholder="Работники"
+            size="small"
+            style={{ width: 226 }}
+            value={props.values.users}
+          >
+            {props.usersOptions.map(option => (
+              <Select.Option value={option.value} key={option.value}>
+                {option.label}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Col>
+    </Row>
+  </Form>
 );
 
 export default Filter;

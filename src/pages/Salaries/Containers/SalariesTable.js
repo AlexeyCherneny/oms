@@ -2,7 +2,12 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, withProps } from "recompose";
 import { get } from "lodash";
+import moment from "moment";
 
+import {
+  displayDateFormat,
+  programDateFormat
+} from "../../../services/formatters";
 import selectors from "../../../store/selectors";
 import actions from "../../../store/actions";
 import SalariesTable from "../Components/SalariesTable";
@@ -37,6 +42,7 @@ const SalariesTableContainer = compose(
 
       return {
         ...salary,
+        date: moment(salary.date, programDateFormat).format(displayDateFormat),
         full_name: fullName,
         amount: amount
       };

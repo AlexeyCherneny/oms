@@ -47,6 +47,7 @@ const navigationTabs = [
   {
     title: "Документы",
     path: "/app/cabinet/documents",
+    icon: "book",
     forRoles: [ROLES.HR]
   }
 ];

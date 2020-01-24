@@ -12,7 +12,11 @@ const SalariesPage = props => {
       <Row gutter={24} type="flex" justify="space-between">
         <Col span={4}></Col>
         <Col span={16} style={{ minWidth: 540 }}>
-          <Card title="Зарплаты">
+          <Card
+            title="Зарплаты"
+            extra={<Filter />}
+            headStyle={{ alignItems: "center" }}
+          >
             <div style={{ margin: "auto", width: "fit-content" }}>
               <LineChart width={700} height={400} data={props.chartData}>
                 <XAxis dataKey="date" />
@@ -27,9 +31,7 @@ const SalariesPage = props => {
             </div>
           </Card>
         </Col>
-        <Col span={4}>
-          <Filter />
-        </Col>
+        <Col span={4}></Col>
       </Row>
 
       <Row

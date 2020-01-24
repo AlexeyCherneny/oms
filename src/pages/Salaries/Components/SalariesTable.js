@@ -24,12 +24,6 @@ const SalaryActions = props => {
         loading={isUpdating}
         style={{ marginRight: 8 }}
       />
-      {/* <Button
-        onClick={() => handleSalaryInfo(salary.id)}
-        disabled={isDisabled}
-        icon="info-circle"
-        style={{ marginRight: 8 }}
-      /> */}
       <Button
         onClick={() => handleSalaryDelete(salary.id)}
         disabled={isDisabled}
@@ -46,6 +40,12 @@ const staticColumns = [
     dataIndex: "full_name",
     key: "full_name",
     align: "let"
+  },
+  {
+    title: "Месяц",
+    dataIndex: "date",
+    key: "date",
+    align: "center"
   },
   {
     title: "Сумма",

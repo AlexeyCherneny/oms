@@ -1,9 +1,13 @@
-import { compose, withProps, lifecycle } from "recompose";
+import { compose, withProps, lifecycle, withHandlers } from "recompose";
 import { connect } from "react-redux";
 import qs from "qs";
 import { withRouter } from "react-router-dom";
-// import moment from "moment";
+import moment from "moment";
 
+import {
+  // displayDateFormat,
+  programDateFormat
+} from "../../../services/formatters";
 import Authenticated from "../../../Components/HOC/Authenticated";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
@@ -11,13 +15,13 @@ import Salaries from "../Components";
 import { matchEntities, mergeObjects } from "../../../services/chartUtils";
 
 const mapState = state => ({
-  usersList: state.users.data ? state.users.data : [],
+  users: selectors.getUsers(state),
   salaries: selectors.getSalaries(state)
 });
 
 const mapDispatch = {
-  fetchUsers: actions.usersRequest,
-  fetchSalaries: actions.salariesRequest
+  readUsers: actions.usersRequest,
+  readSalaries: actions.salariesRequest
 };
 
 const getFullName = user => `${user.first_name} ${user.last_name}`;
@@ -26,38 +30,23 @@ const SalariesContainer = compose(
   Authenticated,
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ usersList, salaries, history, location }) => {
+  withProps(({ users, salaries, history, location }) => {
     const values = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-    let users = usersList;
-    if (values.users && Array.isArray(usersList)) {
-      users = usersList.filter(user => values.users.includes(String(user.id)));
-    }
+    const filteredUsers = users.filter(
+      user => values.users && values.users.includes(String(user.uuid))
+    );
 
-    const chartLines = users.map(user => ({
+    const chartLines = filteredUsers.map(user => ({
       dataKey: getFullName(user),
       type: "stepAfter",
       stroke: "#8331d8"
     }));
 
-    // let startDate = moment()
-    //   .startOf("month")
-    //   .subtract(6, "month");
-    // if (values.start_date) {
-    //   startDate = moment(values.start_date).startOf("month");
-    // }
-
-    // let endDate = moment()
-    //   .startOf("month")
-    //   .add(6, "month");
-    // if (values.end_date) {
-    //   endDate = moment(values.end_date).startOf("month");
-    // }
-
     const usersMatchSalaries = matchEntities(
-      users,
+      filteredUsers,
       salaries,
-      (user, salary) => user.id === salary.userId,
+      (user, salary) => user.uuid === salary.userId,
       (user, salary) => ({
         [`${getFullName(user)}`]: salary.value,
         date: salary.date
@@ -73,12 +62,57 @@ const SalariesContainer = compose(
       handleCreate: () => history.push(`salaries/create`)
     };
   }),
+  withHandlers({
+    buildQuery: ({ location }) => () => {
+      const params = qs.parse(location.search, { ignoreQueryPrefix: true });
+
+      let startDate = moment()
+        .startOf("month")
+        .subtract(6, "month")
+        .format(programDateFormat);
+      if (
+        params.startDate &&
+        moment(params.startDate, "programDateFormat").isValid()
+      ) {
+        startDate = params.startDate;
+      }
+
+      let endDate = moment()
+        .startOf("month")
+        .add(6, "month")
+        .format(programDateFormat);
+      if (
+        params.endDate &&
+        moment(params.endDate, "programDateFormat").isValid()
+      ) {
+        endDate = params.endDate;
+      }
+
+      let users = [];
+      if (params.users && Array.isArray(params.users)) {
+        users = params.users;
+      }
+
+      return qs.stringify({
+        startDate,
+        endDate,
+        users
+      });
+    }
+  }),
   lifecycle({
     componentDidMount() {
-      const { fetchUsers, fetchSalaries } = this.props;
+      const { readUsers, readSalaries, buildQuery, history } = this.props;
 
-      fetchUsers();
-      fetchSalaries();
+      const query = buildQuery();
+
+      history.push({
+        pathname: "salaries",
+        search: query
+      });
+
+      readUsers();
+      readSalaries({ search: `?${query}` });
     }
   })
 )(Salaries);
