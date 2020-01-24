@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:stub": "npm run stub & npm start -- --stubs",
+    "start:stub": "concurrently \"npm run stub\"  \"npm run start -- --stubs\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^5.0.2",
     "stubby": "^4.1.1"
   }
 }

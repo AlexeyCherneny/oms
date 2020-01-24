@@ -9,7 +9,10 @@ import actions from "../../../store/actions";
 import { programDateFormat } from "../../../services/formatters";
 import Filter from "../Components/Filter";
 
-const mapState = ({ users }) => ({ users });
+const mapState = ({ users, authorization }) => ({
+  users,
+  user: authorization.user
+});
 
 const mapDispatch = { push, readSalaries: actions.salariesRequest };
 

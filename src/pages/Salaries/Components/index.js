@@ -3,10 +3,12 @@ import { Card, Row, Col, Button } from "antd";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
 import SalariesTable from "../Containers/SalariesTable";
-
+import { ROLES } from "../../../services/constants";
 import Filter from "../Containers/Filter";
 
 const SalariesPage = props => {
+  const isHR = props.user.roles.includes(ROLES.HR);
+
   return (
     <div>
       <Row gutter={24} type="flex" justify="space-between">
@@ -43,16 +45,17 @@ const SalariesPage = props => {
         <Col span={4} />
         <Col span={16} style={{ minWidth: 540 }}>
           <Card>
-            <Row
-              type="flex"
-              justify="end"
-              style={{ marginBottom: 30, minHeight: 32 }}
-            >
-              <Col>
-                <Button onClick={props.handleCreate}>Создать</Button>
-              </Col>
-            </Row>
-
+            {isHR && (
+              <Row
+                type="flex"
+                justify="end"
+                style={{ marginBottom: 30, minHeight: 32 }}
+              >
+                <Col>
+                  <Button onClick={props.handleCreate}>Создать</Button>
+                </Col>
+              </Row>
+            )}
             <SalariesTable />
           </Card>
         </Col>
