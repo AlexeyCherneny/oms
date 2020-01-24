@@ -1,5 +1,5 @@
 import React from "react";
-import {  Card, Row, Col, Typography, Button } from "antd";
+import { Card, Row, Col, Typography, Button } from "antd";
 
 import Filter from "../Containers/Filter";
 import PieChart from "../Containers/PieChart";

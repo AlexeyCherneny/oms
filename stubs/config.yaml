@@ -11,7 +11,7 @@
 - request:
     url: ^/api/login$
     method: post
-    post: email=user0%40gmail.com&password=Asd123456
+    post: email=email0%40gmail.com&password=Asd123456
   response:
     headers:
       content-type: application/json
