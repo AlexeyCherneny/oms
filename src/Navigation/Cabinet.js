@@ -28,7 +28,7 @@ const Cabinet = () => (
   <Layout>
     <Header />
 
-    <Content style={{ padding: "50px 30px", minHeight: "100vh" }}>
+    <Content style={{ padding: "50px 30px", height: "100vh" }}>
       <Switch>
         <Route path="/app/cabinet" exact component={Home} />
         <Route path="/app/cabinet/profile" component={Profile} />

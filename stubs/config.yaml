@@ -97,12 +97,66 @@
 
 ### Document API
 - request:
-    url: ^/api/document$
+    url: ^/api/documents$
     method: get
   response:
+    latency: 800
+    code: 200
     headers:
       content-type: application/json
-    file: api/document/get_document_success.json
+    file: api/documents/get_document_success.json
+
+
+- request:
+    url: ^/api/documents$
+    method: post
+  response:
+    latency: 800
+    code: 201
+    headers:
+      content-type: application/json
+    file: api/documents/post_document_success.json
+
+
+- request:
+    url: ^/api/documents/([0-5])$
+    method: delete
+  response:
+    latency: 800
+    headers:
+      content-type: application/json
+    file: api/documents/<% url[1] %>/delete.json
+
+
+- request:
+    url: ^/api/documents/([0-5])$
+    method: patch
+  response:
+    latency: 800
+    headers:
+      content-type: application/json
+    file: api/documents/<% url[1] %>/patch.json
+
+
+- request:
+    url: ^/api/documents/(.+)$
+    method: patch
+  response:
+    latency: 800
+    headers:
+      content-type: application/json
+    code: 404
+
+
+- request:
+    url: ^/api/documents/(.+)$
+    method: delete
+  response:
+    latency: 800
+    headers:
+      content-type: application/json
+    code: 404
+
 
 ### Salary API
 - request:

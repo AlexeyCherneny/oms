@@ -109,3 +109,5 @@ export const loadSettings = () => {
     return null;
   }
 } 
+
+export const testResponse = ({ status }) => /200|201|204/.test(status);

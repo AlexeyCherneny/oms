@@ -1,62 +1,29 @@
+import { createCRUDReducer, CRUDState } from './utils';
 import { createReducer } from "redux-act";
 
-import { tree } from '../../helpers';
 import actions from "../actions";
 
-const initialState = {
-  documentsList: {
-    data: [],
-    isLoading: true,
-    listAsTree: [],
-  },
-};
+const documentsState = {
+  ...CRUDState,
+  currentDocument: null,
+}
 
-const reducer = createReducer(
-  {
-    [actions.documentsListSuccess]: (state, { documents }) => {
-      return {
-        ...state,
-        documentsList: {
-          data: documents,
-          isLoading: false,
-          listAsTree: tree.getTreeFormArr(documents),
-        }
-      };
-    },
-    [actions.documentsListFailure]: state => {
-      return {
-        ...state,
-        documentsList: {
-          data: [],
-          isLoading: false,
-          listAsTree: [],
-        }
-      };
-    },
+const documentsReducer = createReducer({
+  ...createCRUDReducer("document", { 
+    onUpdateDataMap: (data, payload) => data.map(item => item.id !== payload.id ? item : payload),
+    onDeleteDataMap: (data, id) => data.filter(item => item.id !== id),
+  }),
+  [actions.setCurrentDocument]: (state, payload) => ({ 
+    ...state, 
+    currentDocument: payload 
+  }),
+  [actions.editCurrentDocument]: (state, payload) => ({ 
+    ...state, 
+    currentDocument: { 
+      ...state.currentDocument, 
+      ...payload 
+    }
+  }),
+}, documentsState);
 
-    [actions.updateListSuccess]: (state, { document }) => {
-      const newData = [...state.documentsList.data.filter(el => el.id !== document.id), document]
-      return {
-        ...state,
-        documentsList: {
-          data: newData,
-          isLoading: false,
-          listAsTree: tree.getTreeFormArr(newData),
-        }
-      };
-    },
-    [actions.updateListFailure]: (state) => {
-      return {
-        ...state,
-        documentsList: {
-          data: state.documentsList.data,
-          isLoading: false,
-          listAsTree: tree.getTreeFormArr(state.documentsList.data),
-        }
-      };
-    },
-  },
-  initialState
-);
-
-export default reducer;
+export default documentsReducer;

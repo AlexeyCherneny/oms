@@ -71,9 +71,7 @@ const rootSaga = function* root() {
   ]);
 
   // DOCUMENTS SAGAS
-  yield all([
-    takeEvery(actions.documentsRequest, documentsSagas.readDocuments, api)
-  ]);
+  yield fork(documentsSagas, api);
 };
 
 export default rootSaga;

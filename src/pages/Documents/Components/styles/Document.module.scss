@@ -1,4 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  height: 100%;
+  padding: 20px;
+  overflow: hidden;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
+}
+
+.editor {
+  flex: auto;
+  overflow: hidden;
 }

@@ -1,58 +1,100 @@
 import React from "react";
-import { Tree, Button, Icon } from "antd";
+import { Tree, Button, Spin, Typography, Tooltip } from "antd";
+import ContextMenu from "../Components/ContextMenu";
 
 import * as styles from "./styles/TreeView.module.scss";
 
 const { TreeNode } = Tree;
 
-const getTreeNodeTitle = (el, handleCreateNode, handleDeleteNode) => (
-  <div className={styles.treeElement}>
-    <p>{el.data.title}</p>
-    <div className={styles.btnWrapper}>
-      <Button
-        onClick={handleCreateNode}
-        size="small"
-        type="primary"
-        shape="circle"
-        className={styles.btn}
-      >
-        <Icon type="file-add" />
-      </Button>
-
-      <Button
-        onClick={handleDeleteNode}
-        size="small"
-        type="primary"
-        shape="circle"
-        className={styles.btn}
-      >
-        <Icon type="delete" />
-      </Button>
-    </div>
-  </div>
+const getTreeNodeTitle = (el, handleCreate, handleRename, handleDelete) => (
+  <ContextMenu
+    onCreate={() => handleCreate(el)}
+    onRename={() => handleRename(el)}
+    onDelete={() => handleDelete(el)}
+  >
+    <span className={styles.nodeTitle}>{el.title}</span>
+  </ContextMenu>
 );
 
-const renderJSXTree = (tree, handleCreateNode, handleDeleteNode) =>
-  tree.map(el => (
-    <TreeNode
-      title={getTreeNodeTitle(el, handleCreateNode, handleDeleteNode)}
-      key={el.data.id}
-      disabled={el.isDisabled}
-    >
-      {renderJSXTree(el.children, handleCreateNode, handleDeleteNode)}
-    </TreeNode>
-  ));
+const renderJSXTree = (tree, documents, ...args) => 
+  tree.map(el => {
+    const children = documents.filter(doc => doc.parent_document === el.id);
+    return (
+      <TreeNode
+        title={getTreeNodeTitle(el, ...args)}
+        key={String(el.id)}
+        className={styles.treeNode}
+      >
+        {children.length > 0 && renderJSXTree(children, documents, ...args)}
+      </TreeNode>
+    )
+});
+  
 
 const TreeView = ({
-  tree,
+  isLoading,
+  selectedId,
+  expandedKeys,
+  rootChildren,
+  documents,
+  readDocuments,
   handleSelectNode,
-  handleCreateNode,
-  handleDeleteNode
+  handleCreate,
+  handleRename,
+  handleDelete,
 }) => {
+  const treeContainerRef = React.useRef(null);
+  const handleTreeRightClick = ({ event }) => {
+    event.stopPropagation(); 
+    treeContainerRef.current.click();
+  }
+
   return (
-    <Tree onSelect={handleSelectNode}>
-      {renderJSXTree(tree, handleCreateNode, handleDeleteNode)}
-    </Tree>
+    <div className={styles.container}>
+      <div className={styles.treeHader}>
+        <Typography.Text className={styles.title} strong>
+          Документы
+        </Typography.Text>
+        <span>
+          <Tooltip placement="top" title="Создать">
+            <Button 
+              icon="file" 
+              type="link" 
+              onClick={() => handleCreate()}
+            />
+          </Tooltip>
+          <Tooltip placement="top" title="Обновить">
+            <Button 
+              icon="sync"
+              type="link"
+              onClick={() => readDocuments()} 
+            />
+          </Tooltip>
+        </span>
+      </div>
+      <ContextMenu
+        onCreate={() => handleCreate()}
+        hideRename
+        hideDelete
+      >
+        <div style={{ flex: 'auto' }} ref={treeContainerRef}>
+          {isLoading ? (
+            <Spin style={{ paddingTop: 20, width: '100%' }} />
+          ) : (
+            <Tree
+              onSelect={handleSelectNode}
+              selectedKeys={[selectedId]}
+              defaultExpandedKeys={expandedKeys}
+              style={{ margin: 10 }}
+              onRightClick={handleTreeRightClick}
+              showLine
+            >
+              {renderJSXTree(rootChildren, documents, handleCreate, handleRename, handleDelete)}
+            </Tree>
+            )}
+        </div>
+      </ContextMenu>
+    </div>
   );
 };
 
