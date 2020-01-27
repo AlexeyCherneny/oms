@@ -3,7 +3,7 @@
     "id": 2,
     "title": "Документ 2 изм",
     "content": "<p>Измененное тело документа 2</p>",
-    "access": [],
+    "access": "admin",
     "private": false,
     "parent_document": 1,
     "createdAt": "",

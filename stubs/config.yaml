@@ -85,7 +85,7 @@
   response:
     - headers:
         content-type: application/json
-      code: 404
+      status: 404
       file: api/user/fail_get_not_found.json
 
 - request:
@@ -101,22 +101,20 @@
     method: get
   response:
     latency: 800
-    code: 200
+    status: 200
     headers:
       content-type: application/json
     file: api/documents/get_document_success.json
-
 
 - request:
     url: ^/api/documents$
     method: post
   response:
     latency: 800
-    code: 201
+    status: 201
     headers:
       content-type: application/json
     file: api/documents/post_document_success.json
-
 
 - request:
     url: ^/api/documents/([0-5])$
@@ -127,7 +125,6 @@
       content-type: application/json
     file: api/documents/<% url[1] %>/delete.json
 
-
 - request:
     url: ^/api/documents/([0-5])$
     method: patch
@@ -137,26 +134,64 @@
       content-type: application/json
     file: api/documents/<% url[1] %>/patch.json
 
-
 - request:
-    url: ^/api/documents/(.+)$
+    url: ^/api/documents/([\/]+)$
     method: patch
   response:
     latency: 800
     headers:
       content-type: application/json
-    code: 404
-
+    status: 404
 
 - request:
-    url: ^/api/documents/(.+)$
+    url: ^/api/documents/([\/]+)$
     method: delete
   response:
     latency: 800
     headers:
       content-type: application/json
-    code: 404
+    status: 404
 
+### Document access API
+- request:
+    url: ^/api/documents/([0-9])/accesses/([0-9]+)$
+    method: delete
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/documents/accesses/delete_document_access_success.json
+
+- request:
+    url: ^/api/documents/([0-9])/accesses/([0-9]+)$
+    method: patch
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/documents/accesses/<% url[2] %>/patch.json
+
+- request:
+    url: ^/api/documents/([0-9]+)/accesses$
+    method: get
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/documents/accesses/get_document_accesses_success.json
+
+- request:
+    url: ^/api/documents/([0-9]+)/accesses$
+    method: post
+  response:
+    latency: 800
+    status: 201
+    headers:
+      content-type: application/json
+    file: api/documents/accesses/post_document_accesses_success.json
 
 ### Salary API
 - request:

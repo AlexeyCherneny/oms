@@ -3,7 +3,7 @@
     "id": 0,
     "title": "Документ 0",
     "content": "<p>Тело документа 0</p>",
-    "access": [],
+    "access": "member",
     "private": false,
     "parent_document": null,
     "createdAt": "",

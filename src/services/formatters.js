@@ -64,3 +64,5 @@ export const isPermitted = (availableRoles = [], roles = []) =>
   availableRoles.some(availableRole =>
     roles.some(role => availableRole === role)
   );
+
+export const getFullUserName = user => user ? (user.first_name + ' ' + user.last_name) : 'John Dow';

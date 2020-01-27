@@ -102,6 +102,16 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
       }
     },
 
+    [`is${firstUppercase(name)}Creating`]: state => {
+      try {
+        const items = get(state, `${path}`);
+        return items?.isCreating || false;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+    },
+
     [`is${firstUppercase(pluralizedName)}Downloading`]: state => {
       try {
         const items = get(state, `${path}`);

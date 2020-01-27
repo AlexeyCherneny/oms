@@ -1,28 +1,22 @@
-import { compose, withProps, withHandlers, lifecycle } from "recompose";
+import { compose, withProps, withHandlers } from "recompose";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { isEqual } from 'lodash';
+import { get } from 'lodash';
 
 import { tree } from "../../../services/helpers";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
 
 import TreeView from "../Components/TreeView";
-import { BASE_URL } from "../constants";
+import { DeleteModal } from "../Components/Modals";
 
 const mapState = state => ({
-  documents: selectors.getDocuments(state),
   isLoading: selectors.isDocumentsDownloading(state),
 });
 
-const mapDispatch = {
-  setDocument: actions.setCurrentDocument,
-  readDocuments: actions.documentsRequest,
-};
-
 const TreeViewContainer = compose(
   withRouter,
-  connect(mapState, mapDispatch),
+  connect(mapState),
   withProps(({ documents, match }) => {
     const selectedId = match.params.id || '';
     const parentIds = tree.getAllParents(documents, selectedId);
@@ -35,30 +29,64 @@ const TreeViewContainer = compose(
     };
   }),
   withHandlers({
-    handleSetDocument: ({ documents, setDocument }) => id => {
-      const isDocument = id && !documents.find(doc => String(doc.parent_document) === id);
-      const document = (isDocument && documents.find(doc => String(doc.id) === id)) || null;
-      setDocument(document);
-    },
-    handleSelectNode: ({ history }) => documentIds => {
+    handleSelectNode: ({ goToDocument, checkChanges, handleSelectDocument }) => documentIds => {
       const id = documentIds[0] || '';
-      history.push(BASE_URL + (id && `/${id}`));
+      checkChanges(() => {
+        handleSelectDocument(id);
+        goToDocument(id);
+      });
     },
-    handleCreate: ({ openNameModal }) => data => openNameModal(data, true),
-    handleRename: ({ openNameModal }) => data => openNameModal(data),
-    handleDelete: ({ openDeleteModal, selectedId }) => data => openDeleteModal(data, selectedId),
-  }),
-  lifecycle({
-    componentDidMount() {
-      const { selectedId, handleSetDocument } = this.props;
-      handleSetDocument(selectedId);
-    },
-    componentDidUpdate(prevProps) {
-      const { selectedId, documents, handleSetDocument } = this.props;
-      if (selectedId !== prevProps.selectedId || !isEqual(documents, prevProps.documents)) {
-        handleSetDocument(selectedId);
+    handleCreate: ({ openModal }) => selectedDoc => {
+      const document = {
+        title: 'Новый документ',
+        content: '',
+        parent_document: get(selectedDoc, 'id', null),
       }
+
+      return openModal({
+        form: {
+          submitTitle: 'Создать',
+          rejectTitle: 'Отменить',
+          initialValues: document,
+        },
+        title: 'Создать новый документ',
+        type: 'rename',
+        meta: {
+          start: params => actions.createDocumentRequest(params),
+          success: () => actions.createDocumentSuccess(),
+          failure: () => actions.createDocumentFailure()
+        }
+      });
     },
+    handleRename: ({ openModal }) => selectedDoc => openModal({
+      form: {
+        submitTitle: 'Сохранить',
+        rejectTitle: 'Отменить',
+        initialValues: selectedDoc,
+      },
+      title: `Переименовать документ ${selectedDoc.title}`,
+      type: 'rename',
+      meta: {
+        start: params => actions.updateDocumentRequest(params),
+        success: () => actions.updateDocumentSuccess(),
+        failure: () => actions.updateDocumentFailure()
+      }
+    }),
+    handleDelete: ({ openModal, selectedId, goToDocument }) => selectedDoc => openModal({
+      type: "confirm",
+      title: `Удалить документ ${selectedDoc?.title}`,
+      content: DeleteModal,
+      cancelText: "Отменить",
+      okText: "Удалить",
+      meta: {
+        start: () => actions.deleteDocumentRequest(selectedDoc.id, {
+          data: selectedDoc,
+          onSuccess: () => selectedId === String(selectedDoc.id) && goToDocument(),
+        }),
+        success: () => actions.deleteDocumentSuccess(),
+        failure: () => actions.deleteDocumentFailure(),
+      }
+    })
   })
 )(TreeView);
 

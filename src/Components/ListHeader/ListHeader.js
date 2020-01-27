@@ -10,6 +10,15 @@ const Header = props => (
     </Typography.Text>
 
     <span>
+      {props.canEditAccess && (
+        <Tooltip placement="top" title="Настройки доступа">
+          <Button
+            icon="setting"
+            type="link"
+            onClick={props.handleConfig}
+          />
+        </Tooltip>
+      )}
       <Tooltip placement="top" title="Создать">
         <Button icon="file" type="link" onClick={props.handleCreate} />
       </Tooltip>

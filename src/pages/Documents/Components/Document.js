@@ -1,21 +1,29 @@
 import React from "react";
 import ReactQuill from "react-quill";
 import { Button, Typography } from "antd";
+
 import Spinner from '../../../Components/Spinner';
 
 import "react-quill/dist/quill.snow.css";
-
-import * as styles from "./styles/Document.module.scss";
 import "./styles/Document.scss";
+import * as styles from "./styles/Document.module.scss";
 
 const Document = ({ 
-  document,
-  isLoading, 
-  handleEditContent,
+  selectedDocument,
+  isLoading,
+  isOpenEdit,
+  openEdit,
+  closeEdit,
+  openSettings,
   handleSaveDocument,
-  handleClose,
+  closeDocument,
+  canEditDocument,
+  canEditAccess,
+  editedDocument,
+  handleEditContent,
+  isDocument,
 }) => {
-  if (!document) {
+  if (!isDocument) {
     return null;
   }
 
@@ -23,30 +31,62 @@ const Document = ({
     <Spinner className={styles.container} spinning={isLoading} delay={250}>
       <div className={styles.header}>
         <Typography.Title level={2} >
-          {document.title}
+          {selectedDocument.title}
         </Typography.Title>
         <div>
-          <Button 
-            onClick={handleSaveDocument} 
-            icon="save" 
-            shape="circle" 
-          />
-          <Button 
-            onClick={handleClose} 
-            icon="close" 
-            shape="circle" 
-            style={{ marginLeft: 8 }} 
+          {!isOpenEdit && canEditDocument && (
+            <Button
+              onClick={openEdit}
+              icon="edit"
+              shape="circle"
+            />
+          )}
+          {isOpenEdit && (
+            <Button
+              onClick={handleSaveDocument}
+              icon="save"
+              shape="circle"
+            />
+          )}
+          {canEditAccess && !isOpenEdit && (
+              <Button
+                onClick={openSettings}
+                icon="setting"
+                shape="circle"
+                style={{ marginLeft: 8 }}
+              />
+          )}
+          {isOpenEdit && (
+            <Button
+              onClick={closeEdit}
+              icon="rollback"
+              shape="circle"
+              style={{ marginLeft: 8 }}
+            />
+          )}
+          <Button
+            onClick={closeDocument}
+            icon="close"
+            shape="circle"
+            style={{ marginLeft: 8 }}
           />
         </div>
       </div>
       <div className={styles.editor}>
-        <ReactQuill 
-          className="custom-ql-editor" 
-          enable={false} 
-          theme="snow" 
-          value={document.content} 
-          onChange={handleEditContent} 
-        />
+        {isOpenEdit ? (
+          <ReactQuill
+            className="custom-ql-editor"
+            enable={false}
+            theme="snow"
+            value={editedDocument?.content || selectedDocument.content}
+            onChange={handleEditContent}
+          />
+        ) : (
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedDocument.content }}
+              className={styles.content}
+            />
+          )}
       </div>
     </Spinner>
   );

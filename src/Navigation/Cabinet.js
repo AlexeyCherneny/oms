@@ -115,10 +115,10 @@ const Cabinet = () => (
 
         <Route path="/app/cabinet/documents">
           {/* <Documents /> */}
-          <Route path="/app/cabinet/documents/" component={Documents} />
+          <Route path="/app/cabinet/documents" component={Documents} />
         </Route>
 
-        <Redirect to="/app/cabinet/" />
+        <Redirect to="/app/cabinet" />
       </Switch>
     </Content>
   </Layout>

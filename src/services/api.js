@@ -66,7 +66,12 @@ const create = (baseURL = `${hostURL}api/`) => {
     readProjectWork: () => api.get("projectWork"),
     updateProjectWork: ({ id, params }) => api.put(`projectWork/${id}`, params),
 
-    readProjectRates: ({ search }) => api.get(`projectRate${search}`)
+    readProjectRates: ({ search }) => api.get(`projectRate${search}`),
+    
+    readDocumentAccesses: documentId => api.get(`documents/${documentId}/accesses`),
+    createDocumentAccesses: ({ documentId, params }) => api.post(`documents/${documentId}/accesses`, params),
+    updateDocumentAccess: ({ id, documentId, params }) => api.patch(`documents/${documentId}/accesses/${id}`, params),
+    deleteDocumentAccess: ({ id, documentId }) => api.delete(`documents/${documentId}/accesses/${id}`),
   };
 };
 
