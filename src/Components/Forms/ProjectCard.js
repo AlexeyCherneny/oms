@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "antd";
 import { get } from "lodash";
 
-import { Input } from "../FormElements";
+import { InputNumber } from "../FormElements";
 import "./styles/ProjectsCard.scss";
 
 const formItemLayout = {
@@ -14,21 +14,29 @@ const formItemLayout = {
 const getInputs = (initialValues = {}) => ({
   workHours: {
     name: 'workHours',
-    label: "Отработано, ч",
     placeholder: "",
     size: 'small',
     settings: {
       initialValue: get(initialValues, "workHours", 0),
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Отработано, ч",
+    },
+    disabled: initialValues.isLoading || initialValues.isUpdating,
   },
   overtimeHours: {
     name: 'overtimeHours',
-    label: "Переработка, ч",
     placeholder: "",
     size: 'small',
     settings: {
       initialValue: get(initialValues, "overtimeHours", 0),
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Переработка, ч",
+    },
+    disabled: initialValues.isLoading || initialValues.isUpdating,
   }
 });
 
@@ -57,21 +65,19 @@ class ProjectCard extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} className="project-card-form">
-        <Form.Item {...formItemLayout} label={inputs.workHours.label}>
-          <Input
-            form={form}
-            {...inputs.workHours}
-            disabled={isLoading || isUpdating}
-          />
-        </Form.Item>
+        <InputNumber
+          form={form}
+          {...inputs.workHours}
+          positive
+          float
+        />
 
-        <Form.Item {...formItemLayout} label={inputs.overtimeHours.label}>
-          <Input
-            form={form}
-            {...inputs.overtimeHours}
-            disabled={isLoading || isUpdating}
-          />
-        </Form.Item>
+        <InputNumber
+          form={form}
+          {...inputs.overtimeHours}
+          positive
+          float
+        />
 
         <div
           style={{ marginTop: 6, textAlign: "right" }}

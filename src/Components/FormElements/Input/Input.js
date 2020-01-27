@@ -1,16 +1,26 @@
 import React from "react";
-import { Input } from "antd";
+import { Input, Form } from "antd";
 
-class FormInput extends React.Component {
-  render() {
-    return <Input {...this.props} />;
-  }
-}
+const FormInput = React.forwardRef((props, ref) => {
+  return (
+    <Input {...props} ref={ref} />
+  );
+});
 
-const InputWrapper = ({ name, settings, form, ...props } ) =>
-  form.getFieldDecorator(
-    name,
-    settings
-  )(<FormInput {...props} />);
+const InputWrapper = ({
+  form,
+  name,
+  settings,
+  itemProps,
+  ...props
+}) => {
+  const decorateField = form ? form.getFieldDecorator(name, settings) : node => node;
+
+  return (
+    <Form.Item {...itemProps}>
+      {decorateField(<FormInput {...props} />)}
+    </Form.Item>
+  );
+};
 
 export default InputWrapper;

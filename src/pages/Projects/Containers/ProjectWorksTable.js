@@ -52,8 +52,8 @@ const ProjectWorksListContainer = compose(
     handleProjectWorkEdit: ({
       openModal,
       getProjectWorkById
-    }) => projectWorkId => {
-      const projectWork = getProjectWorkById(projectWorkId);
+    }) => ({ uuid }) => {
+      const projectWork = getProjectWorkById(uuid);
 
       return openModal({
         form: {

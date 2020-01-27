@@ -93,5 +93,3 @@ export const isPermitted = (availableRoles = [], roles = []) => {
   return false;
 };
 
-export const getFullUserName = user =>
-  user ? user.first_name + " " + user.last_name : "John Dow";
