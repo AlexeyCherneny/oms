@@ -97,18 +97,28 @@ export const CRUDState = {
   deletingIds: []
 };
 
+const defaultOnUpdateDataMap = (data, payload) => {
+  return updateItemInArray(
+    data,
+    payload,
+    (a, b) => String(a.id) === String(b.id)
+  );
+};
+
+const defaultOnDeleteDataMap = (data, payload) => {
+  return removeItemFromArray(
+    data,
+    payload,
+    (itemA, itemB) => itemA.id !== itemB.id
+  );
+};
+
 export const createCRUDReducer = (
   name,
   {
     onCreateDataMap = addItemToArray,
-    onUpdateDataMap = (data, payload) =>
-      updateItemInArray(
-        data,
-        payload.item,
-        (a, b) => String(a.uuid) === String(b.uuid)
-      ),
-    onDeleteDataMap = (data, payload) =>
-      removeItemFromArray(data, payload, (itemA, itemB) => itemA.uuid !== itemB)
+    onUpdateDataMap = defaultOnUpdateDataMap,
+    onDeleteDataMap = defaultOnDeleteDataMap
   } = {}
 ) => {
   const upperName = name.toUpperCase();
@@ -118,12 +128,16 @@ export const createCRUDReducer = (
   return {
     // CREATE ENTITY ------------------------------------
     // --------------------------------------------------
-    [`CREATE_${upperName}_REQUEST`]: state => {
+    //
+    // payload - null
+    [`CREATE_${upperName}_REQUEST`]: (state, payload) => {
       return {
         ...state,
         isCreating: true
       };
     },
+    //
+    // payload - created item
     [`CREATE_${upperName}_SUCCESS`]: (state, payload) => {
       return {
         ...state,
@@ -132,6 +146,8 @@ export const createCRUDReducer = (
         isCreating: false
       };
     },
+    //
+    // payload - null
     [`CREATE_${upperName}_FAILURE`]: (state, payload) => {
       return {
         ...state,
@@ -147,13 +163,17 @@ export const createCRUDReducer = (
     // --
     // READ ENTITY --------------------------------------
     // --------------------------------------------------
-    [`${pluralizeUpperName}_REQUEST`]: state => {
+    //
+    // payload - null
+    [`${pluralizeUpperName}_REQUEST`]: (state, payload) => {
       return {
         ...state,
 
         isDownloading: true
       };
     },
+    //
+    // payload - array of read items
     [`${pluralizeUpperName}_SUCCESS`]: (state, payload) => {
       return {
         ...state,
@@ -162,6 +182,8 @@ export const createCRUDReducer = (
         isDownloading: false
       };
     },
+    //
+    // payload - null
     [`${pluralizeUpperName}_FAILURE`]: (state, payload) => {
       return {
         ...state,
@@ -178,6 +200,8 @@ export const createCRUDReducer = (
     // --
     // UPDATE ENTITY ------------------------------------
     // --------------------------------------------------
+    //
+    // payload - updated item
     [`UPDATE_${upperName}_REQUEST`]: (state, payload) => {
       return {
         ...state,
@@ -185,6 +209,8 @@ export const createCRUDReducer = (
         updatingIds: addItemToArray(state.updatingIds, payload.id)
       };
     },
+    //
+    // payload - updated item
     [`UPDATE_${upperName}_SUCCESS`]: (state, payload) => {
       return {
         ...state,
@@ -193,11 +219,13 @@ export const createCRUDReducer = (
         updatingIds: removeItemFromArray(state.updatingIds, payload.id)
       };
     },
+    //
+    // payload - id of updating item
     [`UPDATE_${upperName}_FAILURE`]: (state, payload) => {
       return {
         ...state,
 
-        updatingIds: removeItemFromArray(state.updatingIds, payload.id)
+        updatingIds: removeItemFromArray(state.updatingIds, payload)
       };
     },
     // --
@@ -206,6 +234,8 @@ export const createCRUDReducer = (
     // --
     // DELETE ENTITY ------------------------------------
     // --------------------------------------------------
+    //
+    // payload - id of deleting item
     [`DELETE_${upperName}_REQUEST`]: (state, payload) => {
       return {
         ...state,
@@ -213,6 +243,8 @@ export const createCRUDReducer = (
         deletingIds: addItemToArray(state.deletingIds, payload)
       };
     },
+    //
+    // payload - id of deleting item
     [`DELETE_${upperName}_SUCCESS`]: (state, payload) => {
       return {
         ...state,
@@ -221,6 +253,8 @@ export const createCRUDReducer = (
         deletingIds: removeItemFromArray(state.deletingIds, payload)
       };
     },
+    //
+    // payload - id of deleting item
     [`DELETE_${upperName}_FAILURE`]: (state, payload) => {
       return {
         ...state,

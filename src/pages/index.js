@@ -10,6 +10,7 @@ import EditUser from "./EditUser";
 import Home from "./Home";
 import Payments from "./Payments";
 import Documents from "./Documents";
+import Projects from "./Projects";
 import EditSalary from "./EditSalary";
 import CreateSalary from "./CreateSalary";
 import { CreatePayment, UpdatePayment, PaymentInfo } from "./Payment";
@@ -34,5 +35,6 @@ export {
   UpdatePayment,
   PaymentInfo,
   Documents,
-  CreateSalary
+  CreateSalary,
+  Projects
 };

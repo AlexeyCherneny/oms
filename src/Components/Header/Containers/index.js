@@ -49,12 +49,18 @@ const navigationTabs = [
     path: "/app/cabinet/documents",
     icon: "snippets",
     forRoles: [ROLES.HR]
+  },
+  {
+    title: "Проекты",
+    path: "/app/cabinet/projects",
+    icon: "project",
+    forRoles: [ROLES.HR, ROLES.EMPLOYEE]
   }
 ];
 
 const mapState = ({ authorization }) => ({
   roles: get(authorization, "user.roles", []),
-  isMenuCollapsed: get(authorization, 'settings.isMenuCollapsed', false),
+  isMenuCollapsed: get(authorization, "settings.isMenuCollapsed", false)
 });
 
 const mapDispatch = {
@@ -70,13 +76,15 @@ const HeaderContainer = compose(
         roles.some(userRole => userRole === forRole)
       );
     const tabs = navigationTabs.filter(isTabAvailable);
-    const activeTab = tabs.map(tab => tab.path).find(item => item.includes(location.pathname));
+    const activeTab = tabs
+      .map(tab => tab.path)
+      .find(item => item.includes(location.pathname));
 
     return { activeTab, tabs };
   }),
   withHandlers({
-    handleMenuCollapse: ({ isMenuCollapsed, setUserSettings }) => 
-      () => setUserSettings({ isMenuCollapsed: !isMenuCollapsed }),
+    handleMenuCollapse: ({ isMenuCollapsed, setUserSettings }) => () =>
+      setUserSettings({ isMenuCollapsed: !isMenuCollapsed })
   })
 )(Header);
 

@@ -12,6 +12,8 @@ const documentsReducer = createReducer({
   ...createCRUDReducer("document", { 
     onUpdateDataMap: (data, payload) => data.map(item => item.id !== payload.id ? item : payload),
     onDeleteDataMap: (data, id) => data.filter(item => item.id !== id),
+
+    // match: (i1, i2) => i1.id === i2.id,
   }),
   [actions.setCurrentDocument]: (state, payload) => ({ 
     ...state, 
