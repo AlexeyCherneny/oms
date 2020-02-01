@@ -10,7 +10,7 @@ import {
   cleanAuthToken,
   cleanUser,
   setApiAuthorizationHeader,
-  loadSettings, 
+  loadSettings
 } from "./utils";
 
 function* initializeApplication(api, action) {
@@ -37,6 +37,8 @@ function* initializeApplication(api, action) {
 
     if (response.status === 200) {
       yield put(actions.setUser({ user: response.data.data }));
+
+      yield put(actions.usersRequest());
 
       const settings = loadSettings();
       yield put(actions.setUserSettings(settings));
@@ -114,6 +116,6 @@ function* initializeApplication(api, action) {
 
 export default function*(api) {
   yield all([
-    takeLatest(actions.initializeApplicationRequest, initializeApplication, api),
+    takeLatest(actions.initializeApplicationRequest, initializeApplication, api)
   ]);
 }

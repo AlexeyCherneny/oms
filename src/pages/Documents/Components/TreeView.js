@@ -1,6 +1,8 @@
 import React from "react";
-import { Tree, Button, Spin, Typography, Tooltip } from "antd";
+import { Tree, Spin } from "antd";
 import ContextMenu from "../Components/ContextMenu";
+
+import { ListHeader } from "../../../Components";
 
 import * as styles from "./styles/TreeView.module.scss";
 
@@ -16,7 +18,7 @@ const getTreeNodeTitle = (el, handleCreate, handleRename, handleDelete) => (
   </ContextMenu>
 );
 
-const renderJSXTree = (tree, documents, ...args) => 
+const renderJSXTree = (tree, documents, ...args) =>
   tree.map(el => {
     const children = documents.filter(doc => doc.parent_document === el.id);
     return (
@@ -27,9 +29,8 @@ const renderJSXTree = (tree, documents, ...args) =>
       >
         {children.length > 0 && renderJSXTree(children, documents, ...args)}
       </TreeNode>
-    )
-});
-  
+    );
+  });
 
 const TreeView = ({
   isLoading,
@@ -41,45 +42,26 @@ const TreeView = ({
   handleSelectNode,
   handleCreate,
   handleRename,
-  handleDelete,
+  handleDelete
 }) => {
   const treeContainerRef = React.useRef(null);
   const handleTreeRightClick = ({ event }) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     treeContainerRef.current.click();
-  }
+  };
 
   return (
     <div className={styles.container}>
-      <div className={styles.treeHader}>
-        <Typography.Text className={styles.title} strong>
-          Документы
-        </Typography.Text>
-        <span>
-          <Tooltip placement="top" title="Создать">
-            <Button 
-              icon="file" 
-              type="link" 
-              onClick={() => handleCreate()}
-            />
-          </Tooltip>
-          <Tooltip placement="top" title="Обновить">
-            <Button 
-              icon="sync"
-              type="link"
-              onClick={() => readDocuments()} 
-            />
-          </Tooltip>
-        </span>
-      </div>
-      <ContextMenu
-        onCreate={() => handleCreate()}
-        hideRename
-        hideDelete
-      >
-        <div style={{ flex: 'auto' }} ref={treeContainerRef}>
+      <ListHeader
+        title="Документы"
+        handleCreate={handleCreate}
+        handleUpdate={readDocuments}
+      />
+
+      <ContextMenu onCreate={() => handleCreate()} hideRename hideDelete>
+        <div style={{ flex: "auto" }} ref={treeContainerRef}>
           {isLoading ? (
-            <Spin style={{ paddingTop: 20, width: '100%' }} />
+            <Spin style={{ paddingTop: 20, width: "100%" }} />
           ) : (
             <Tree
               onSelect={handleSelectNode}
@@ -89,9 +71,15 @@ const TreeView = ({
               onRightClick={handleTreeRightClick}
               showLine
             >
-              {renderJSXTree(rootChildren, documents, handleCreate, handleRename, handleDelete)}
+              {renderJSXTree(
+                rootChildren,
+                documents,
+                handleCreate,
+                handleRename,
+                handleDelete
+              )}
             </Tree>
-            )}
+          )}
         </div>
       </ContextMenu>
     </div>

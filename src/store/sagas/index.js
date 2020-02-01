@@ -10,7 +10,11 @@ import eventsSagas from "./events";
 import salariesSagas from "./salaries";
 import paymentsSagas from "./payments";
 import documentsSagas from "./documents";
+import projectsSagas from "./projects";
 import usersPlanSagas from "./usersPlan";
+import modalSagas from "./modal";
+import projectWorkSagas from "./projectWork";
+import projectRateSagas from "./projectRate";
 
 const rootSaga = function* root() {
   const api = API.create();
@@ -72,6 +76,18 @@ const rootSaga = function* root() {
 
   // DOCUMENTS SAGAS
   yield fork(documentsSagas, api);
+
+  // PROJECT SAGAS
+  yield fork(projectsSagas, api);
+
+  // PROJECT WORK SAGAS
+  yield fork(projectWorkSagas, api);
+
+  // PROJECT RATE SAGAS
+  yield fork(projectRateSagas, api);
+
+  // MODAL SAGAS
+  yield fork(modalSagas, api);
 };
 
 export default rootSaga;

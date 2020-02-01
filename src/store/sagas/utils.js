@@ -1,5 +1,6 @@
 // import { Sentry } from "react-native-sentry";
 import { put } from "redux-saga/effects";
+import { get } from "lodash";
 
 export function* handleSagaError(error, errorMessage, failureAction) {
   try {
@@ -97,7 +98,7 @@ export const saveSettings = settings => {
     const errorMessage = "Error while saving user settings to local storage";
     handleError(error, errorMessage);
   }
-} 
+};
 
 export const loadSettings = () => {
   try {
@@ -108,6 +109,20 @@ export const loadSettings = () => {
     handleError(error, errorMessage);
     return null;
   }
-} 
+};
+
+export const spreadAction = action => {
+  try {
+    const payload = get(action, "payload", {});
+
+    const onSuccess = get(action, "payload.meta.onSuccess", () => {});
+    const onFailure = get(action, "payload.meta.onFailure", () => {});
+
+    return { payload, onSuccess, onFailure };
+  } catch (err) {
+    console.log("Error while spreading action", err);
+    return {};
+  }
+};
 
 export const testResponse = ({ status }) => /200|201|204/.test(status);

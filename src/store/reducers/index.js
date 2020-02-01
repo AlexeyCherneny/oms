@@ -10,9 +10,19 @@ import usersPlanReducer from "./usersPlan";
 import eventsReducer from "./events";
 import paymentsReducer from "./payments";
 import documentReducer from "./documents";
+import modalReducer from "./modal";
 
 const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
 const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
+const projectReducer = createReducer(createCRUDReducer("project"), CRUDState);
+const projectWorkReducer = createReducer(
+  createCRUDReducer("projectWork"),
+  CRUDState
+);
+const projectRateReducer = createReducer(
+  createCRUDReducer("projectRate"),
+  CRUDState
+);
 
 const createRootReducer = history =>
   combineReducers({
@@ -23,8 +33,12 @@ const createRootReducer = history =>
     salaries: salaryReducer,
     payments: paymentsReducer,
     documents: documentReducer,
-
+    projects: projectReducer,
+    modal: modalReducer,
     usersPlan: usersPlanReducer,
+    projectWorks: projectWorkReducer,
+    projectRate: projectRateReducer,
+
     router: connectRouter(history)
   });
 

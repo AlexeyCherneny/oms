@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import TreeView from "../Containers/TreeView";
 import Document from "../Containers/Document";
 
-import * as styles from './styles/index.module.scss';
+import * as styles from "./styles/index.module.scss";
 
 const DocumentsPage = ({
   isLoading,
@@ -21,15 +21,19 @@ const DocumentsPage = ({
   resetSelectedDoc,
   handleChangeTitle,
   handleSubmit,
-  handleDelete,
+  handleDelete
 }) => {
   return (
     <>
       <Modal
         visible={isOpenNameModal}
-        title={isNewDoc ? 'Создать документ' : `Переименовать ${selectedDoc?.title || ''}` }
+        title={
+          isNewDoc
+            ? "Создать документ"
+            : `Переименовать ${selectedDoc?.title || ""}`
+        }
         cancelText="Отменить"
-        okText={isNewDoc ? 'Создать' : 'Сохранить' }
+        okText={isNewDoc ? "Создать" : "Сохранить"}
         onCancel={closeNameModal}
         onOk={handleSubmit}
         confirmLoading={isLoading}
@@ -42,9 +46,9 @@ const DocumentsPage = ({
       </Modal>
       <Modal
         visible={isOpenDeleteModal}
-        title={`Удалить ${selectedDoc?.title || ''}`}
+        title={`Удалить ${selectedDoc?.title || ""}`}
         cancelText="Отменить"
-        okText={'Удалить'}
+        okText={"Удалить"}
         onCancel={closeDeleteModal}
         onOk={handleDelete}
         confirmLoading={isLoading}
@@ -53,13 +57,15 @@ const DocumentsPage = ({
         afterClose={resetSelectedDoc}
         destroyOnClose
       >
-        <span className={styles.iconConfirm}><Icon type="question-circle" /></span>
+        <span className={styles.iconConfirm}>
+          <Icon type="question-circle" />
+        </span>
         Вы действительно желаете удалить документ?
       </Modal>
-      <Layout style={{ height: '100%', maxWidth: 1280, margin: 'auto' }}>
+      <Layout style={{ height: "100%", maxWidth: 1280, margin: "auto" }}>
         <Layout.Sider width={300} style={{ marginRight: 30 }}>
           <Route path="/app/cabinet/documents/:id?">
-            <TreeView  
+            <TreeView
               openNameModal={openNameModal}
               openDeleteModal={openDeleteModal}
             />

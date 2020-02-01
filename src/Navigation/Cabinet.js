@@ -2,7 +2,10 @@ import React from "react";
 import { Layout } from "antd";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import { Header } from "../Components";
+import Project from "../pages/Projects/Containers/Project";
+import ProjectUsers from "../pages/Projects/Containers/ProjectUsers";
+import ProjectUser from "../pages/Projects/Containers/ProjectUser";
+import { Header, Modal } from "../Components";
 import {
   Users,
   UsersPlan,
@@ -20,12 +23,14 @@ import {
   CreatePayment,
   PaymentInfo,
   Documents,
+  Projects
 } from "../pages";
 
 const { Content } = Layout;
 
 const Cabinet = () => (
   <Layout>
+    <Modal />
     <Header />
 
     <Content style={{ padding: "50px 30px", height: "100vh" }}>
@@ -62,12 +67,26 @@ const Cabinet = () => (
               <Users />
               <Route path="/app/cabinet/users/create" component={CreateUser} />
               <Route path="/app/cabinet/users/:id/info" component={UserInfo} />
-              <Route
-                path="/app/cabinet/users/:id/edit"
-                component={EditUser}
-              />
+              <Route path="/app/cabinet/users/:id/edit" component={EditUser} />
             </Route>
           </Switch>
+        </Route>
+
+        <Route path="/app/cabinet/projects/:projectId?">
+          <Projects>
+            <Route path="/app/cabinet/projects/:projectId">
+              <Project>
+                <Route path="/app/cabinet/projects/:projectId/users/:userId?">
+                  <ProjectUsers>
+                    <Route
+                      path="/app/cabinet/projects/:projectId/users/:userId"
+                      component={ProjectUser}
+                    />
+                  </ProjectUsers>
+                </Route>
+              </Project>
+            </Route>
+          </Projects>
         </Route>
 
         <Route path="/app/cabinet/salaries">
@@ -95,8 +114,8 @@ const Cabinet = () => (
         </Route>
 
         <Route path="/app/cabinet/documents">
-          <Documents />
-          {/* <Route path="/app/cabinet/documents" component={Documents} /> */}
+          {/* <Documents /> */}
+          <Route path="/app/cabinet/documents/" component={Documents} />
         </Route>
 
         <Redirect to="/app/cabinet/" />

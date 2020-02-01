@@ -6,11 +6,20 @@ const salariesSelectors = createCRUDSelectors("salary", "salaries");
 const usersSelectors = createCRUDSelectors("user", "users");
 const usersPlanSelectors = createCRUDSelectors("usersPlan");
 const documentSelectors = createCRUDSelectors("document", "documents");
+const projectSelectors = createCRUDSelectors("project", "projects");
+const projectWorksSelectors = createCRUDSelectors(
+  "projectWork",
+  "projectWorks"
+);
+const projectRateSelectors = createCRUDSelectors("projectRate", "projectRate");
 
 export default {
   ...salariesSelectors,
   ...paymentsSelectors,
   ...usersSelectors,
   ...usersPlanSelectors,
-  ...documentSelectors
+  ...projectSelectors,
+  ...documentSelectors,
+  ...projectWorksSelectors,
+  ...projectRateSelectors
 };

@@ -198,3 +198,81 @@
     headers:
       content-type: application/json
     file: api/salaries/create_salary_success.json
+
+### ProjectRate API
+- request:
+    url: ^/api/projectRate
+    method: get
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+    file: api/projectRate/get_project_rates_success.json
+
+### ProjectWork API
+- request:
+    url: ^/api/projectWork
+    method: get
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+    file: api/projectWork/get_project_work_success.json
+
+- request:
+    url: ^/api/projectWork
+    method: put
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+    file: api/projectWork/update_project_work_success.json
+
+### Project API
+- request:
+    url: ^/api/project
+    method: post
+    headers:
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+    file: api/project/create_project_success.json
+
+- request:
+    url: ^/api/project
+    method: get
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
+    file: api/project/get_projects_success.json
+
+- request:
+    url: ^/api/project
+    method: put
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
+    file: api/project/update_project_success.json
+
+- request:
+    url: ^/api/project
+    method: delete
+  response:
+    latency: 800
+    code: 200
+    headers:
+      content-type: application/json
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
+    file: api/project/delete_project_success.json

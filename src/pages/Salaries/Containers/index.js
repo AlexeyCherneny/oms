@@ -72,7 +72,7 @@ const SalariesContainer = compose(
         .format(programDateFormat);
       if (
         params.startDate &&
-        moment(params.startDate, "programDateFormat").isValid()
+        moment(params.startDate, programDateFormat).isValid()
       ) {
         startDate = params.startDate;
       }
@@ -83,7 +83,7 @@ const SalariesContainer = compose(
         .format(programDateFormat);
       if (
         params.endDate &&
-        moment(params.endDate, "programDateFormat").isValid()
+        moment(params.endDate, programDateFormat).isValid()
       ) {
         endDate = params.endDate;
       }

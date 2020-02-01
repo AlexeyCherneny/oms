@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "workRate": 10,
+      "overtimeRate": 16,
+      "projectId": 0,
+      "currency": "USD",
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "date": "01.04.1997"
+    },
+    {
+      "id": 0,
+      "workRate": 10,
+      "overtimeRate": 12,
+      "projectId": 0,
+      "currency": "USD",
+      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
+      "date": "01.04.1997"
+    },
+    {
+      "id": 0,
+      "workRate": 10,
+      "overtimeRate": 13,
+      "projectId": 0,
+      "currency": "USD",
+      "userId": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
+      "date": "01.04.1997"
+    },
+    {
+      "id": 0,
+      "workRate": 10,
+      "overtimeRate": 13,
+      "projectId": 0,
+      "currency": "USD",
+      "userId": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+      "date": "01.04.1997"
+    },
+    {
+      "id": 0,
+      "workRate": 10,
+      "overtimeRate": 13,
+      "projectId": 0,
+      "currency": "USD",
+      "userId": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+      "date": "01.04.1997"
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}
