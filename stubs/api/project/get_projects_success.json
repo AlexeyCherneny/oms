@@ -41,6 +41,10 @@
         {
           "id": 5,
           "path": "/path/document_2.pdf"
+        },
+        {
+          "id": 6,
+          "path": "/path/document_2.pdf"
         }
       ]
     }

@@ -3,6 +3,7 @@ import { Menu, Spin } from "antd";
 import { NavLink } from "react-router-dom";
 
 import styles from "./styles/projectsList.module.scss";
+import { ListHeader } from "../../../Components";
 
 const menuProps = {
   theme: "light",
@@ -18,23 +19,34 @@ const Header = ({ selectedKey, tabs, isLoading }) => {
   }
 
   return (
-    <Menu {...menuProps} selectedKeys={[selectedKey]}>
-      {tabs.map(tab => (
-        <Menu.Item
-          key={tab.id}
-          className={styles.menuItem}
-          style={{
-            lineHeight: "40px",
-            margin: 0,
-            height: 60,
-            display: "flex",
-            alignItems: "center"
-          }}
-        >
-          <NavLink to={tab.path}>{tab.title}</NavLink>
-        </Menu.Item>
-      ))}
-    </Menu>
+    <div>
+      <ListHeader
+        title="Сотрудники"
+        // handleCreate={handleCreate}
+        // handleUpdate={readProjects}
+      />
+      <Menu
+        {...menuProps}
+        selectedKeys={[selectedKey]}
+        style={{ marginBottom: 0 }}
+      >
+        {tabs.map(tab => (
+          <Menu.Item
+            key={tab.id}
+            className={styles.menuItem}
+            style={{
+              lineHeight: "40px",
+              margin: 0,
+              height: 60,
+              display: "flex",
+              alignItems: "center"
+            }}
+          >
+            <NavLink to={tab.to}>{tab.title}</NavLink>
+          </Menu.Item>
+        ))}
+      </Menu>
+    </div>
   );
 };
 

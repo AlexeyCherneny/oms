@@ -2,17 +2,16 @@ import React from "react";
 import { Layout } from "antd";
 
 import ProjectUsersList from "../Containers/ProjectUsersList";
-import ProjectUser from "../Containers/ProjectUser";
 
-const ProjectUsers = () => {
+const ProjectUsers = props => {
   return (
     <Layout>
-      <Layout.Sider width={250} theme="light" style={{ paddingRight: 30 }}>
+      <Layout.Sider theme="light" style={{ paddingRight: 30 }} width={300}>
         <ProjectUsersList />
       </Layout.Sider>
 
       <Layout.Content style={{ backgroundColor: "white" }}>
-        <ProjectUser />
+        {props.children}
       </Layout.Content>
     </Layout>
   );

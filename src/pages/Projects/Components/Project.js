@@ -1,10 +1,9 @@
 import React from "react";
-import { Typography, Collapse, Icon } from "antd";
+import { Typography } from "antd";
 
 import ProjectWorkTable from "../Containers/ProjectWorksTable";
-import ProjectUsers from "../Containers/ProjectUsers";
+import ProjectAttachments from "../Containers/ProjectAttachments";
 import Filter from "../Containers/Filter";
-import { File } from "../../../Components";
 
 const Title = props => (
   <div
@@ -25,27 +24,14 @@ const Title = props => (
   </div>
 );
 
-const Project = ({ children, attachments, usersTabs }) => {
+const Project = ({ children }) => {
   return (
-    <>
+    <div style={{ backgroundColor: "white" }}>
       <Title title="Отработка" extra={<Filter />} />
       <ProjectWorkTable />
-
-      <Collapse
-        bordered={false}
-        expandIcon={({ isActive }) => (
-          <Icon type="caret-right" rotate={isActive ? 90 : 0} />
-        )}
-      >
-        <Collapse.Panel header="Вложения" key="1">
-          {attachments.map((attachment, i) => (
-            <File {...attachment} key={i} />
-          ))}
-        </Collapse.Panel>
-      </Collapse>
-
-      <ProjectUsers />
-    </>
+      <ProjectAttachments />
+      {children}
+    </div>
   );
 };
 

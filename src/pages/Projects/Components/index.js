@@ -9,9 +9,7 @@ const TreeView = ({ children }) => {
       <Layout.Sider width={300} theme="light" style={{ marginRight: 30 }}>
         <ProjectsList />
       </Layout.Sider>
-      <Layout.Content style={{ backgroundColor: "white" }}>
-        {children}
-      </Layout.Content>
+      <Layout.Content>{children}</Layout.Content>
     </Layout>
   );
 };

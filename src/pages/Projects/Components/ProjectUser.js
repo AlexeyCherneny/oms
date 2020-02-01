@@ -2,7 +2,12 @@ import React from "react";
 
 const ProjectUser = ({ rate }) => {
   if (!rate) return null;
-  return <div>{`Ставка на проекта: ${rate.rate}`}</div>;
+  return (
+    <div style={{ paddingTop: 20 }}>
+      <div>{`Ставка работы: ${rate.workRate}`}</div>
+      <div>{`Ставка переработки: ${rate.overtimeRate}`}</div>
+    </div>
+  );
 };
 
 export default ProjectUser;

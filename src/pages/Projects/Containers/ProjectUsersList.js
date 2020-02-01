@@ -26,17 +26,19 @@ const getFullName = user =>
 const ProjectUsersListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ match, tabs, getProjectById, getUserById }) => {
-    const projectId = get(match, "params.id");
+  withProps(({ match, location, getProjectById, getUserById }) => {
+    const projectId = get(match, "params.projectId");
     const project = getProjectById(projectId);
 
     const userId = get(match, "params.userId");
-    const documentId = get(match, "params.documentId");
 
     const userTabs = get(project, "users", []).map(userId => ({
       title: getFullName(getUserById(userId)),
       id: userId,
-      path: `${BASE_URL}/${documentId}/users/${userId}`
+      to: {
+        pathname: `${BASE_URL}/${projectId}/users/${userId}`,
+        search: location.search
+      }
     }));
 
     return {

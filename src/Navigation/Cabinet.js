@@ -75,7 +75,16 @@ const Cabinet = () => (
         <Route path="/app/cabinet/projects/:projectId?">
           <Projects>
             <Route path="/app/cabinet/projects/:projectId">
-              <Project></Project>
+              <Project>
+                <Route path="/app/cabinet/projects/:projectId/users/:userId?">
+                  <ProjectUsers>
+                    <Route
+                      path="/app/cabinet/projects/:projectId/users/:userId"
+                      component={ProjectUser}
+                    />
+                  </ProjectUsers>
+                </Route>
+              </Project>
             </Route>
           </Projects>
         </Route>

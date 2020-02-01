@@ -2,17 +2,11 @@ import React from "react";
 import { Table, Button } from "antd";
 
 const TableActions = props => {
-  const {
-    projectWork,
-    handleProjectWorkEdit,
-    isProjectWorkUpdating,
-    isProjectWorkDeleting
-  } = props;
+  const { projectWork, handleProjectWorkEdit, isProjectWorkUpdating } = props;
 
   const isUpdating = isProjectWorkUpdating(projectWork.id);
-  const isDeleting = isProjectWorkDeleting(projectWork.id);
 
-  const isDisabled = isUpdating || isDeleting;
+  const isDisabled = isUpdating;
 
   return (
     <>
