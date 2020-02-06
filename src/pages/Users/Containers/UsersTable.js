@@ -26,10 +26,10 @@ const UsersTableContainer = compose(
   withProps(({ history, users }) => {
     const tableData = users.map(user => ({
       ...user,
-      full_name: `${defaultTo(user.last_name, "")} ${defaultTo(
-        user.first_name,
+      full_name: `${defaultTo(user.lastName, "")} ${defaultTo(
+        user.firstName,
         ""
-      )} ${defaultTo(user.middle_name, "")}`
+      )} ${defaultTo(user.middleName, "")}`
     }));
 
     return {

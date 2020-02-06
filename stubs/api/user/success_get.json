@@ -6,9 +6,9 @@
       "roles": [
         "ROLE_USER"
       ],
-      "first_name": "Emmanuelle",
-      "last_name": "Bechtelar",
-      "middle_name": "Coy",
+      "firstName": "Emmanuelle",
+      "lastName": "Bechtelar",
+      "middleName": "Coy",
       "birthday": "30/08/1988",
       "photo": "123"
     },
@@ -18,9 +18,9 @@
       "roles": [
         "ROLE_HR"
       ],
-      "first_name": "Angelita",
-      "last_name": "Luettgen",
-      "middle_name": "Luis",
+      "firstName": "Angelita",
+      "lastName": "Luettgen",
+      "middleName": "Luis",
       "birthday": "03/11/1981",
       "photo": null
     },
@@ -30,9 +30,9 @@
       "roles": [
         "ROLE_USER"
       ],
-      "first_name": "Abel",
-      "last_name": "Wolf",
-      "middle_name": "Thad",
+      "firstName": "Abel",
+      "lastName": "Wolf",
+      "middleName": "Thad",
       "birthday": "28/11/1984",
       "photo": null
     },
@@ -42,9 +42,9 @@
       "roles": [
         "ROLE_USER"
       ],
-      "first_name": "Dean",
-      "last_name": "Wunsch",
-      "middle_name": "Kraig",
+      "firstName": "Dean",
+      "lastName": "Wunsch",
+      "middleName": "Kraig",
       "birthday": "13/02/2003",
       "photo": null
     },
@@ -54,9 +54,9 @@
       "roles": [
         "ROLE_USER"
       ],
-      "first_name": "Charlotte",
-      "last_name": "Medhurst",
-      "middle_name": "Abe",
+      "firstName": "Charlotte",
+      "lastName": "Medhurst",
+      "middleName": "Abe",
       "birthday": "30/07/1989",
       "photo": null
     }

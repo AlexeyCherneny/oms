@@ -22,7 +22,7 @@ const CalendarContainer = compose(
     const events = get(eventsList, "data", []);
 
     const usersBirths = usersList.map(user => ({
-      name: user.first_name + " " + user.last_name,
+      name: user.firstName + " " + user.lastName,
       date: user.birthday,
       type: "birth"
     }));

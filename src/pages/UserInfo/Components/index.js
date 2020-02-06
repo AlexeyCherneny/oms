@@ -17,7 +17,7 @@ const UserInfo = props => {
         </Col>
         <Col span={18}>
           <h1 className={styles.userName}>
-            {user.first_name + " " + user.last_name + " " + user.middle_name}
+            {user.firstName + " " + user.lastName + " " + user.middleName}
           </h1>
         </Col>
       </Row>

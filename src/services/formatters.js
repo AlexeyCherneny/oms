@@ -4,7 +4,7 @@ export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
 
 export const getFullName = user => {
-  return user ? `${user.first_name} ${user.last_name}` : "";
+  return user ? `${user.firstName} ${user.lastName}` : "";
 };
 
 export const fromProgramToDisplayDate = date => {

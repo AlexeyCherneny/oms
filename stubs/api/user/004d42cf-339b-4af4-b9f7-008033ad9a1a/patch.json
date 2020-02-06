@@ -5,9 +5,9 @@
     "roles": [
       "ROLE_USER"
     ],
-    "first_name": "Emmanuelle",
-    "last_name": "Bechtelar",
-    "middle_name": "Coy",
+    "firstName": "Emmanuelle",
+    "lastName": "Bechtelar",
+    "middleName": "Coy",
     "birthday": "30/08/1988",
     "skype": "123",
     "telegram": "123",

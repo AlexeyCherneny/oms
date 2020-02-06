@@ -82,7 +82,7 @@ class Project extends React.Component {
     console.log(
       "users1: ",
       users.map(user => ({
-        label: `${user.first_name[0]}. ${user.last_name}`,
+        label: `${user.firstName[0]}. ${user.lastName}`,
         value: String(user.uuid)
       }))
     );
@@ -102,7 +102,7 @@ class Project extends React.Component {
             {...inputs(initialValues).userId}
             disabled
             options={users.map(user => ({
-              label: `${user.first_name[0]}. ${user.last_name}`,
+              label: `${user.firstName[0]}. ${user.lastName}`,
               value: String(user.uuid)
             }))}
           />

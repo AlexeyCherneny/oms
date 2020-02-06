@@ -73,7 +73,7 @@ const inputs = initialValues => ({
     placeholder: "Черненый",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "last_name", ""),
+      initialValue: get(initialValues, "lastName", ""),
       rules: [
         {
           required: true,
@@ -87,7 +87,7 @@ const inputs = initialValues => ({
     placeholder: "Алексей",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "first_name", ""),
+      initialValue: get(initialValues, "firstName", ""),
       rules: [
         {
           required: true,
@@ -101,7 +101,7 @@ const inputs = initialValues => ({
     placeholder: "Андреевич",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "middle_name", "")
+      initialValue: get(initialValues, "middleName", "")
     }
   },
   birthday: {

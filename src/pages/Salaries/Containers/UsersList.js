@@ -21,12 +21,12 @@ const mapDispatch = {
 };
 
 const getFullName = user =>
-  user ? `${user.first_name || ""} ${user.last_name || ""}` : "";
+  user ? `${user.firstName || ""} ${user.lastName || ""}` : "";
 
 const UsersListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ match, location, users, getUserById }) => {
+  withProps(({ match, location, users }) => {
     const userId = get(match, "params.userId");
 
     const userTabs = users.map(user => ({

@@ -21,7 +21,7 @@ const mapDispatch = {
 };
 
 const getFullName = user =>
-  user ? `${user.first_name || ""} ${user.last_name || ""}` : "";
+  user ? `${user.firstName || ""} ${user.lastName || ""}` : "";
 
 const ProjectUsersListContainer = compose(
   withRouter,

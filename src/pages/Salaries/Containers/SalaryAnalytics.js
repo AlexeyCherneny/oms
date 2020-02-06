@@ -3,35 +3,21 @@ import { connect } from "react-redux";
 import qs from "qs";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import { groupBy } from "lodash";
+import { get, groupBy } from "lodash";
 
 import { programDateFormat, getFullName } from "../../../services/formatters";
+import { colors } from "../../../services/constants";
 import Authenticated from "../../../Components/HOC/Authenticated";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
 import SalariesAnalytics from "../Components/SalaryAnalytics";
 import { splitRange } from "../../../services/chartUtils";
 
-const colors = [
-  "#001f3f",
-  "#0074D9",
-  "#7FDBFF",
-  "#39CCCC",
-  "#3D9970",
-  "#2ECC40",
-  "#01FF70",
-  "#FFDC00",
-  "#FF851B",
-  "#FF4136",
-  "#85144b",
-  "#F012BE",
-  "#B10DC9"
-];
-
 const mapState = state => ({
   users: selectors.getUsers(state),
   salaries: selectors.getSalaries(state),
-  getUserById: selectors.getUserById(state)
+  getUserById: selectors.getUserById(state),
+  state
 });
 
 const mapDispatch = {
@@ -71,20 +57,15 @@ const SalariesAnalyticsContainer = compose(
         return acc;
       }, {});
 
-    console.log("res: ", res);
     const chartData = Object.values(res);
 
-    const usersIds = users ? users.map(u => u.id) : [];
-    const usersLines = values.uuid ? values.uuid : usersIds;
+    const usersLines = values.uuid ? values.uuid : [];
 
     const chartLines = usersLines.map((userId, i) => ({
       dataKey: getFullName(getUserById(userId)),
       type: "stepAfter",
       stroke: colors[i]
     }));
-
-    console.log("chartData: ", chartData);
-    console.log("chartLines: ", chartLines);
 
     return {
       values,
@@ -93,7 +74,7 @@ const SalariesAnalyticsContainer = compose(
     };
   }),
   withHandlers({
-    buildQuery: ({ location }) => () => {
+    buildQuery: ({ location, state }) => () => {
       const params = qs.parse(location.search, { ignoreQueryPrefix: true });
 
       let dateFrom = moment()
@@ -115,7 +96,8 @@ const SalariesAnalyticsContainer = compose(
         dateTo = params.dateTo;
       }
 
-      let uuid = [];
+      const userUUID = get(state, "authorization.user.uuid");
+      let uuid = [userUUID];
       if (params.uuid && Array.isArray(params.uuid)) {
         uuid = params.uuid;
       }
@@ -136,11 +118,14 @@ const SalariesAnalyticsContainer = compose(
         history,
         location
       } = this.props;
+
       const query = buildQuery();
+
       history.push({
         pathname: location.pathname,
         search: query
       });
+
       readUsers();
       readSalaries({ search: `?${query}` });
     }

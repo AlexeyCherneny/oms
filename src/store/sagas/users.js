@@ -35,7 +35,6 @@ function* readUsers(
     const response = yield call(api.readUsers, { search });
 
     if (response.status === 200) {
-      yield delay(1000);
 
       yield put(actions.usersSuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
@@ -66,10 +65,10 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
         })
       );
       if (meta.onSuccess) meta.onSuccess(response.data);
-      const { first_name, last_name } = response.data;
+      const { firstName, lastName } = response.data;
       Notification.success(
         "Сотрудники",
-        `Информция о сотруднике ${first_name || ""} ${last_name ||
+        `Информция о сотруднике ${firstName || ""} ${lastName ||
           ""} успешно обновлена.`
       );
     } else {
@@ -78,11 +77,11 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
   } catch (error) {
     const errorMessage = "Error while updating user";
 
-    const { first_name, last_name } = payload.params;
+    const { firstName, lastName } = payload.params;
     Notification.error(
       "Сотрудники",
-      `Ошибка обновления информации о сотруднике ${first_name ||
-        ""} ${last_name || ""}.`
+      `Ошибка обновления информации о сотруднике ${firstName ||
+        ""} ${lastName || ""}.`
     );
     if (meta.onFailure) meta.onFailure(error);
 
@@ -93,18 +92,17 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
 }
 
 function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
-  const first_name = get(meta.user, "first_name") || "";
-  const last_name = get(meta.user, "last_name") || "";
+  const firstName = get(meta.user, "firstName") || "";
+  const lastName = get(meta.user, "lastName") || "";
   try {
     const response = yield call(api.deleteUser, payload);
 
     if (response.status === 200) {
-      yield delay(1000);
       yield put(actions.deleteUserSuccess(payload));
       if (meta.onSuccess) meta.onSuccess(response.data);
       Notification.success(
         "Сотрудники",
-        `Cотрудник ${first_name} ${last_name} успешно удален.`
+        `Cотрудник ${firstName} ${lastName} успешно удален.`
       );
     } else {
       throw response;
@@ -113,7 +111,7 @@ function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
     const errorMessage = "Error while deleting users list";
     Notification.error(
       "Сотрудники",
-      `Не удалось удалить сотрудника ${first_name} ${last_name}.`
+      `Не удалось удалить сотрудника ${firstName} ${lastName}.`
     );
     if (meta.onFailure) meta.onFailure(error);
 

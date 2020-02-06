@@ -130,7 +130,7 @@ class EventForm extends React.Component {
             {...inputs(initialValues).user}
             disabled
             options={users.map(user => ({
-              label: `${user.first_name[0]}. ${user.last_name}`,
+              label: `${user.firstName[0]}. ${user.lastName}`,
               value: String(user.uuid)
             }))}
           />

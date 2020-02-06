@@ -52,7 +52,7 @@ const ProjectWorksListContainer = compose(
         ...projectWork,
         workAmount: formatCurrency(workAmount, currency),
         overtimeAmount: formatCurrency(overtimeAmount, currency),
-        fullName: `${user.last_name} ${user.first_name}`
+        fullName: `${user.lastName} ${user.firstName}`
       };
     });
 

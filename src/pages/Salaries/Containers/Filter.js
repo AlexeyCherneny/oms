@@ -58,7 +58,7 @@ const FilterContainer = compose(
   }),
   withProps(({ users, location }) => {
     const usersOptions = defaultTo(get(users, "data", []), []).map(user => ({
-      label: `${user.first_name[0]}. ${user.last_name}`,
+      label: `${user.firstName[0]}. ${user.lastName}`,
       value: String(user.uuid)
     }));
 

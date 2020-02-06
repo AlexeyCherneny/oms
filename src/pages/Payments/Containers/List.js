@@ -28,7 +28,7 @@ const mapDispatch = {
   push
 };
 const getFullName = user => {
-  return user ? `${user.first_name} ${user.last_name}` : "";
+  return user ? `${user.firstName} ${user.lastName}` : "";
 };
 
 const dateFormat = "YYYY-MM-DD";
