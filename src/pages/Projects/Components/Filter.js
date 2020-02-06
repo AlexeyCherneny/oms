@@ -7,15 +7,15 @@ import { displayDateFormat } from "../../../services/formatters";
 const Filter = props => {
   return (
     <Form layout="inline">
-      <Form.Item label="C" style={{ marginBottom: 0 }}>
+      <Form.Item style={{ marginBottom: 0 }}>
         <DatePicker.MonthPicker
           format={[displayDateFormat]}
           style={{ width: 150 }}
           size="small"
-          onChange={props.handleDateChange("date")}
+          onChange={props.handleDateChange}
           placeholder="Дата"
           value={
-            props.values.date ? moment(props.values.date, "YYYY-MM-DD") : null
+            props.searchObj.date ? moment(props.searchObj.date) : null
           }
         />
       </Form.Item>

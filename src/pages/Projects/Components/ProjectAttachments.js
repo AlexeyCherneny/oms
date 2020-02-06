@@ -19,8 +19,9 @@ const ProjectAttachments = ({ attachments, handleUpload }) => {
         extra={<Upload handleUpload={handleUpload} />}
       >
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {attachments.map((attachment, i) => (
+          {attachments.map(attachment => (
             <div
+              key={attachment.id}
               style={{
                 flex: "1 1 auto",
                 width: "33%",
@@ -28,7 +29,7 @@ const ProjectAttachments = ({ attachments, handleUpload }) => {
                 textOverflow: "ellipsis"
               }}
             >
-              <File {...attachment} key={i} />
+              <File {...attachment} />
             </div>
           ))}
         </div>

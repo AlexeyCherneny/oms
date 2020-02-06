@@ -1,11 +1,31 @@
 import React from "react";
-import { Typography } from "antd";
+import { Button, Typography, Tooltip } from "antd";
 
 import ProjectWorkTable from "../Containers/ProjectWorksTable";
 import ProjectAttachments from "../Containers/ProjectAttachments";
 import Filter from "../Containers/Filter";
 
-const Title = props => (
+import * as styles from "./styles/Project.module.scss";
+
+const Extra = ({
+  handleAddUser,
+  project,
+  ...props
+}) => !project ? null : (
+    <div className={styles.extraContainer}>
+    <Tooltip placement="top" title="Добавить пользователей" >
+      <Button 
+        type="link"
+        icon="usergroup-add"
+        onClick={handleAddUser}
+        className={styles.btnCreate}
+      />
+    </Tooltip>
+    <Filter {...props} />
+  </div>
+);
+
+const Title = ({ title, extra }) => (
   <div
     style={{
       background: "#001529",
@@ -14,22 +34,31 @@ const Title = props => (
     }}
   >
     <Typography.Text
-      style={{ color: "rgba(255, 255, 255, 0.65)", margin: 10 }}
+      className={styles.title}
       strong
     >
-      {props.title}
+      {title}
     </Typography.Text>
 
-    <>{props.extra}</>
+    {extra}
   </div>
 );
 
-const Project = ({ children }) => {
+const Project = ({ 
+  children, 
+  title,
+  ...props
+}) => {
   return (
-    <div style={{ backgroundColor: "white" }}>
-      <Title title="Отработка" extra={<Filter />} />
+    <div className={styles.container}>
+      <Title 
+        title={`Информация по проекту ${title}`} 
+        extra={(<Extra {...props} />)} 
+      />
       <ProjectWorkTable />
-      <ProjectAttachments />
+      <ProjectAttachments 
+        {...props}
+      />
       {children}
     </div>
   );

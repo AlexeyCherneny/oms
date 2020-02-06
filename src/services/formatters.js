@@ -47,7 +47,7 @@ export const formatCurrency = (num, curr) => {
     case "RUR":
       return `${count} ₽`;
     default:
-      return "";
+      return String(count) + curr ? ` ${curr}` : '';
   }
 };
 

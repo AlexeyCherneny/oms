@@ -7,10 +7,10 @@ class FormInput extends React.Component {
   }
 }
 
-const InputWrapper = props =>
-  props.form.getFieldDecorator(
-    props.name,
-    props.settings
+const InputWrapper = ({ name, settings, form, ...props } ) =>
+  form.getFieldDecorator(
+    name,
+    settings
   )(<FormInput {...props} />);
 
 export default InputWrapper;

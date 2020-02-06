@@ -1,56 +1,67 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { connect } from "react-redux";
+import { Form, Button, Col, Row } from "antd";
 import { get } from "lodash";
 import moment from "moment";
 
-import {
-  displayDateFormat,
-  programDateFormat
-} from "../../services/formatters";
 import FormDatepicker from "../FormElements/Datepicker/Datepicker";
 import FormSelect from "../FormElements/Select/Select";
 import FormInput from "../FormElements/Input/Input";
-import { connect } from "react-redux";
+import { DATE_FORMATS } from "../../services/constants";
+
+import 'moment/locale/ru';
 
 const formItemLayout = {
   style: { marginBottom: 0 }
 };
 
-const inputs = initialValues => ({
+const getInputs = initialValues => ({
   date: {
     name: "date",
     placeholder: "Дата",
-    format: [displayDateFormat],
+    format: [DATE_FORMATS.monthString],
     settings: {
       initialValue: get(initialValues, "date", "")
-        ? moment(get(initialValues, "date", ""), programDateFormat)
+        ? moment(get(initialValues, "date", ""))
         : null,
       rules: [{ required: true, message: "Обязательное поле" }]
     },
     style: { width: "100%" }
   },
   userId: {
-    name: "userId",
-    placeholder: "Пользователь",
+    name: "user_id",
+    placeholder: "Сотрудник",
     settings: {
-      initialValue: get(initialValues, "userId", null),
+      initialValue: get(initialValues, "user_id", null),
       rules: [{ required: true, message: "Обязательное поле" }]
     }
   },
   workHours: {
-    name: "workHours",
+    name: "work_hours",
     placeholder: "Рабочие часы",
     settings: {
-      initialValue: get(initialValues, "workHours", null),
-      rules: [{ required: true, message: "Обязательное поле" }]
+      initialValue: get(initialValues, "work_hours", 0),
     }
   },
   overtimeHours: {
-    name: "overtimeHours",
+    name: "overtime_hours",
     placeholder: "Переработанные часы",
     settings: {
-      initialValue: get(initialValues, "overtimeHours", null),
-      rules: [{ required: true, message: "Обязательное поле" }]
+      initialValue: get(initialValues, "overtime_hours", 0),
+    }
+  },
+  workRate: {
+    name: "work_rate",
+    placeholder: "Часовая ставка",
+    settings: {
+      initialValue: get(initialValues, "work_rate", 0),
+    }
+  },
+  overtimeRate: {
+    name: "work_overtime",
+    placeholder: "Cтавка переработки",
+    settings: {
+      initialValue: get(initialValues, "overtime_rate", 0),
     }
   }
 });
@@ -63,7 +74,10 @@ class Project extends React.Component {
 
     form.validateFields((err, values) => {
       if (!err) {
-        handleSubmit(values);
+        handleSubmit({
+          ...values,
+          date: moment(values.date).format(DATE_FORMATS.dashReverse)
+        });
       }
     });
   };
@@ -78,54 +92,81 @@ class Project extends React.Component {
       users
     } = this.props;
 
-    console.log("users: ", users);
-    console.log(
-      "users1: ",
-      users.map(user => ({
-        label: `${user.firstName[0]}. ${user.lastName}`,
-        value: String(user.uuid)
-      }))
-    );
+    const userData = users.map(user => ({
+      label: `${user.first_name[0]}. ${user.last_name}`,
+      value: String(user.uuid)
+    }))
+
+    const inputs = getInputs(initialValues);
+
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayout} label="Дата">
-          <FormDatepicker
-            form={form}
-            {...inputs(initialValues).date}
-            disabled
-          />
-        </Form.Item>
+      <Form onSubmit={this.handleSubmit} style={{ marginTop: -20 }}>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item {...formItemLayout} label="Дата">
+              <FormDatepicker
+                form={form}
+                {...inputs.date}
+                disabled
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item  {...formItemLayout} label="Сотрудник">
+              <FormSelect
+                form={form}
+                options={userData}
+                {...inputs.userId}
+                disabled
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-        <Form.Item {...formItemLayout} label="Пользователь">
-          <FormSelect
-            form={form}
-            {...inputs(initialValues).userId}
-            disabled
-            options={users.map(user => ({
-              label: `${user.firstName[0]}. ${user.lastName}`,
-              value: String(user.uuid)
-            }))}
-          />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item {...formItemLayout} label="Часовая ставка">
+              <FormInput
+                form={form}
+                {...inputs.workRate}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item {...formItemLayout} label="Ставка переработки">
+              <FormInput
+                form={form}
+                {...inputs.overtimeRate}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-        <Form.Item {...formItemLayout} label="Рабочие часы">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).workHours}
-            disabled={isLoading}
-          />
-        </Form.Item>
-
-        <Form.Item {...formItemLayout} label="Переработанные часы">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).overtimeHours}
-            disabled={isLoading}
-          />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item {...formItemLayout} label="Рабочие часы">
+              <FormInput
+                form={form}
+                {...inputs.workHours}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item {...formItemLayout} label="Переработанные часы">
+              <FormInput
+                form={form}
+                {...inputs.overtimeHours}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <div
-          style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}
+          style={{ marginTop: 24, display: "flex", justifyContent: "flex-end" }}
         >
           {handleReject && (
             <Button

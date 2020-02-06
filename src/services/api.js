@@ -58,20 +58,19 @@ const create = (baseURL = `${hostURL}api/`) => {
     updateDocument: ({ id, params }) => api.patch(`documents/${id}`, params),
     deleteDocument: id => api.delete(`documents/${id}`),
 
-    createProject: params => api.post(`project`, params),
-    readProjects: () => api.get("project"),
-    updateProject: ({ id, params }) => api.put(`project/${id}`, params),
-    deleteProject: () => api.delete("project"),
+    createProject: params => api.post("projects", params),
+    readProjects: () => api.get("projects"),
+    updateProject: ({ id, params }) => api.put(`projects/${id}`, params),
+    deleteProject: id => api.delete(`projects/${id}`),
 
-    readProjectWork: () => api.get("projectWork"),
-    updateProjectWork: ({ id, params }) => api.put(`projectWork/${id}`, params),
-
-    readProjectRates: ({ search }) => api.get(`projectRate${search}`),
+    readProjectWorks: ({ projectId, params }) => api.get(`/projects/${projectId}/works?${params}`),
+    updateProjectWork: ({ id, projectId, params }) => api.put(`projects/${projectId}/works/${id}`, params),
     
     readDocumentAccesses: documentId => api.get(`documents/${documentId}/accesses`),
     createDocumentAccesses: ({ documentId, params }) => api.post(`documents/${documentId}/accesses`, params),
     updateDocumentAccess: ({ id, documentId, params }) => api.patch(`documents/${documentId}/accesses/${id}`, params),
     deleteDocumentAccess: ({ id, documentId }) => api.delete(`documents/${documentId}/accesses/${id}`),
+    
   };
 };
 

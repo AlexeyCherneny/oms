@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
-import { compose, lifecycle } from "recompose";
+import { compose, lifecycle, withProps } from "recompose";
 
 import Authenticated from "../../../Components/HOC/Authenticated";
 import Projects from "../Components";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
+import { withRouter } from "react-router";
 
 const mapState = state => ({
   roles: state.authorization.user && state.authorization.user.roles,
@@ -17,12 +18,14 @@ const mapDispatch = {
 
 const ProjectsContainer = compose(
   Authenticated,
+  withRouter,
   connect(mapState, mapDispatch),
+  withProps(({ match }) => ({
+    indexPath: match.path,
+  })),
   lifecycle({
     componentDidMount() {
-      const { readProjects } = this.props;
-
-      readProjects();
+      this.props.readProjects();
     }
   })
 )(Projects);

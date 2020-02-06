@@ -29,11 +29,12 @@ const reducer = createReducer(
     }),
     [actions.hideModal]: (state, payload) => ({
       ...state,
-      form: null,
-      type: "",
       isOpen: false
     }),
 
+    [actions.destroyModal]: () => ({
+      ...initialState
+    }),
     [actions.startModalLoading]: (state, payload) => ({
       ...state,
       isLoading: true

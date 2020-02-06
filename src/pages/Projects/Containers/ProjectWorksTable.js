@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
-import { compose, lifecycle, withProps, withHandlers } from "recompose";
+import { compose, withProps, withHandlers } from "recompose";
 import { withRouter } from "react-router-dom";
-import { get } from "lodash";
 
 import ProjectWorksList from "../Components/ProjectWorksTable";
 import actions from "../../../store/actions";
@@ -14,6 +13,7 @@ const mapState = state => ({
   getProjectWorkById: selectors.getProjectWorkById(state),
   isLoading: selectors.isProjectWorksDownloading(state),
   isDownloading: selectors.isProjectWorksDownloading(state),
+  isProjectsDownloading: selectors.isProjectsDownloading(state),
   isProjectWorkUpdating: selectors.isProjectWorkUpdating(state),
   projectRates: selectors.getProjectRates(state)
 });
@@ -27,37 +27,27 @@ const mapDispatch = {
 const ProjectWorksListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  lifecycle({
-    componentDidMount() {
-      const { readProjectWorks } = this.props;
-
-      readProjectWorks();
-    }
-  }),
-  withProps(({ projectWorks, getUserById, projectRates }) => {
-    const tableData = projectWorks.map(projectWork => {
-      const user = getUserById(projectWork.userId);
-
-      const { userId, workHours, overtimeHours } = projectWork;
-
-      const rate = projectRates.find(
-        projectRate => projectRate.userId === userId
-      );
-      const currency = get(rate, "currency", "");
-
-      const workAmount = rate && rate.workRate * workHours;
-      const overtimeAmount = rate && rate.overtimeRate * overtimeHours;
+  
+  withProps(({ projectWorks, getUserById, isDownloading, isProjectsDownloading }) => {
+    const tableData = projectWorks.map(work => {
+      const user = getUserById(work.user_id);
+      const workAmount = (work.work_hours || 0) * (work.work_rate || 0);
+      const overtimeAmount = (work.overtime_hours || 0) * (work.overtime_rate || 0);
+      const totalAmount = workAmount + overtimeAmount;
+      const currency = work.currency || '';
 
       return {
-        ...projectWork,
+        ...work,
         workAmount: formatCurrency(workAmount, currency),
         overtimeAmount: formatCurrency(overtimeAmount, currency),
-        fullName: `${user.lastName} ${user.firstName}`
+        totalAmount: formatCurrency(totalAmount, currency),
+        fullName: `${user?.last_name} ${user?.first_name}`
       };
     });
 
     return {
-      tableData
+      tableData,
+      isLoadingData: isProjectsDownloading || isDownloading,
     };
   }),
   withHandlers({
@@ -73,12 +63,13 @@ const ProjectWorksListContainer = compose(
           submitTitle: "Обновить",
           rejectTitle: "Отменить"
         },
+        title: "Информация об отработанном времени",
         type: "projectWork",
         meta: {
           start: params =>
             actions.updateProjectWorkRequest({
-              id: projectWorkId,
-              params
+              ...projectWork,
+              ...params
             }),
           success: () => actions.updateProjectWorkSuccess(),
           failure: () => actions.updateProjectWorkFailure()

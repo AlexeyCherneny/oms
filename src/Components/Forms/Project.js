@@ -1,19 +1,16 @@
 import React from "react";
-import { Form, Button } from "antd";
-import { get } from "lodash";
+import { Form, Button, Row, Col } from "antd";
 
-import FormInput from "../FormElements/Input/Input";
+import { Input, DatePicker } from "../FormElements";
+import Moment from "moment";
+import { programDateFormat } from "../../services/formatters";
 
-const formItemLayout = {
-  style: { marginBottom: 0 }
-};
-
-const inputs = initialValues => ({
+const createInputs = ({ title, start_date, end_date }) => ({
   title: {
     name: "title",
-    placeholder: "OMS",
+    placeholder: "Название проекта",
     settings: {
-      initialValue: get(initialValues, "title", ""),
+      initialValue: title || '',
       rules: [
         {
           required: true,
@@ -21,6 +18,34 @@ const inputs = initialValues => ({
         }
       ]
     }
+  },
+  startDate: {
+    name: "start_date",
+    placeholder: "Начало проекта",
+    settings: {
+      initialValue: Moment(start_date).isValid() ? Moment(start_date) : Moment(),
+      rules: [
+        {
+          required: true,
+          message: "Обязательное поле"
+        }
+      ]
+    },
+    style: { width: '100%' }
+  },
+  endDate: {
+    name: "end_date",
+    placeholder: "Окончание проекта",
+    settings: {
+      initialValue: Moment(end_date).isValid() ? Moment(end_date) : Moment(),
+      rules: [
+        {
+          required: true,
+          message: "Обязательное поле"
+        }
+      ]
+    },
+    style: { width: '100%' }
   }
 });
 
@@ -32,7 +57,11 @@ class Project extends React.Component {
 
     form.validateFields((err, values) => {
       if (!err) {
-        handleSubmit(values);
+        handleSubmit({ 
+          ...values,
+          start_date: Moment(values.start_date).format(programDateFormat),
+          end_date: Moment(values.end_date).format(programDateFormat),
+        });
       }
     });
   };
@@ -46,15 +75,38 @@ class Project extends React.Component {
       handleReject
     } = this.props;
 
+    const inputs = createInputs(initialValues);
+
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayout} label="Название">
-          <FormInput
+      <Form onSubmit={this.handleSubmit} style={{ marginTop: -24 }}>
+        <Form.Item label="Название проекта">
+          <Input
             form={form}
-            {...inputs(initialValues).title}
+            {...inputs.title}
             disabled={isLoading}
           />
         </Form.Item>
+
+        <Row type="flex" gutter={16}>
+          <Col span={12}>
+            <Form.Item label="Начало проекта">
+              <DatePicker
+                form={form}
+                {...inputs.startDate}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="Окончание проекта">
+              <DatePicker
+                form={form}
+                {...inputs.endDate}
+                disabled={isLoading}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           {handleReject && (

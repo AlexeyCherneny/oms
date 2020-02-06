@@ -2,13 +2,10 @@ import React from "react";
 import { Layout } from "antd";
 import { Switch, Route, Redirect } from "react-router-dom";
 
-import Project from "../pages/Projects/Containers/Project";
-import ProjectUsers from "../pages/Projects/Containers/ProjectUsers";
-import ProjectUser from "../pages/Projects/Containers/ProjectUser";
-
 import SalariesManagement from "../pages/Salaries/Containers/SalariesManagement";
 import SalaryRangeTable from "../pages/Salaries/Containers/SalaryRangeTable";
 import SalaryAnalytics from "../pages/Salaries/Containers/SalaryAnalytics";
+
 import { Header, Modal } from "../Components";
 import {
   Users,
@@ -65,7 +62,7 @@ const Cabinet = () => (
               path="/app/cabinet/users/plan/:operation(edit)/:id"
               component={UsersPlan}
             />
-            <Route path="/app/cabinet/users/">
+            <Route path="/app/cabinet/users">
               <Users />
               <Route path="/app/cabinet/users/create" component={CreateUser} />
               <Route path="/app/cabinet/users/:id/info" component={UserInfo} />
@@ -74,22 +71,7 @@ const Cabinet = () => (
           </Switch>
         </Route>
 
-        <Route path="/app/cabinet/projects/:projectId?">
-          <Projects>
-            <Route path="/app/cabinet/projects/:projectId">
-              <Project>
-                <Route path="/app/cabinet/projects/:projectId/users/:userId?">
-                  <ProjectUsers>
-                    <Route
-                      path="/app/cabinet/projects/:projectId/users/:userId"
-                      component={ProjectUser}
-                    />
-                  </ProjectUsers>
-                </Route>
-              </Project>
-            </Route>
-          </Projects>
-        </Route>
+        <Route path="/app/cabinet/projects" component={Projects} />
 
         <Route path="/app/cabinet/salaries">
           <Salaries>

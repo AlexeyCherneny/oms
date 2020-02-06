@@ -125,4 +125,7 @@ export const spreadAction = action => {
   }
 };
 
-export const testResponse = ({ status }) => /200|201|204/.test(status);
+export const testResponse = response => {
+  if (/200|201|204/.test(response.status)) return true;
+  throw response;
+}

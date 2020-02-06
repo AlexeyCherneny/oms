@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { get } from "lodash";
-import { compose, withProps, lifecycle, withHandlers } from "recompose";
+import { compose, withProps, lifecycle, withHandlers, mapProps } from "recompose";
 import { withRouter } from "react-router-dom";
+import { isEqual, pickBy, pick } from "lodash";
 import moment from "moment";
 import qs from "qs";
 
@@ -18,7 +19,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = {
-  readProjectRates: actions.projectRatesRequest
+  readProjectWorks: actions.projectWorksRequest,
 };
 
 const getFullName = user =>
@@ -27,8 +28,9 @@ const getFullName = user =>
 const ProjectContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ match, getProjectById, getUserById }) => {
-    const projectId = get(match, "params.projectId");
+  withProps(({ match, location, getProjectById, getUserById }) => {
+    const projectId = get(match, "params.projectId", '');
+    const searchObj = qs.parse(location.search, { ignoreQueryPrefix: true });
     const project = getProjectById(projectId);
 
     const title = get(project, "title", "");
@@ -45,60 +47,59 @@ const ProjectContainer = compose(
       title,
       attachments,
       usersTabs,
-      project
+      project,
+      projectId,
+      searchObj,
     };
   }),
   withHandlers({
-    buildQuery: ({ location }) => () => {
-      const params = qs.parse(location.search, { ignoreQueryPrefix: true });
+    buildQuery: ({ searchObj }) => () => {
+      const momentDate = moment(searchObj.date).isValid()
+        ? moment(searchObj.date)
+        : moment();
+      const date = momentDate.startOf('month').format(programDateFormat);
+      const newSeachObj = pickBy({ ...searchObj, date });
 
-      let date = moment()
-        .startOf("month")
-        .format(programDateFormat);
-      if (params.date && moment(params.date, programDateFormat).isValid()) {
-        date = moment(params.date, programDateFormat).format(programDateFormat);
-      }
-
-      return qs.stringify({ date });
-    }
+      return isEqual(searchObj, newSeachObj) ? null : newSeachObj;
+    },
+    updateQuery: ({ location, history, searchObj }) => (addQuery, skipSearch = false) => {
+      const { pathname } = location;
+      const newSeachObj = skipSearch ? { ...searchObj, ...addQuery } : addQuery;
+      const search = qs.stringify(newSeachObj, { skipNulls: true });
+      history.replace({ pathname, search });
+    },
+    readProjectWorks: ({ readProjectWorks, searchObj, projectId }) => () => {
+      readProjectWorks({ projectId, search: searchObj });
+    },
+    handleAddUser: () => () => console.log('add user'),
   }),
   lifecycle({
     componentDidMount() {
-      const { history, buildQuery, location } = this.props;
-
+      const { buildQuery, updateQuery, readProjectWorks } = this.props;
       const query = buildQuery();
-      history.push({
-        pathname: location.pathname,
-        search: query
-      });
+      query ? updateQuery(query, true) : readProjectWorks();
     },
+    
     componentDidUpdate(prevProps) {
-      const { readProjectRates, buildQuery } = this.props;
+      const { readProjectWorks, buildQuery, updateQuery, projectId, searchObj } = this.props;
+      const isProjectChanged = projectId !== prevProps.projectId;
+      const isSearchUpdated = !isEqual(searchObj, prevProps.searchObj);
 
-      const currProjectId = get(this.props, "match.params.projectId");
-      const prevProjectId = get(prevProps, "match.params.projectId");
-
-      const currProject = get(this.props, "project");
-      const prevProject = get(prevProps, "project");
-
-      const currSearch = get(this.props, "location.search");
-      const prevSearch = get(prevProps, "location.search");
-
-      if (
-        (!prevProject && currProject) ||
-        (currProject &&
-          (prevProjectId !== currProjectId || prevSearch !== currSearch))
-      ) {
-        const searchObj = qs.parse(buildQuery(), { ignoreQueryPrefix: true });
-        const search =
-          "?" + qs.stringify({ users: currProject.users, ...searchObj });
-
-        if (currProject && currSearch) {
-          readProjectRates({ search });
-        }
+      if (isProjectChanged || isSearchUpdated) {
+        const query = buildQuery();
+        query ? updateQuery(query, true) : readProjectWorks();
       }
     }
-  })
+  }),
+  mapProps(props => pick(props, [
+    'children',
+    'title',
+    'project',
+    'attachments',
+    'updateQuery',
+    'handleAddUser',
+    'searchObj'
+  ]))
 )(Project);
 
 export default ProjectContainer;

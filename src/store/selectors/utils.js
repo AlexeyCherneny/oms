@@ -30,7 +30,8 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
       }
     },
 
-    [`get${firstUppercase(name)}ById`]: (state, settings = {}) => id => {
+    [`get${firstUppercase(name)}ById`]: state => id => {
+      const { idKey = 'uuid' } = settings;
       try {
         const items = get(state, `${path}`);
 
@@ -48,7 +49,7 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
 
         return data.find(
           item =>
-            String(item.uuid) === String(id) || String(item.id) === String(id)
+            String(item[idKey]) === String(id) || String(item.id) === String(id)
         );
       } catch (error) {
         console.error(error);

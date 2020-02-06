@@ -63,21 +63,35 @@ const ModalContent = props => {
         : <span>{props.content}</span>;
   }
 };
-const CustomModal = props => {
-  let modalSettings = { footer: null, onCancel: () => props.handleReject() };
 
-  if (props.type === MODAL_TYPES.confirm) {
-    modalSettings = {
-      cancelText: props.cancelText,
-      okText: props.okText,
-      onOk: props.handleSubmit,
-      title: props.title,
-      content: props.content,
-      closable: !props.isLoading,
-      confirmLoading: props.isLoading,
-      cancelButtonProps: { disabled: props.isLoading }
-    };
+const getModalSettings = props => {
+  const defaultProps = {
+    afterClose: props.handleClose,
+    onCancel: props.handleReject,
+    destroyOnClose: true,
   }
+
+  switch (props.type) {
+    case MODAL_TYPES.confirm: 
+      return {
+        ...defaultProps,
+        onOk: props.handleSubmit,
+        cancelText: props.cancelText,
+        okText: props.okText,
+        title: props.title,
+        content: props.content,
+      };
+    default: 
+      return {
+        ...defaultProps,
+        footer: null,
+      }
+  }
+}
+
+const CustomModal = props => {
+  const modalSettings = getModalSettings(props);
+
   return (
     <Modal {...props} {...modalSettings}>
       <ModalContent {...props}></ModalContent>

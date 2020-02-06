@@ -1,28 +1,26 @@
 import { call, put, all, takeLatest } from "redux-saga/effects";
-import { defaultTo } from "lodash";
+import { pick } from "lodash";
 import qs from "qs";
 
 import actions from "../actions";
 import Notification from "../../services/notification";
-import { handleSagaError, spreadAction } from "./utils";
+import { handleSagaError, spreadAction, testResponse } from "./utils";
 
 function* readProjectWorks(
   api,
   { payload = {}, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const search = defaultTo(payload.search, "");
-    const response = yield call(api.readProjectWork, { search });
+    const { projectId, search } = payload;
+    const paramsObj = pick(search, ['date']);
+    const response = yield call(api.readProjectWorks, { projectId, params: qs.stringify(paramsObj)});
+    testResponse(response);
 
-    if (response.status === 200) {
-      yield put(actions.projectWorksSuccess(response.data.data));
-      if (meta.onSuccess) meta.onSuccess(response.data.data);
-    } else {
-      throw response;
-    }
+    yield put(actions.projectWorksSuccess(response.data.data));
+    if (meta.onSuccess) meta.onSuccess(response.data.data);
   } catch (error) {
-    const errorMessage = "Error while fetching projectWorks list";
-    Notification.error("Сотрудники", "Не удалось загрузить данные.");
+    const errorMessage = "Error while fetching project works list";
+    Notification.error("Информация о проекте", "Не удалось загрузить данные.");
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, actions.projectWorksFailure);
@@ -35,7 +33,8 @@ function* updateProjectWork(api, action) {
   try {
     const response = yield call(api.updateProjectWork, {
       id: payload.id,
-      params: qs.stringify(payload.params)
+      projectId: payload.project_id,
+      params: qs.stringify(payload)
     });
 
     if (response.status === 200) {

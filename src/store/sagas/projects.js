@@ -4,7 +4,7 @@ import qs from "qs";
 
 import actions from "../actions";
 import Notification from "../../services/notification";
-import { handleSagaError, spreadAction } from "./utils";
+import { handleSagaError, spreadAction, testResponse } from "./utils";
 
 function* createProject(api, action) {
   const { payload, onSuccess, onFailure } = spreadAction(action);
@@ -14,6 +14,7 @@ function* createProject(api, action) {
 
     if (response.status === 200) {
       yield put(actions.createProjectSuccess(response.data.data));
+      Notification.success("Проекты", "Проект успешно создан.");
       onSuccess(response.data.data);
     } else {
       throw response;
@@ -55,18 +56,19 @@ function* updateProject(api, action) {
   try {
     const response = yield call(api.updateProject, {
       id: payload.id,
-      params: qs.stringify(payload.params)
+      params: qs.stringify(payload)
     });
 
-    if (response.status === 200) {
+    if (testResponse(response)) {
       yield put(actions.updateProjectSuccess(response.data.data));
+      Notification.success("Проекты", "Проект успешно обновлен.");
       onSuccess(response.data.data);
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while fetching updating project";
-    Notification.error("Внимание", "Не удалось обновить проект.");
+    Notification.error("Проекты", "Не удалось обновить проект.");
     onFailure(error);
 
     yield handleSagaError(error, errorMessage, actions.updateProjectFailure);
@@ -79,15 +81,16 @@ function* deleteProject(api, action) {
   try {
     const response = yield call(api.deleteProject, payload);
 
-    if (response.status === 200) {
+    if (testResponse(response)) {
       yield put(actions.deleteProjectSuccess(payload));
+      Notification.success("Проекты", "Проект успешно удален.");
       onSuccess(response.data);
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while deleting project list";
-    Notification.error("Внимание", "Не удалось удалить проект.");
+    Notification.error("Проекты", "Не удалось удалить проект.");
     onFailure(error);
 
     yield handleSagaError(error, errorMessage, () =>

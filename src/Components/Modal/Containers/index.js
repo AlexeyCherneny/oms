@@ -12,7 +12,8 @@ const mapState = ({ modal }) => ({
 
 const mapDispatch = {
   handleSubmit: actions.confirmModal,
-  handleReject: actions.declineModal
+  handleReject: actions.declineModal,
+  handleClose: actions.destroyModal,
 };
 
 const ModalContainer = compose(
