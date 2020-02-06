@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.0.2",
+    "dotenv": "^8.2.0",
     "stubby": "^4.1.1"
   }
 }
