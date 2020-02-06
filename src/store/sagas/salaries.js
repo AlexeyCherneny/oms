@@ -25,7 +25,7 @@ function* createSalaryRange(
         rangeActions.push(
           put(
             actions.updateSalaryRequest({
-              id: existedSalary,
+              id: existedSalary.id,
               params: {
                 user: payload.user,
                 value: payload.value,
@@ -104,7 +104,7 @@ function* createSalary(
       qs.stringify({ salary: payload })
     );
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield put(actions.createSalarySuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
@@ -126,7 +126,7 @@ function* readSalaries(
     const search = defaultTo(payload.search, "");
     const response = yield call(api.readSalaries, { search });
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield put(actions.salariesSuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
@@ -147,7 +147,7 @@ function* updateSalary(
   try {
     const response = yield call(api.updateSalary, payload);
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield put(
         actions.updateSalarySuccess({
           id: payload.id,
@@ -175,7 +175,7 @@ function* deleteSalary(
   try {
     const response = yield call(api.deleteSalary, payload);
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield put(actions.deleteSalarySuccess(payload));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {

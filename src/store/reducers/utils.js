@@ -101,7 +101,7 @@ const defaultOnUpdateDataMap = (data, payload) => {
   return updateItemInArray(
     data,
     payload,
-    (a, b) => String(a.id) === String(b.id)
+    (a, b) => String(a.id) === String(b.id) || String(a.uuid) === String(b.uuid)
   );
 };
 

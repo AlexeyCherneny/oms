@@ -1,59 +1,68 @@
-import React from 'react';
-import { Row, Col, Typography, Button } from "antd";
-import { NavLink } from 'react-router-dom';
-import Moment from 'moment';
+import React from "react";
+import {
+  Row,
+  Col
+  //  Typography, Button
+} from "antd";
+// import { NavLink } from "react-router-dom";
+import Moment from "moment";
 
-import { Card } from '../../../Components';
-import { formatCurrency, formatCount } from '../../../services/formatters';
-import { DATE_FORMATS, ROLES } from '../../../services/constants';
+import { Card } from "../../../Components";
+import { formatCurrency, formatCount } from "../../../services/formatters";
+import {
+  // DATE_FORMATS,
+  ROLES
+} from "../../../services/constants";
 
-import * as styles from './styles/styles.module.scss';
+// import * as styles from './styles/styles.module.scss';
 
-Moment.locale('ru');
+Moment.locale("ru");
 
-const { Text, Paragraph } = Typography;
+// const { Text, Paragraph } = Typography;
 
 const colProps = {
   xs: 24,
   sm: 12,
   md: 8,
-  style: { marginBottom: '24px' }
-}
+  style: { marginBottom: "24px" }
+};
 
-const daysText = ['день', 'дня', 'дней'];
-const peopleText = ['человек', 'человека', 'человек'];
+// const daysText = ['день', 'дня', 'дней'];
+const peopleText = ["человек", "человека", "человек"];
 
 const Dashboard = props => {
-  const nextSalaryDate = Moment(props.nextSalaryDate);
-  const salaryFooter = !props.nextSalary ? null : (
-    <span>
-      {nextSalaryDate.isValid() ? `С ${nextSalaryDate.format(DATE_FORMATS.fullString)} - ` : 'Следующее повышение - '}
-      <Text>{formatCurrency(props.nextSalary, 'USD')}</Text>
-    </span>
-  );
+  // const nextSalaryDate = Moment(props.nextSalaryDate);
+  // const salaryFooter = !props.nextSalary ? null : (
+  //   <span>
+  //     {nextSalaryDate.isValid() ? `С ${nextSalaryDate.format(DATE_FORMATS.fullString)} - ` : 'Следующее повышение - '}
+  //     <Text>{formatCurrency(props.nextSalary, 'USD')}</Text>
+  //   </span>
+  // );
 
-  const currentSalaryFooter = !props.dayoff ? null : (
-    <span>Отгулов - <Text>{formatCount(props.dayoff, ...daysText)}</Text></span>
-  );
+  // const currentSalaryFooter = !props.dayoff ? null : (
+  //   <span>Отгулов - <Text>{formatCount(props.dayoff, ...daysText)}</Text></span>
+  // );
 
-  const employeesFooter = props.role !== ROLES.hr ? null : (
-    <span>Плановая численность - <Text>{formatCount(props.plannedEmployees, ...peopleText)}</Text></span>
-  );
+  // const employeesFooter = props.role !== ROLES.hr ? null : (
+  //   <span>Плановая численность - <Text>{formatCount(props.plannedEmployees, ...peopleText)}</Text></span>
+  // );
 
-  const vacationFooter = (<NavLink to='/app/cabinet/events'><Text>Запланировать отпуск</Text></NavLink>);
+  // const vacationFooter = (<NavLink to='/app/cabinet/events'><Text>Запланировать отпуск</Text></NavLink>);
 
   return (
     <Row gutter={24} type="flex">
-      <Col {...colProps} >
+      <Col {...colProps}>
         <Card
           header="Teкущая ЗП"
-          title={props.salary ? formatCurrency(props.salary, 'USD') : 'Неизвестна'}
-          footer={salaryFooter}
+          title={
+            props.salary ? formatCurrency(props.salary, "USD") : "Неизвестна"
+          }
+          // footer={salaryFooter}
           tooltip="Дополнительная информация"
           hideContent={props.isPrivate}
         />
       </Col>
-      <Col {...colProps} >
+      {/* <Col {...colProps} >
         <Card header="Ближайшие события">
         {props.events.length > 0 ? props.events.map(event => (
           <div className={styles.cell} key={`event_${event.id}`}>
@@ -67,8 +76,8 @@ const Dashboard = props => {
           </div>
         )}
         </Card>
-      </Col>
-      <Col {...colProps} >
+      </Col> */}
+      {/* <Col {...colProps} >
         <Card
           header="Зарплата за текущий месяц"
           title={formatCurrency(props.currentSalary, 'USD')}
@@ -76,27 +85,27 @@ const Dashboard = props => {
           tooltip="Дополнительная информация"
           hideContent={props.isPrivate}
         />
-      </Col>
-      <Col {...colProps} >
+      </Col> */}
+      {/* <Col {...colProps} >
         <Card
           header="Доступное кол-во дней отпуска"
           title={formatCount(props.vacation, ...daysText)}
           footer={vacationFooter}
           tooltip="Дополнительная информация"
         />
-      </Col>
+      </Col> */}
       {props.role === ROLES.hr && (
-        <Col {...colProps} >
+        <Col {...colProps}>
           <Card
             header="Количество сотрудников"
             title={formatCount(props.employees, ...peopleText)}
-            footer={employeesFooter}
+            // footer={employeesFooter}
             tooltip="Дополнительная информация"
           />
         </Col>
       )}
     </Row>
   );
-}
+};
 
 export default Dashboard;

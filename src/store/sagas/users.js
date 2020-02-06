@@ -11,8 +11,6 @@ function* createUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
     const response = yield call(api.createUser, qs.stringify(payload));
 
     if (response.status === 200) {
-      yield delay(1000);
-
       yield put(actions.createUserSuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
       Notification.success("Внимание", "Пользователь успешно создан.");
@@ -36,7 +34,7 @@ function* readUsers(
     const search = defaultTo(payload.search, "");
     const response = yield call(api.readUsers, { search });
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
       yield put(actions.usersSuccess(response.data.data));
@@ -60,13 +58,11 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
       params: qs.stringify(payload.params)
     });
 
-    if (/200|201|204/.test(response.status)) {
-      yield delay(1000);
-
+    if (response.status === 200) {
       yield put(
         actions.updateUserSuccess({
-          id: payload.id,
-          item: response.data
+          id: payload.uuid,
+          ...response.data.data
         })
       );
       if (meta.onSuccess) meta.onSuccess(response.data);
@@ -81,6 +77,7 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
     }
   } catch (error) {
     const errorMessage = "Error while updating user";
+
     const { first_name, last_name } = payload.params;
     Notification.error(
       "Сотрудники",
@@ -101,7 +98,7 @@ function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
   try {
     const response = yield call(api.deleteUser, payload);
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
       yield put(actions.deleteUserSuccess(payload));
       if (meta.onSuccess) meta.onSuccess(response.data);

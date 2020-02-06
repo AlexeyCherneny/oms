@@ -22,7 +22,6 @@ const SalaryActions = props => {
         icon="edit"
         disabled={isDisabled}
         loading={isUpdating}
-        size="medium"
         style={{ marginRight: 8 }}
       />
       {salary.value !== 0 && (
@@ -30,7 +29,6 @@ const SalaryActions = props => {
           onClick={() => handleSalaryRangeDelete(salary)}
           disabled={isDisabled}
           loading={isDeleting}
-          size="medium"
           icon="delete"
         />
       )}
@@ -65,7 +63,7 @@ const staticColumns = [
 const SalaryRangeTable = props => (
   <Table
     dataSource={props.tableData}
-    rowKey="id"
+    rowKey="date"
     size="medium"
     ellipsis
     pagination={{

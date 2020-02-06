@@ -35,7 +35,7 @@ const CreateUserContainer = compose(
       const meta = {
         onSuccess: () => history.push(BASE_URL)
       };
-      createUser({ user:params }, meta);
+      createUser({ user: params }, meta);
     }
   })
 )(CreateUser);

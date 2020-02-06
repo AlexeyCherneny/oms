@@ -29,7 +29,9 @@ const inputs = initialValues => ({
     placeholder: "Пользователь",
     options: roles,
     settings: {
-      initialValue: get(initialValues, "roles", []),
+      initialValue: Array.isArray(get(initialValues, "roles", []))
+        ? get(initialValues, "roles", [])
+        : [],
       rules: [
         {
           required: true,
@@ -110,7 +112,7 @@ const inputs = initialValues => ({
     style: { width: "100%" },
     settings: {
       initialValue: get(initialValues, "birthday", "")
-        ? moment(initialValues.birthday, "DD/MM/YYYY")
+        ? moment(initialValues.birthday, "YYYY/MM/DD")
         : null,
       rules: [{ required: true, message: "Обязательное поле" }]
     }
@@ -135,7 +137,7 @@ class CreateUser extends React.Component {
 
   render() {
     const { initialValues = {}, form, isLoading } = this.props;
-
+    console.log("initialValues: ", initialValues);
     return (
       <Form onSubmit={this.handleSubmit}>
         <Row

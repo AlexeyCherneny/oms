@@ -33,7 +33,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     createUser: params => api.put(`user`, params),
     readUser: id => api.get(`user/${id}`),
     readUsers: ({ search }) => api.get(`user${search}`),
-    updateUser: ({ id, params }) => api.patch(`user/${id}`, params),
+    updateUser: ({ uuid, params }) => api.patch(`user/${uuid}`, params),
     deleteUser: id => api.delete(`user/${id}`),
 
     createEvent: args => api.post(`events`, args),

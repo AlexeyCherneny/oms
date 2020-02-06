@@ -35,7 +35,7 @@ function* createUsersPlan(
     //const response = yield call(api.createUsersPlan, payload);
     const response = { status: 200, data: payload };
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
       yield put(actions.createUsersPlanSuccess(response.data));
@@ -59,7 +59,7 @@ function* loadUsersPlans(api, { payload = {}, meta = {} } = {}) {
     //const response = yield call(api.readUsers, { search });
     const response = { status: 200, data };
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
       yield put(actions.usersPlansSuccess(response.data));
@@ -83,7 +83,7 @@ function* updateUsersPlan(
     //const response = yield call(api.updateUser, payload);
     const response = { status: 200, data: payload };
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
       yield put(actions.updateUsersPlanSuccess());
@@ -112,7 +112,7 @@ function* deleteUsersPlan(
     //const response = yield call(api.deleteUser, payload);
     const response = { status: 200, data: payload };
 
-    if (/200|201|204/.test(response.status)) {
+    if (response.status === 200) {
       yield delay(1000);
 
       yield put(actions.deleteUsersPlanSuccess(payload));

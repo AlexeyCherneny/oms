@@ -33,29 +33,29 @@ const navigationTabs = [
     icon: "dollar",
     forRoles: [ROLES.HR]
   },
-  {
-    title: "Мероприятия",
-    path: "/app/cabinet/events",
-    icon: "calendar",
-    forRoles: [ROLES.HR, ROLES.EMPLOYEE]
-  },
+  // {
+  //   title: "Мероприятия",
+  //   path: "/app/cabinet/events",
+  //   icon: "calendar",
+  //   forRoles: [ROLES.HR, ROLES.EMPLOYEE]
+  // },
   // {
   //   title: "Финансы",
   //   path: "/app/cabinet/payments",
   //   forRoles: [ROLES.HR, ROLES.EMPLOYEE]
   // },
-  {
-    title: "Документы",
-    path: "/app/cabinet/documents",
-    icon: "snippets",
-    forRoles: [ROLES.HR]
-  },
-  {
-    title: "Проекты",
-    path: "/app/cabinet/projects",
-    icon: "project",
-    forRoles: [ROLES.HR, ROLES.EMPLOYEE]
-  }
+  // {
+  //   title: "Документы",
+  //   path: "/app/cabinet/documents",
+  //   icon: "snippets",
+  //   forRoles: [ROLES.HR]
+  // },
+  // {
+  //   title: "Проекты",
+  //   path: "/app/cabinet/projects",
+  //   icon: "project",
+  //   forRoles: [ROLES.HR, ROLES.EMPLOYEE]
+  // }
 ];
 
 const mapState = ({ authorization }) => ({
