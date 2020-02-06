@@ -1,0 +1,16 @@
+.menuItem {
+  line-height: "40px";
+  margin: 0;
+  height: 60;
+  display: "flex";
+  alignitems: "center";
+}
+
+.contentSpinner {
+  padding-top: 20;
+  width: "100%";
+}
+
+.listWrapper::-webkit-scrollbar {
+  display: none;
+}

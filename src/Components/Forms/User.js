@@ -23,13 +23,13 @@ const roles = [
 ];
 
 const inputs = initialValues => ({
-  role: {
-    name: "role",
+  roles: {
+    name: "roles",
     mode: "multiple",
     placeholder: "Пользователь",
     options: roles,
     settings: {
-      initialValue: get(initialValues, "role", []),
+      initialValue: get(initialValues, "roles", []),
       rules: [
         {
           required: true,
@@ -71,7 +71,7 @@ const inputs = initialValues => ({
     placeholder: "Черненый",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "lastName", ""),
+      initialValue: get(initialValues, "last_name", ""),
       rules: [
         {
           required: true,
@@ -85,7 +85,7 @@ const inputs = initialValues => ({
     placeholder: "Алексей",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "firstName", ""),
+      initialValue: get(initialValues, "first_name", ""),
       rules: [
         {
           required: true,
@@ -99,7 +99,7 @@ const inputs = initialValues => ({
     placeholder: "Андреевич",
     suffix: <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />,
     settings: {
-      initialValue: get(initialValues, "middleName", "")
+      initialValue: get(initialValues, "middle_name", "")
     }
   },
   birthday: {
@@ -109,8 +109,8 @@ const inputs = initialValues => ({
     suffixIcon: <Icon type="calendar" style={{ color: "rgba(0,0,0,.25)" }} />,
     style: { width: "100%" },
     settings: {
-      initialValue: get(initialValues, "date", "")
-        ? moment(initialValues.date, programDateFormat)
+      initialValue: get(initialValues, "birthday", "")
+        ? moment(initialValues.birthday, "DD/MM/YYYY")
         : null,
       rules: [{ required: true, message: "Обязательное поле" }]
     }
@@ -156,7 +156,7 @@ class CreateUser extends React.Component {
         <Form.Item {...formItemLayout} label="Роль">
           <FormSelect
             form={form}
-            {...inputs(initialValues).role}
+            {...inputs(initialValues).roles}
             disabled={isLoading}
           />
         </Form.Item>

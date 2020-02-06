@@ -8,7 +8,7 @@ const UserInfo = props => {
   const { user } = props;
 
   if (!user) return null;
-
+  console.log("user: ", user);
   return (
     <>
       <Row className={styles.userPhotoNameWrapper}>
@@ -22,38 +22,46 @@ const UserInfo = props => {
         </Col>
       </Row>
       <Row className={styles.addInfoWrapper}>
-        <Row>
-          <Col span={18}>
-            <h2>Телефон:</h2>
-          </Col>
-          <Col span={18}>
-            <p className={styles.addInfo}>{user.phone}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={18}>
-            <h2>Должность:</h2>
-          </Col>
-          <Col span={18}>
-            <p className={styles.addInfo}>{user.position}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={18}>
-            <h2>Дата рождения:</h2>
-          </Col>
-          <Col span={18}>
-            <p className={styles.addInfo}>{user.birthday}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={18}>
-            <h2>Email:</h2>
-          </Col>
-          <Col span={18}>
-            <p className={styles.addInfo}>{user.email}</p>
-          </Col>
-        </Row>
+        {user.phone && (
+          <Row>
+            <Col span={18}>
+              <h2>Телефон:</h2>
+            </Col>
+            <Col span={18}>
+              <p className={styles.addInfo}>{user.phone}</p>
+            </Col>
+          </Row>
+        )}
+        {user.position && (
+          <Row>
+            <Col span={18}>
+              <h2>Должность:</h2>
+            </Col>
+            <Col span={18}>
+              <p className={styles.addInfo}>{user.position}</p>
+            </Col>
+          </Row>
+        )}
+        {user.birthday && (
+          <Row>
+            <Col span={18}>
+              <h2>Дата рождения:</h2>
+            </Col>
+            <Col span={18}>
+              <p className={styles.addInfo}>{user.birthday}</p>
+            </Col>
+          </Row>
+        )}
+        {user.email && (
+          <Row>
+            <Col span={18}>
+              <h2>Email:</h2>
+            </Col>
+            <Col span={18}>
+              <p className={styles.addInfo}>{user.email}</p>
+            </Col>
+          </Row>
+        )}
       </Row>
     </>
   );

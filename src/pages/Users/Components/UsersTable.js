@@ -57,12 +57,6 @@ const staticColumns = [
     align: "let"
   },
   {
-    title: "Позиция",
-    dataIndex: "position",
-    key: "position",
-    align: "center"
-  },
-  {
     title: "Действия",
     key: "action",
     width: "150px",

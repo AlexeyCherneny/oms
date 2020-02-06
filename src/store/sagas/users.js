@@ -96,8 +96,8 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
 }
 
 function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
-  const firstName = get(meta.user, "first_name") || "";
-  const lastName = get(meta.user, "last_name") || "";
+  const first_name = get(meta.user, "first_name") || "";
+  const last_name = get(meta.user, "last_name") || "";
   try {
     const response = yield call(api.deleteUser, payload);
 
@@ -107,7 +107,7 @@ function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
       if (meta.onSuccess) meta.onSuccess(response.data);
       Notification.success(
         "Сотрудники",
-        `Cотрудник ${firstName} ${lastName} успешно удален.`
+        `Cотрудник ${first_name} ${last_name} успешно удален.`
       );
     } else {
       throw response;
@@ -116,7 +116,7 @@ function* deleteUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
     const errorMessage = "Error while deleting users list";
     Notification.error(
       "Сотрудники",
-      `Не удалось удалить сотрудника ${firstName} ${lastName}.`
+      `Не удалось удалить сотрудника ${first_name} ${last_name}.`
     );
     if (meta.onFailure) meta.onFailure(error);
 

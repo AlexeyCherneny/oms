@@ -44,16 +44,30 @@ const rootSaga = function* root() {
 
   // SALARIES ACTIONS
   yield all([
-    takeLatest(actions.createSalaryRequest, salariesSagas.createSalary, api)
+    takeEvery(actions.createSalaryRequest, salariesSagas.createSalary, api)
   ]);
   yield all([
-    takeLatest(actions.salariesRequest, salariesSagas.readSalaries, api)
+    takeEvery(
+      actions.createSalaryRangeRequest,
+      salariesSagas.createSalaryRange,
+      api
+    )
   ]);
   yield all([
-    takeLatest(actions.updateSalaryRequest, salariesSagas.updateSalary, api)
+    takeEvery(
+      actions.deleteSalaryRangeRequest,
+      salariesSagas.deleteSalaryRange,
+      api
+    )
   ]);
   yield all([
-    takeLatest(actions.deleteSalaryRequest, salariesSagas.deleteSalary, api)
+    takeEvery(actions.salariesRequest, salariesSagas.readSalaries, api)
+  ]);
+  yield all([
+    takeEvery(actions.updateSalaryRequest, salariesSagas.updateSalary, api)
+  ]);
+  yield all([
+    takeEvery(actions.deleteSalaryRequest, salariesSagas.deleteSalary, api)
   ]);
 
   // PAYMENTS ACTIONS

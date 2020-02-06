@@ -1,34 +1,41 @@
 import moment from "moment";
 const dateFormat = "YYYY-MM-DD";
 
-export const splitRage = (sd, ed, divider) => {
+export const splitRange = (sd, ed, divider, preFill) => {
   try {
     if (!divider) {
       return [];
     }
 
-    let startDate = moment()
+    if (preFill) {
+      if (!sd && !ed) {
+        return [];
+      }
+    }
+    let dateFrom = moment()
       .startOf(divider)
       .subtract(6, divider);
     if (sd) {
-      startDate = moment(sd).startOf(divider);
+      dateFrom = moment(sd).startOf(divider);
     }
 
-    let endDate = moment()
+    let dateTo = moment()
       .startOf(divider)
       .add(6, divider);
     if (ed) {
-      endDate = moment(ed).startOf(divider);
+      dateTo = moment(ed).startOf(divider);
     }
 
-    if (!startDate.isValid() || !endDate.isValid()) {
+    if (!dateFrom.isValid() || !dateTo.isValid()) {
       return [];
     }
 
-    const splittedItems = {};
+    const splittedItems = {
+      [dateTo.format(dateFormat)]: ""
+    };
 
-    while (endDate.subtract(1, divider).isSameOrAfter(startDate)) {
-      splittedItems[endDate.format(dateFormat)] = "";
+    while (dateTo.subtract(1, divider).isSameOrAfter(dateFrom)) {
+      splittedItems[dateTo.format(dateFormat)] = "";
     }
 
     return splittedItems;
@@ -44,30 +51,30 @@ export const splitTimelineItem = (item, divider = "months") => {
       return [];
     }
 
-    let startDate = moment()
+    let dateFrom = moment()
       .startOf(divider)
       .subtract(6, divider);
-    if (item.startDate) {
-      startDate = moment(item.startDate).startOf(divider);
+    if (item.dateFrom) {
+      dateFrom = moment(item.dateFrom).startOf(divider);
     }
 
-    let endDate = moment()
+    let dateTo = moment()
       .startOf(divider)
       .add(6, divider);
-    if (item.endDate) {
-      endDate = moment(item.endDate).startOf(divider);
+    if (item.dateTo) {
+      dateTo = moment(item.dateTo).startOf(divider);
     }
 
-    if (!startDate.isValid() || !endDate.isValid()) {
+    if (!dateFrom.isValid() || !dateTo.isValid()) {
       return [];
     }
 
     const splittedItems = [];
 
-    while (endDate.subtract(1, divider).isSameOrAfter(startDate)) {
+    while (dateTo.subtract(1, divider).isSameOrAfter(dateFrom)) {
       splittedItems.unshift({
         ...item,
-        date: endDate.format(dateFormat)
+        date: dateTo.format(dateFormat)
       });
     }
 
@@ -93,42 +100,4 @@ export const splitTimelineItems = (timelineItems, divider) => {
     console.log(err);
     return [];
   }
-};
-
-export const matchEntities = (
-  entityA,
-  entityB,
-  isMatch = () => true,
-  match = () => {}
-) => {
-  try {
-    const matches = [];
-
-    entityA.forEach(entityAItem => {
-      entityB.forEach(entityBItem => {
-        if (isMatch(entityAItem, entityBItem)) {
-          matches.push(match(entityAItem, entityBItem));
-        }
-      });
-    });
-
-    return matches;
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-};
-
-export const mergeObjects = (arr, merger) => {
-  const data = {};
-
-  arr.forEach(item => {
-    if (data[item.date]) {
-      data[item.date] = { ...data[item.date], ...item };
-    } else {
-      data[item.date] = { ...item };
-    }
-  });
-
-  return Object.values(data);
 };

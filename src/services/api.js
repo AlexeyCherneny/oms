@@ -42,7 +42,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     updateEvent: args => api.put(`events/${args.id}`, args),
     deleteEvent: args => api.delete(`events/${args.id}`),
 
-    createSalary: ({ params }) => api.post(`salary`, params),
+    createSalary: params => api.put(`salary`, params),
     readSalary: id => api.get(`salary/${id}`),
     readSalaries: ({ search }) => api.get(`salary${search}`),
     updateSalary: ({ id, params }) => api.put(`salary/${id}`, params),

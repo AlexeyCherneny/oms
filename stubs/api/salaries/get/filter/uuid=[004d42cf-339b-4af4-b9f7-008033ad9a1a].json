@@ -10,80 +10,86 @@
     {
       "id": 2,
       "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-      "value": 200,
+      "value": 100,
       "currency": "USD",
       "date": "2019-02-01"
     },
     {
       "id": 3,
       "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-      "value": 200,
+      "value": 100,
       "currency": "USD",
       "date": "2019-03-01"
     },
     {
       "id": 4,
       "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-      "value": 303,
+      "value": 200,
       "currency": "USD",
       "date": "2019-04-01"
     },
     {
       "id": 5,
       "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-      "value": 500,
+      "value": 200,
       "currency": "USD",
       "date": "2019-05-01"
     },
     {
       "id": 6,
       "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-      "value": 500,
+      "value": 300,
       "currency": "USD",
       "date": "2019-06-01"
     },
-
     {
       "id": 7,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 100,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 300,
       "currency": "USD",
-      "date": "2019-01-01"
+      "date": "2019-07-01"
     },
     {
       "id": 8,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 200,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
       "currency": "USD",
-      "date": "2019-02-01"
+      "date": "2019-08-01"
     },
     {
       "id": 9,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 200,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
       "currency": "USD",
-      "date": "2019-03-01"
+      "date": "2019-09-01"
     },
     {
       "id": 10,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 303,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
       "currency": "USD",
-      "date": "2019-04-01"
+      "date": "2019-10-01"
     },
     {
       "id": 11,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 500,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
       "currency": "USD",
-      "date": "2019-05-01"
+      "date": "2019-11-01"
     },
     {
       "id": 12,
-      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
-      "value": 500,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
       "currency": "USD",
-      "date": "2019-06-01"
+      "date": "2019-12-01"
+    },
+    {
+      "id": 13,
+      "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "value": 450,
+      "currency": "USD",
+      "date": "2020-01-01"
     }
   ],
   "errors": [],
