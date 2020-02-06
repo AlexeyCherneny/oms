@@ -101,7 +101,7 @@ const defaultOnUpdateDataMap = (data, payload) => {
   return updateItemInArray(
     data,
     payload,
-    (a, b) => String(a.id) === String(b.id)
+    (a, b) => String(a.id) === String(b.id) || String(a.uuid) === String(b.uuid)
   );
 };
 
@@ -109,7 +109,7 @@ const defaultOnDeleteDataMap = (data, payload) => {
   return removeItemFromArray(
     data,
     payload,
-    (itemA, itemB) => itemA.id !== itemB.id
+    (itemA, itemB) => itemA.id !== itemB
   );
 };
 
@@ -260,6 +260,21 @@ export const createCRUDReducer = (
         ...state,
 
         deletingIds: removeItemFromArray(state.deletingIds, payload)
+      };
+    },
+    // --
+    // --
+    // --
+    // --
+    // --------------------------------------------------
+    // --------------------------------------------------
+    //
+    // payload - id of deleting item
+    [`RESET_${pluralizeUpperName}`]: (state, payload) => {
+      return {
+        ...state,
+
+        data: []
       };
     }
   };

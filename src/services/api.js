@@ -33,7 +33,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     createUser: params => api.put(`user`, params),
     readUser: id => api.get(`user/${id}`),
     readUsers: ({ search }) => api.get(`user${search}`),
-    updateUser: ({ id, params }) => api.patch(`user/${id}`, params),
+    updateUser: ({ uuid, params }) => api.patch(`user/${uuid}`, params),
     deleteUser: id => api.delete(`user/${id}`),
 
     createEvent: args => api.post(`events`, args),
@@ -42,7 +42,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     updateEvent: args => api.put(`events/${args.id}`, args),
     deleteEvent: args => api.delete(`events/${args.id}`),
 
-    createSalary: ({ params }) => api.post(`salary`, params),
+    createSalary: params => api.put(`salary`, params),
     readSalary: id => api.get(`salary/${id}`),
     readSalaries: ({ search }) => api.get(`salary${search}`),
     updateSalary: ({ id, params }) => api.put(`salary/${id}`, params),

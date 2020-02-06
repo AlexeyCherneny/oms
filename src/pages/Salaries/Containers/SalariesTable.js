@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, withProps } from "recompose";
-import { get } from "lodash";
 import moment from "moment";
 
 import {
   displayDateFormat,
-  programDateFormat
+  programDateFormat,
+  getFullName
 } from "../../../services/formatters";
 import selectors from "../../../store/selectors";
 import actions from "../../../store/actions";
@@ -28,30 +28,18 @@ const mapDispatch = {
 const SalariesTableContainer = compose(
   connect(mapState, mapDispatch),
   withRouter,
-  withProps(({ history, salaries, getUserById }) => {
+  withProps(({ salaries, getUserById }) => {
     const tableData = salaries.map(salary => {
-      const user = getUserById(salary.userId);
-
-      const fullName = `${get(user, "last_name", "")} ${get(
-        user,
-        "first_name",
-        ""
-      )} ${get(user, "middle_name", "")}`;
-
-      const amount = formatCurrency(salary.value, salary.currency);
-
       return {
         ...salary,
         date: moment(salary.date, programDateFormat).format(displayDateFormat),
-        full_name: fullName,
-        amount: amount
+        fullName: getFullName(getUserById(salary.userId)),
+        amount: formatCurrency(salary.value, "USD")
       };
     });
 
     return {
-      tableData,
-      handleSalaryInfo: salary_id => history.push(`salaries/${salary_id}/info`),
-      handleSalaryEdit: salary_id => history.push(`salaries/${salary_id}/edit`)
+      tableData
     };
   })
 )(SalariesTable);

@@ -27,13 +27,9 @@ const Calendar = props => (
 
       if (day && day.workday === "true") {
         if (date.el) {
-          date.el.style.background = "green";
-          date.el.style.opacity = "0.7";
         }
       } else {
         if (date.el) {
-          date.el.style.background = "red";
-          date.el.style.opacity = "0.3";
         }
       }
     }}

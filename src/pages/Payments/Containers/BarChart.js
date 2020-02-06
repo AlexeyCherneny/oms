@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import moment from "moment";
 import { groupBy, reduce, merge, mapValues, pickBy, reverse } from "lodash";
 
-import { splitRage } from "../../../services/chartUtils";
+import { splitRange } from "../../../services/chartUtils";
 
 import { programDateFormat } from "../../../services/formatters";
 
@@ -53,7 +53,7 @@ const BarChartContainer = compose(
       endDate = moment(values.end_date).startOf("month");
     }
 
-    const range = splitRage(startDate, endDate, "month");
+    const range = splitRange(startDate, endDate, "month");
 
     const groupedPayments = groupBy(payments, payment =>
       moment(payment.date)

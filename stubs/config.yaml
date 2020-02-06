@@ -106,7 +106,6 @@
       content-type: application/json
     file: api/documents/get_document_success.json
 
-
 - request:
     url: ^/api/documents$
     method: post
@@ -117,7 +116,6 @@
       content-type: application/json
     file: api/documents/post_document_success.json
 
-
 - request:
     url: ^/api/documents/([0-5])$
     method: delete
@@ -126,7 +124,6 @@
     headers:
       content-type: application/json
     file: api/documents/<% url[1] %>/delete.json
-
 
 - request:
     url: ^/api/documents/([0-5])$
@@ -137,7 +134,6 @@
       content-type: application/json
     file: api/documents/<% url[1] %>/patch.json
 
-
 - request:
     url: ^/api/documents/(.+)$
     method: patch
@@ -146,7 +142,6 @@
     headers:
       content-type: application/json
     code: 404
-
 
 - request:
     url: ^/api/documents/(.+)$
@@ -157,23 +152,25 @@
       content-type: application/json
     code: 404
 
-
 ### Salary API
+
 - request:
-    url: ^/api/salary$
+    url: ^/api/salary
+    query:
+      uuid[0]: "004d42cf-339b-4af4-b9f7-008033ad9a1a"
+    method: get
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/get/filter/uuid=[004d42cf-339b-4af4-b9f7-008033ad9a1a].json
+
+- request:
+    url: ^/api/salary
     method: get
   response:
     headers:
       content-type: application/json
     file: api/salaries/get_salaries_success.json
-
-- request:
-    url: ^/api/salary/.$
-    method: get
-  response:
-    headers:
-      content-type: application/json
-    file: api/salaries/get_user_salary_success.json
 
 - request:
     url: ^/api/salary/.$
