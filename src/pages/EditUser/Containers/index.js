@@ -53,10 +53,11 @@ const ProfilePageContainer = compose(
       const meta = {
         onSuccess: () => history.push(BASE_URL)
       };
+
       updateUser(
         {
-          id: match.params.id,
-          params
+          uuid: match.params.id,
+          params: { user: params }
         },
         meta
       );

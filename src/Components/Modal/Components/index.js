@@ -4,6 +4,7 @@ import { Modal } from "antd";
 import ProjectForm from "../../Forms/Project";
 import ProjectWorkForm from "../../Forms/ProjectWork";
 import RenameModal from "../../Forms/RenameModal";
+import CustomSalary from "../../Forms/CustomSalary";
 
 const MODAL_TYPES = {
   project: 'project',
@@ -13,6 +14,8 @@ const MODAL_TYPES = {
 }
 
 const ModalContent = props => {
+  const { isLoading } = props;
+
   switch (props.type) {
     case MODAL_TYPES.project: {
       return (
@@ -20,6 +23,7 @@ const ModalContent = props => {
           {...props.form}
           handleSubmit={props.handleSubmit}
           handleReject={props.handleReject}
+          isLoading={isLoading}
         />
       );
     }
@@ -29,6 +33,17 @@ const ModalContent = props => {
           {...props.form}
           handleSubmit={props.handleSubmit}
           handleReject={props.handleReject}
+          isLoading={isLoading}
+        />
+      );
+    }
+    case "customSalary": {
+      return (
+        <CustomSalary
+          {...props.form}
+          handleSubmit={props.handleSubmit}
+          handleReject={props.handleReject}
+          isLoading={isLoading}
         />
       );
     }
@@ -49,14 +64,13 @@ const ModalContent = props => {
   }
 };
 const CustomModal = props => {
-  let modalSettings = { footer: null };
+  let modalSettings = { footer: null, onCancel: () => props.handleReject() };
 
   if (props.type === MODAL_TYPES.confirm) {
     modalSettings = {
       cancelText: props.cancelText,
       okText: props.okText,
       onOk: props.handleSubmit,
-      onCancel: props.handleReject,
       title: props.title,
       content: props.content,
       closable: !props.isLoading,

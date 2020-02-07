@@ -8,7 +8,7 @@ const UserActions = props => {
     handleUserInfo,
     handleUserEdit,
     isUserUpdating,
-    handleUserDelete,
+    // handleUserDelete,
     isUserDeleting,
     accountRoles
   } = props;
@@ -37,14 +37,14 @@ const UserActions = props => {
         icon="info-circle"
         style={{ marginRight: 8 }}
       />
-      {isHR && (
+      {/* {isHR && (
         <Button
           onClick={() => handleUserDelete(user.uuid, { user })}
           disabled={isDisabled}
           loading={isDeleting}
           icon="delete"
         />
-      )}
+      )} */}
     </>
   );
 };
@@ -55,12 +55,6 @@ const staticColumns = [
     dataIndex: "full_name",
     key: "full_name",
     align: "let"
-  },
-  {
-    title: "Позиция",
-    dataIndex: "position",
-    key: "position",
-    align: "center"
   },
   {
     title: "Действия",
@@ -74,7 +68,7 @@ const staticColumns = [
 const UsersList = props => (
   <Table
     dataSource={props.tableData}
-    rowKey="id"
+    rowKey="uuid"
     pagination={{ pageSize: 5 }}
     loading={props.isDownloading}
   >

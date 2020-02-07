@@ -43,7 +43,6 @@ function* initializeApplication(api, action) {
       const settings = loadSettings();
       yield put(actions.setUserSettings(settings));
 
-      yield delay(1000);
       yield put(actions.initializeApplicationSuccess());
     } else if (response.status === 401) {
       cleanAuthToken();

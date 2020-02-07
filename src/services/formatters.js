@@ -1,5 +1,21 @@
+import moment from "moment";
+
 export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
+
+export const getFullName = user => {
+  return user ? `${user.firstName} ${user.lastName}` : "";
+};
+
+export const fromProgramToDisplayDate = date => {
+  const mDate = moment(date, programDateFormat);
+
+  if (mDate.isValid()) {
+    return mDate.format(sDisplayDateFormat);
+  }
+
+  return "";
+};
 
 export const formatBirthdayForCalendar = arrayOfBirthday => {
   const year = new Date().getFullYear();
@@ -48,6 +64,7 @@ export const formatCount = (num, one, two = one, five = two) => {
 
 export const programDateFormat = "YYYY-MM-DD";
 export const displayDateFormat = "DD.MM.YYYY";
+export const sDisplayDateFormat = "MM.YYYY";
 
 export const formatPaymentType = type => {
   switch (type) {

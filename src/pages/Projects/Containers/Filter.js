@@ -1,6 +1,5 @@
 import { compose, withProps, withHandlers } from "recompose";
 import { connect } from "react-redux";
-import { get, defaultTo } from "lodash";
 import { push } from "connected-react-router";
 import { withRouter } from "react-router-dom";
 import qs from "qs";

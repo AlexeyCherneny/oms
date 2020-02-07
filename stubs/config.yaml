@@ -152,7 +152,6 @@
       content-type: application/json
     status: 404
 
-### Document access API
 - request:
     url: ^/api/documents/([0-9])/accesses/([0-9]+)$
     method: delete
@@ -194,21 +193,24 @@
     file: api/documents/accesses/post_document_accesses_success.json
 
 ### Salary API
+
 - request:
-    url: ^/api/salary$
+    url: ^/api/salary
+    query:
+      uuid[0]: "004d42cf-339b-4af4-b9f7-008033ad9a1a"
+    method: get
+  response:
+    headers:
+      content-type: application/json
+    file: api/salaries/get/filter/uuid=[004d42cf-339b-4af4-b9f7-008033ad9a1a].json
+
+- request:
+    url: ^/api/salary
     method: get
   response:
     headers:
       content-type: application/json
     file: api/salaries/get_salaries_success.json
-
-- request:
-    url: ^/api/salary/.$
-    method: get
-  response:
-    headers:
-      content-type: application/json
-    file: api/salaries/get_user_salary_success.json
 
 - request:
     url: ^/api/salary/.$

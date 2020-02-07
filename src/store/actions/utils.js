@@ -72,6 +72,12 @@ export const createCRUDActions = name => {
       `DELETE_${upperName}_FAILURE`,
       payload => payload,
       (_, meta) => meta
+    ),
+
+    [`reset${firstUppercase(pluralizeName)}`]: createAction(
+      `RESET_${pluralizeUpperName}`,
+      payload => payload,
+      (_, meta) => meta
     )
   };
 };

@@ -96,7 +96,6 @@ function* saveFCMToken(api, action) {
 }
 
 function* updateUserLocalSettings() {
-  yield delay(1000);
   const settings = yield select(state => get(state, 'authorization.settings', {}));
   saveSettings(settings);
 }

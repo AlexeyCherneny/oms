@@ -5,6 +5,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Project from "../pages/Projects/Containers/Project";
 import ProjectUsers from "../pages/Projects/Containers/ProjectUsers";
 import ProjectUser from "../pages/Projects/Containers/ProjectUser";
+
+import SalariesManagement from "../pages/Salaries/Containers/SalariesManagement";
+import SalaryRangeTable from "../pages/Salaries/Containers/SalaryRangeTable";
+import SalaryAnalytics from "../pages/Salaries/Containers/SalaryAnalytics";
 import { Header, Modal } from "../Components";
 import {
   Users,
@@ -12,8 +16,6 @@ import {
   Events,
   Profile,
   Salaries,
-  CreateSalary,
-  EditSalary,
   CreateUser,
   UserInfo,
   EditUser,
@@ -90,10 +92,24 @@ const Cabinet = () => (
         </Route>
 
         <Route path="/app/cabinet/salaries">
-          <Salaries />
+          <Salaries>
+            <Switch>
+              <Route
+                exact
+                path="/app/cabinet/salaries/analytics"
+                component={SalaryAnalytics}
+              />
 
-          <Route path="/app/cabinet/salaries/create" component={CreateSalary} />
-          <Route path="/app/cabinet/salaries/:id/edit" component={EditSalary} />
+              <Route exact path="/app/cabinet/salaries/:userId?">
+                <SalariesManagement>
+                  <Route
+                    path="/app/cabinet/salaries/:userId"
+                    component={SalaryRangeTable}
+                  />
+                </SalariesManagement>
+              </Route>
+            </Switch>
+          </Salaries>
         </Route>
 
         <Route path="/app/cabinet/payments">

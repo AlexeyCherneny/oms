@@ -17,7 +17,7 @@ const mapDispatch = {
 const UserTabContainer = compose(
   connect(mapState, mapDispatch),
   withProps(({ user }) => ({
-    fullName: `${get(user, "first_name", "")} ${get(user, "last_name", "")}`
+    fullName: `${get(user, "firstName", "")} ${get(user, "lastName", "")}`
   }))
 )(UserTab);
 

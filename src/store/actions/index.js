@@ -6,9 +6,9 @@ import eventsActions from "./events";
 import paymentsActions from "./payments";
 import documentActions from "./documents";
 import modalActions from "./modal";
+import salariesActions from "./salaries";
 
 const usersActions = createCRUDActions("user");
-const salariesActions = createCRUDActions("salary");
 const usersPlanActions = createCRUDActions("usersPlan");
 const projectsActions = createCRUDActions("project");
 const projectWorkActions = createCRUDActions("projectWork");

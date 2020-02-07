@@ -23,13 +23,15 @@ const roles = [
 ];
 
 const inputs = initialValues => ({
-  role: {
-    name: "role",
+  roles: {
+    name: "roles",
     mode: "multiple",
     placeholder: "Пользователь",
     options: roles,
     settings: {
-      initialValue: get(initialValues, "role", []),
+      initialValue: Array.isArray(get(initialValues, "roles", []))
+        ? get(initialValues, "roles", [])
+        : [],
       rules: [
         {
           required: true,
@@ -109,8 +111,8 @@ const inputs = initialValues => ({
     suffixIcon: <Icon type="calendar" style={{ color: "rgba(0,0,0,.25)" }} />,
     style: { width: "100%" },
     settings: {
-      initialValue: get(initialValues, "date", "")
-        ? moment(initialValues.date, programDateFormat)
+      initialValue: get(initialValues, "birthday", "")
+        ? moment(initialValues.birthday, "YYYY/MM/DD")
         : null,
       rules: [{ required: true, message: "Обязательное поле" }]
     }
@@ -135,7 +137,7 @@ class CreateUser extends React.Component {
 
   render() {
     const { initialValues = {}, form, isLoading } = this.props;
-
+    console.log("initialValues: ", initialValues);
     return (
       <Form onSubmit={this.handleSubmit}>
         <Row
@@ -156,7 +158,7 @@ class CreateUser extends React.Component {
         <Form.Item {...formItemLayout} label="Роль">
           <FormSelect
             form={form}
-            {...inputs(initialValues).role}
+            {...inputs(initialValues).roles}
             disabled={isLoading}
           />
         </Form.Item>

@@ -5,9 +5,9 @@
     "roles": [
       "ROLE_USER"
     ],
-    "first_name": "Abel",
-    "last_name": "Wolf",
-    "middle_name": "Thad",
+    "firstName": "Abel",
+    "lastName": "Wolf",
+    "middleName": "Thad",
     "birthday": "28/11/1984",
     "skype": "wunsch.adrianna",
     "telegram": "ibuckridge",

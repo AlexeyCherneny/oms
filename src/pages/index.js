@@ -11,8 +11,6 @@ import Home from "./Home";
 import Payments from "./Payments";
 import Documents from "./Documents";
 import Projects from "./Projects";
-import EditSalary from "./EditSalary";
-import CreateSalary from "./CreateSalary";
 import { CreatePayment, UpdatePayment, PaymentInfo } from "./Payment";
 
 import ApplicationLoader from "./ApplicationLoader/ApplicationLoader";
@@ -24,7 +22,6 @@ export {
   Events,
   Profile,
   Salaries,
-  EditSalary,
   CreateUser,
   UserInfo,
   EditUser,
@@ -35,6 +32,5 @@ export {
   UpdatePayment,
   PaymentInfo,
   Documents,
-  CreateSalary,
   Projects
 };

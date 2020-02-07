@@ -5,9 +5,9 @@
     "roles": [
       "ROLE_USER"
     ],
-    "first_name": "Sonny",
-    "last_name": "Walker",
-    "middle_name": "Jamil",
+    "firstName": "Sonny",
+    "lastName": "Walker",
+    "middleName": "Jamil",
     "birthday": "09/12/1997",
     "skype": "ddickens",
     "telegram": "neil.mccullough",
