@@ -6,7 +6,8 @@ import './styles/ProjectWorkTable.scss';
 
 const TableActions = ({
   projectWork, 
-  handleProjectWorkEdit, 
+  handleProjectWorkEdit,
+  handleDelete, 
   isProjectWorkUpdating
 }) => {
 
@@ -19,7 +20,11 @@ const TableActions = ({
         icon="edit"
         loading={isUpdating}
         style={{ marginRight: 8 }}
-        size="small"
+      />
+      <Button
+        onClick={() => handleDelete(projectWork)}
+        icon="delete"
+        loading={isUpdating}
       />
     </>
   );
@@ -99,7 +104,7 @@ const ProjectWorkTable = props => {
       className="antd-table-custom"
       rowClassName={addWarningClass}
       dataSource={props.tableData}
-      rowKey="id"
+      rowKey="uuid"
       size="medium"
       loading={props.isLoadingData}
       pagination={{

@@ -115,10 +115,11 @@ export const spreadAction = action => {
   try {
     const payload = get(action, "payload", {});
 
-    const onSuccess = get(action, "payload.meta.onSuccess", () => {});
-    const onFailure = get(action, "payload.meta.onFailure", () => {});
+    const onSuccess = get(action, "payload.meta.onSuccess", get(action, 'meta.onSuccess', () => {}));
+    const onFailure = get(action, "payload.meta.onFailure", get(action, 'meta.onFailure', () => {}));
+    const data = get(action, "meta.data", null);
 
-    return { payload, onSuccess, onFailure };
+    return { payload, onSuccess, onFailure, data };
   } catch (err) {
     console.log("Error while spreading action", err);
     return {};

@@ -3,12 +3,15 @@ import { Modal } from "antd";
 
 import ProjectForm from "../../Forms/Project";
 import ProjectWorkForm from "../../Forms/ProjectWork";
+import ProjectUser from "../../Forms/ProjectUser";
 import RenameModal from "../../Forms/RenameModal";
 import CustomSalary from "../../Forms/CustomSalary";
 
-const MODAL_TYPES = {
+export const MODAL_TYPES = {
   project: 'project',
   projectWork: 'projectWork',
+  projectUser: 'projectUser',
+  customSalary: 'customSalary',
   rename: 'rename',
   confirm: 'confirm'
 }
@@ -37,7 +40,17 @@ const ModalContent = props => {
         />
       );
     }
-    case "customSalary": {
+    case MODAL_TYPES.projectUser: {
+      return (
+        <ProjectUser
+          {...props.form}
+          handleSubmit={props.handleSubmit}
+          handleReject={props.handleReject}
+          isLoading={isLoading}
+        />
+      );
+    }
+    case MODAL_TYPES.customSalary: {
       return (
         <CustomSalary
           {...props.form}
@@ -69,6 +82,7 @@ const getModalSettings = props => {
     afterClose: props.handleClose,
     onCancel: props.handleReject,
     destroyOnClose: true,
+    closable: !props.isLoading,
   }
 
   switch (props.type) {
@@ -80,6 +94,12 @@ const getModalSettings = props => {
         okText: props.okText,
         title: props.title,
         content: props.content,
+        okButtonProps: {
+          loading: props.isLoading,
+        },
+        cancelButtonProps: {
+          disabled: props.isLoading,
+        },
       };
     default: 
       return {

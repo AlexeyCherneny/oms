@@ -5,7 +5,8 @@ import { get } from "lodash";
 
 import {
   formatEventsForCalendar,
-  formatBirthdayForCalendar
+  formatBirthdayForCalendar,
+  getFullName
 } from "../../../services/formatters";
 
 import Calendar from "../Components/Calendar";
@@ -22,7 +23,7 @@ const CalendarContainer = compose(
     const events = get(eventsList, "data", []);
 
     const usersBirths = usersList.map(user => ({
-      name: user.firstName + " " + user.lastName,
+      name: getFullName(user),
       date: user.birthday,
       type: "birth"
     }));

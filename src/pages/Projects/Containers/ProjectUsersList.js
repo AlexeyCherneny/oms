@@ -7,6 +7,7 @@ import { BASE_URL } from "../constants";
 import ProjectUsersList from "../Components/ProjectUsersList";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
+import { getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
   getProjectById: selectors.getProjectById(state),
@@ -19,9 +20,6 @@ const mapDispatch = {
   createProject: actions.createProjectsRequest,
   openModal: actions.openModal
 };
-
-const getFullName = user =>
-  user ? `${user.firstName || ""} ${user.lastName || ""}` : "";
 
 const ProjectUsersListContainer = compose(
   withRouter,

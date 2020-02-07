@@ -4,8 +4,11 @@ export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
 
 export const getFullName = user => {
-  return user ? `${user.firstName} ${user.lastName}` : "";
+  return user ? `${user.firstName} ${user.lastName}` : '';
 };
+
+export const getShortName = user => 
+  user ? `${user.firstName[0]}. ${user.lastName}` : '';
 
 export const fromProgramToDisplayDate = date => {
   const mDate = moment(date, programDateFormat);
@@ -82,4 +85,3 @@ export const isPermitted = (availableRoles = [], roles = []) =>
     roles.some(role => availableRole === role)
   );
 
-export const getFullUserName = user => user ? (user.firstName + ' ' + user.lastName) : 'John Dow';

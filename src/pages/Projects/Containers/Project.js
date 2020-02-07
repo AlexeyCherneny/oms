@@ -3,16 +3,18 @@ import { get } from "lodash";
 import { compose, withProps, lifecycle, withHandlers, mapProps } from "recompose";
 import { withRouter } from "react-router-dom";
 import { isEqual, pickBy, pick } from "lodash";
-import moment from "moment";
+import Moment from "moment";
 import qs from "qs";
 
 import Project from "../Components/Project";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
-
-import { programDateFormat } from "../../../services/formatters";
+import { MODAL_TYPES } from "../../../Components/Modal/Components";
+import { programDateFormat, getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
+  projectWorks: selectors.getProjectWorks(state),
+  isLoadingProject: selectors.isProjectsDownloading(state),
   getProjectById: selectors.getProjectById(state),
   getUserById: selectors.getUserById(state),
   users: selectors.getUsers(state)
@@ -20,10 +22,9 @@ const mapState = state => ({
 
 const mapDispatch = {
   readProjectWorks: actions.projectWorksRequest,
+  cleanProjectWorks: actions.cleanProjectWorks,
+  openModal: actions.openModal,
 };
-
-const getFullName = user =>
-  user ? `${user.firstName || ""} ${user.lastName || ""}` : "";
 
 const ProjectContainer = compose(
   withRouter,
@@ -54,9 +55,9 @@ const ProjectContainer = compose(
   }),
   withHandlers({
     buildQuery: ({ searchObj }) => () => {
-      const momentDate = moment(searchObj.date).isValid()
-        ? moment(searchObj.date)
-        : moment();
+      const momentDate = Moment(searchObj.date).isValid()
+        ? Moment(searchObj.date)
+        : Moment();
       const date = momentDate.startOf('month').format(programDateFormat);
       const newSeachObj = pickBy({ ...searchObj, date });
 
@@ -68,10 +69,28 @@ const ProjectContainer = compose(
       const search = qs.stringify(newSeachObj, { skipNulls: true });
       history.replace({ pathname, search });
     },
-    readProjectWorks: ({ readProjectWorks, searchObj, projectId }) => () => {
-      readProjectWorks({ projectId, search: searchObj });
+    readProjectWorks: ({ readProjectWorks, cleanProjectWorks, searchObj, project }) => () => {
+      if (!project) return cleanProjectWorks();
+      readProjectWorks({ projectId: project.uuid, search: searchObj });
     },
-    handleAddUser: () => () => console.log('add user'),
+    handleAddUser: ({ openModal, users, projectWorks, searchObj, project }) => () => openModal({
+      form: {
+        initialValues: {
+          date: searchObj.date,
+          projectId: project.uuid
+        },
+        users: users.filter(user => !projectWorks.find(work => work.userId === user.uuid)),
+        submitTitle: "Добавить",
+        rejectTitle: "Отменить"
+      },
+      title: "Добавить сотрудников",
+      type: MODAL_TYPES.projectUser,
+      meta: {
+        start: params => actions.createProjectWorkRequest({ projectId: project.uuid, params }),
+        success: () => actions.createProjectWorkSuccess(),
+        failure: () => actions.createProjectWorkFailure()
+      },
+    })
   }),
   lifecycle({
     componentDidMount() {
@@ -81,8 +100,9 @@ const ProjectContainer = compose(
     },
     
     componentDidUpdate(prevProps) {
-      const { readProjectWorks, buildQuery, updateQuery, projectId, searchObj } = this.props;
-      const isProjectChanged = projectId !== prevProps.projectId;
+      const { readProjectWorks, buildQuery, updateQuery, isLoadingProject, project, searchObj } = this.props;
+      const isProjectChanged = !isEqual(project, prevProps.project) 
+        || (prevProps.isLoadingProject && !isLoadingProject);
       const isSearchUpdated = !isEqual(searchObj, prevProps.searchObj);
 
       if (isProjectChanged || isSearchUpdated) {
@@ -98,6 +118,7 @@ const ProjectContainer = compose(
     'attachments',
     'updateQuery',
     'handleAddUser',
+    'readProjectWorks',
     'searchObj'
   ]))
 )(Project);

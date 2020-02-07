@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button, Row, Col } from "antd";
+import Moment from "moment";
 
 import { Input, DatePicker } from "../FormElements";
-import Moment from "moment";
 import { programDateFormat } from "../../services/formatters";
 
 const createInputs = ({ title, start_date, end_date }) => ({
@@ -111,7 +111,7 @@ class Project extends React.Component {
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           {handleReject && (
             <Button
-              loading={isLoading}
+              disabled={isLoading}
               style={{ marginRight: 10 }}
               onClick={handleReject}
             >
@@ -119,7 +119,11 @@ class Project extends React.Component {
             </Button>
           )}
           {handleSubmit && (
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button 
+              type="primary" 
+              htmlType="submit" 
+              loading={isLoading}
+            >
               {this.props.submitTitle}
             </Button>
           )}

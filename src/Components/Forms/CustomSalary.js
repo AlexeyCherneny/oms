@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 
 import {
   displayDateFormat,
-  programDateFormat
+  programDateFormat,
+  getShortName
 } from "../../services/formatters";
 import FormInput from "../FormElements/Input/Input";
 import MonthPicker from "../FormElements/MonthPicker/MonthPicker";
@@ -130,7 +131,7 @@ class EventForm extends React.Component {
             {...inputs(initialValues).user}
             disabled
             options={users.map(user => ({
-              label: `${user.firstName[0]}. ${user.lastName}`,
+              label: getShortName(user),
               value: String(user.uuid)
             }))}
           />

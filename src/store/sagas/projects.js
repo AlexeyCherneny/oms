@@ -11,14 +11,12 @@ function* createProject(api, action) {
 
   try {
     const response = yield call(api.createProject, qs.stringify(payload));
+    testResponse(response);
 
-    if (response.status === 200) {
-      yield put(actions.createProjectSuccess(response.data.data));
-      Notification.success("Проекты", "Проект успешно создан.");
-      onSuccess(response.data.data);
-    } else {
-      throw response;
-    }
+    yield put(actions.createProjectSuccess(response.data.data));
+    Notification.success("Проекты", "Проект успешно создан.");
+    onSuccess(response.data.data);
+    
   } catch (error) {
     const errorMessage = "Error while creating Project";
     Notification.error("Внимание", "Не удалось создать проект.");

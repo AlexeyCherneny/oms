@@ -3,6 +3,7 @@ import { compose, withProps, withHandlers } from "recompose";
 import { withRouter } from "react-router-dom";
 
 import ProjectWorksList from "../Components/ProjectWorksTable";
+import { MODAL_TYPES } from "../../../Components/Modal/Components";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
 import { formatCurrency, getFullName } from "../../../services/formatters";
@@ -15,12 +16,9 @@ const mapState = state => ({
   isDownloading: selectors.isProjectWorksDownloading(state),
   isProjectsDownloading: selectors.isProjectsDownloading(state),
   isProjectWorkUpdating: selectors.isProjectWorkUpdating(state),
-  projectRates: selectors.getProjectRates(state)
 });
 
 const mapDispatch = {
-  readProjectWorks: actions.projectWorksRequest,
-  createProjectWork: actions.createProjectWorksRequest,
   openModal: actions.openModal
 };
 
@@ -64,7 +62,7 @@ const ProjectWorksListContainer = compose(
           rejectTitle: "Отменить"
         },
         title: "Информация об отработанном времени",
-        type: "projectWork",
+        type: MODAL_TYPES.projectWork,
         meta: {
           start: params =>
             actions.updateProjectWorkRequest({
@@ -75,7 +73,19 @@ const ProjectWorksListContainer = compose(
           failure: () => actions.updateProjectWorkFailure()
         }
       });
-    }
+    },
+    handleDelete: ({ openModal, getUserById }) => work => openModal({
+      type: "confirm",
+      title: `Удалить сотрудника`,
+      content: `Вы действительно желаете удалить сотрудника ${getFullName(getUserById(work.userId))} из проекта?`,
+      cancelText: "Отменить",
+      okText: "Удалить",
+      meta: {
+        start: () => actions.deleteProjectWorkRequest(work.uuid, { data: work }),
+        success: () => actions.deleteProjectWorkSuccess(),
+        failure: () => actions.deleteProjectWorkFailure(),
+      }
+    })
   })
 )(ProjectWorksList);
 

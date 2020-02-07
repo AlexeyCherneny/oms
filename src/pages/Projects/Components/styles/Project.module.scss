@@ -1,10 +1,16 @@
 .container {
   background: #fff;
-  
-  .title {
-  color: rgba(255, 255, 255, 0.65); 
-  margin: 10px;
 }
+
+.titleContainer {
+  background: #001529;
+  display: flex;
+  justify-content: space-between;
+
+  .title {
+    color: rgba(255, 255, 255, 0.65); 
+    margin: 10px;
+  }
 }
 
 .extraContainer {
@@ -13,6 +19,9 @@
 
   .btnCreate {
     font-size: 20px;
+  }
+
+  .btn {
     margin-right: 8px;
   }
 }

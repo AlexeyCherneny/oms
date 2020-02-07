@@ -11,7 +11,6 @@ const projectWorksSelectors = createCRUDSelectors(
   "projectWork",
   "projectWorks"
 );
-const projectRateSelectors = createCRUDSelectors("projectRate", "projectRate");
 const documentAccessSelectors = createCRUDSelectors("documentAccess", "documentAccesses");
 
 export default {
@@ -22,6 +21,5 @@ export default {
   ...projectSelectors,
   ...documentSelectors,
   ...projectWorksSelectors,
-  ...projectRateSelectors,
   ...documentAccessSelectors,
 };

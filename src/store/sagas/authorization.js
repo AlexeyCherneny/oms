@@ -27,8 +27,9 @@ function* signIn(api, action) {
       if (userResponse.status === 200) {
         const { data: user } = userResponse.data;
 
-        yield put(actions.signInSuccess());
+        yield put(actions.usersRequest());
         yield put(actions.setUser({ user }));
+        yield put(actions.signInSuccess());
 
         saveUser(user);
       } else {
@@ -54,6 +55,7 @@ function* logout(api) {
     yield put(actions.logoutSuccess());
     yield put(actions.resetUser());
     yield put(replace("/app/sign-in"));
+    yield put(actions.initializeApplicationRequest());
   } catch (error) {
     const errorMessage = "Error while logout";
 

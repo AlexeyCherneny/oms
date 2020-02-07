@@ -7,7 +7,7 @@ import * as styles from './styles/UserTab.module.scss';
 const UserTab = ({ 
   isMenuCollapsed, 
   fullName, 
-  logout, 
+  handleLogout, 
   menuProps 
 }) => (
   <div className={cn(isMenuCollapsed && styles.containerCollapsed)}>
@@ -23,7 +23,7 @@ const UserTab = ({
       >
         <Menu.Item
           key='profile_exit'
-          onClick={logout}
+          onClick={handleLogout}
         >
           Выйти
         </Menu.Item>

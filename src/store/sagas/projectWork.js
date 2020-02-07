@@ -19,11 +19,33 @@ function* readProjectWorks(
     yield put(actions.projectWorksSuccess(response.data.data));
     if (meta.onSuccess) meta.onSuccess(response.data.data);
   } catch (error) {
-    const errorMessage = "Error while fetching project works list";
+    const errorMessage = "Error while fetching project work list";
     Notification.error("Информация о проекте", "Не удалось загрузить данные.");
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, actions.projectWorksFailure);
+  }
+}
+
+function* createProjectWork(api, action) {
+  const { payload, onSuccess, onFailure } = spreadAction(action);
+
+  try {
+    const response = yield call(api.createProjectWork, {
+      projectId: payload.projectId,
+      params: qs.stringify(payload.params)
+    });
+
+    testResponse(response);
+    yield put(actions.createProjectWorkSuccess(response.data.data));
+    onSuccess(response.data.data);
+
+  } catch (error) {
+    const errorMessage = "Error while fetching updating project";
+    Notification.error("Внимание", "Не удалось обновить отработку.");
+    onFailure(error);
+
+    yield handleSagaError(error, errorMessage, actions.createProjectFailure);
   }
 }
 
@@ -37,12 +59,10 @@ function* updateProjectWork(api, action) {
       params: qs.stringify(payload)
     });
 
-    if (response.status === 200) {
-      yield put(actions.updateProjectWorkSuccess(response.data.data));
-      onSuccess(response.data.data);
-    } else {
-      throw response;
-    }
+    testResponse(response);
+    yield put(actions.updateProjectWorkSuccess(response.data.data));
+    onSuccess(response.data.data);
+
   } catch (error) {
     const errorMessage = "Error while fetching updating project";
     Notification.error("Внимание", "Не удалось обновить отработку.");
@@ -52,9 +72,33 @@ function* updateProjectWork(api, action) {
   }
 }
 
+function* deleteProjectWork(api, action) {
+  const { payload, onSuccess, onFailure, data } = spreadAction(action);
+  
+  try {
+    const response = yield call(api.deleteProjectWork, { id: payload, projectId: data.projectId });
+    testResponse(response);
+
+    yield put(actions.deleteProjectWorkSuccess(payload));
+    Notification.success("Проекты", "Информация о пользователе успешно удалена.");
+    onSuccess(response.data);
+
+  } catch (error) {
+    const errorMessage = "Error while deleting project list";
+    Notification.error("Проекты", "Не удалось удалить проект.");
+    onFailure(error);
+
+    yield handleSagaError(error, errorMessage, () =>
+      actions.deleteProjectWorkFailure(payload)
+    );
+  }
+}
+
 export default function*(api) {
-  yield all([takeLatest(actions.projectWorksRequest, readProjectWorks, api)]);
   yield all([
-    takeLatest(actions.updateProjectWorkRequest, updateProjectWork, api)
+    takeLatest(actions.projectWorksRequest, readProjectWorks, api),
+    takeLatest(actions.createProjectWorkRequest, createProjectWork, api),
+    takeLatest(actions.updateProjectWorkRequest, updateProjectWork, api),
+    takeLatest(actions.deleteProjectWorkRequest, deleteProjectWork, api)
   ]);
 }

@@ -1,38 +1,19 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+
+const selectUser = ({ authorization }) => authorization?.user;
 
 export default function authorized(ProtectedComponent) {
-  class Authenticated extends React.Component {
-    componentDidMount() {
-      const { history, user } = this.props;
+  const Authenticated = props => {
+    const user = useSelector(selectUser);
 
-      if (!user) {
-        history.replace("/app/sign-in");
-      }
-    }
-
-    componentDidUpdate() {
-      const { history, user } = this.props;
-
-      if (!user) {
-        history.replace("/app/sign-in");
-      }
-    }
-
-    render() {
-      const { user } = this.props;
-
-      if (!user) {
-        return null;
-      }
-
-      return <ProtectedComponent {...this.props} />;
-    }
+    return user ? (
+      <ProtectedComponent {...props} />
+    ) : (
+      <Redirect to="/app/sign-in" />
+    );
   }
 
-  const mapState = ({ authorization }) => ({ user: authorization.user });
-
-  return compose(withRouter, connect(mapState))(Authenticated);
+  return Authenticated;
 }

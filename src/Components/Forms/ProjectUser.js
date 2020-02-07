@@ -1,10 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Form, Button, Col, Row } from "antd";
+import { Form, Button, Row, Col } from "antd";
 import { get } from "lodash";
 import Moment from "moment";
 
-import { DatePicker, Select, Input } from '../FormElements';
+import { DatePicker, Select, Input } from "../FormElements";
 import { getShortName } from "../../services/formatters";
 import { DATE_FORMATS } from "../../services/constants";
 
@@ -14,7 +13,7 @@ const formItemLayout = {
   style: { marginBottom: 0 }
 };
 
-const getInputs = initialValues => ({
+const getInputs = (initialValues = {}) => ({
   date: {
     name: "date",
     placeholder: "Дата",
@@ -27,26 +26,12 @@ const getInputs = initialValues => ({
     },
     style: { width: "100%" }
   },
-  userId: {
-    name: "userId",
-    placeholder: "Сотрудник",
+  users: {
+    name: "users",
+    placeholder: "Сотрудники",
+    mode: "multiple",
     settings: {
-      initialValue: get(initialValues, "userId", null),
       rules: [{ required: true, message: "Обязательное поле" }]
-    }
-  },
-  workHours: {
-    name: "workHours",
-    placeholder: "Рабочие часы",
-    settings: {
-      initialValue: get(initialValues, "workHours", 0),
-    }
-  },
-  overtimeHours: {
-    name: "overtimeHours",
-    placeholder: "Переработанные часы",
-    settings: {
-      initialValue: get(initialValues, "overtimeHours", 0),
     }
   },
   workRate: {
@@ -69,14 +54,14 @@ class Project extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { form, handleSubmit } = this.props;
+    const { form, handleSubmit, initialValues } = this.props;
 
-    form.validateFields((err, values) => {
+    form.validateFields((err, { users, ...values }) => {
       if (!err) {
-        handleSubmit({
-          ...values,
-          date: Moment(values.date).format(DATE_FORMATS.dashReverse)
-        });
+        const date = Moment(values.date).startOf('month').format(DATE_FORMATS.dashReverse);
+        const extra = { ...initialValues, ...values, date };
+        const formData = users.map(userId => ({ ...extra, userId }));
+        handleSubmit(formData);
       }
     });
   };
@@ -100,27 +85,22 @@ class Project extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} style={{ marginTop: -20 }}>
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item {...formItemLayout} label="Дата">
-              <DatePicker
-                form={form}
-                {...inputs.date}
-                disabled
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item  {...formItemLayout} label="Сотрудник">
-              <Select
-                form={form}
-                options={userData}
-                {...inputs.userId}
-                disabled
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item {...formItemLayout} label="Дата">
+          <DatePicker
+            form={form}
+            {...inputs.date}
+            disabled={isLoading}
+          />
+        </Form.Item>
+
+        <Form.Item  {...formItemLayout} label="Сотрудники">
+          <Select
+            form={form}
+            options={userData}
+            {...inputs.users}
+            disabled={isLoading}
+          />
+        </Form.Item>
 
         <Row gutter={16}>
           <Col span={12}>
@@ -137,27 +117,6 @@ class Project extends React.Component {
               <Input
                 form={form}
                 {...inputs.overtimeRate}
-                disabled={isLoading}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item {...formItemLayout} label="Рабочие часы">
-              <Input
-                form={form}
-                {...inputs.workHours}
-                disabled={isLoading}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item {...formItemLayout} label="Переработанные часы">
-              <Input
-                form={form}
-                {...inputs.overtimeHours}
                 disabled={isLoading}
               />
             </Form.Item>
@@ -191,6 +150,4 @@ class Project extends React.Component {
   }
 }
 
-export default connect(state => ({ users: state.users.data || [] }))(
-  Form.create({ name: "project" })(Project)
-);
+export default Form.create({ name: "project_user" })(Project);

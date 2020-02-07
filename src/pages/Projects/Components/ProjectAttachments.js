@@ -21,7 +21,7 @@ const ProjectAttachments = ({ attachments, handleUpload }) => {
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {attachments.map(attachment => (
             <div
-              key={attachment.id}
+              key={attachment.uuid}
               style={{
                 flex: "1 1 auto",
                 width: "33%",

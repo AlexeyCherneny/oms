@@ -49,14 +49,16 @@ const ProjectsListContainer = compose(
         }
       });
     },
-    handleDelete: ({ openModal }) => project => openModal({
+    handleDelete: ({ openModal, selectedKey, indexPath, history }) => project => openModal({
       type: "confirm",
       title: `Удалить проект ${project.title}`,
       content: "Вы действительно хотите выполнить это действие?",
       cancelText: "Отменить",
       okText: "Удалить",
       meta: {
-        start: () => actions.deleteProjectRequest(project.uuid),
+        start: () => actions.deleteProjectRequest(project.uuid, {
+          onSuccess: () => String(project.uuid) === selectedKey && history.push(indexPath)
+        }),
         success: () => actions.deleteProjectSuccess(),
         failure: () => actions.deleteProjectFailure()
       }

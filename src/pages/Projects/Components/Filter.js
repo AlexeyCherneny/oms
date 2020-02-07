@@ -1,10 +1,10 @@
 import React from "react";
 import { DatePicker, Form } from "antd";
-import moment from "moment";
+import Moment from "moment";
 
 import { displayDateFormat } from "../../../services/formatters";
 
-const Filter = props => {
+const Filter = ({ handleDateChange, searchObj }) => {
   return (
     <Form layout="inline">
       <Form.Item style={{ marginBottom: 0 }}>
@@ -12,11 +12,9 @@ const Filter = props => {
           format={[displayDateFormat]}
           style={{ width: 150 }}
           size="small"
-          onChange={props.handleDateChange}
+          onChange={handleDateChange}
           placeholder="Дата"
-          value={
-            props.searchObj.date ? moment(props.searchObj.date) : null
-          }
+          value={searchObj?.date ? Moment(searchObj.date) : null}
         />
       </Form.Item>
     </Form>

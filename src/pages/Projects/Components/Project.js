@@ -10,8 +10,9 @@ import * as styles from "./styles/Project.module.scss";
 const Extra = ({
   handleAddUser,
   project,
+  readProjectWorks,
   ...props
-}) => !project ? null : (
+}) => (
     <div className={styles.extraContainer}>
     <Tooltip placement="top" title="Добавить пользователей" >
       <Button 
@@ -19,20 +20,24 @@ const Extra = ({
         icon="usergroup-add"
         onClick={handleAddUser}
         className={styles.btnCreate}
+        disabled={!project}
       />
     </Tooltip>
+      <Tooltip placement="top" title="Обновить" >
+        <Button
+          type="link"
+          icon="sync"
+          onClick={readProjectWorks}
+          className={styles.btn}
+          disabled={!project}
+        />
+      </Tooltip>
     <Filter {...props} />
   </div>
 );
 
 const Title = ({ title, extra }) => (
-  <div
-    style={{
-      background: "#001529",
-      display: "flex",
-      justifyContent: "space-between"
-    }}
-  >
+  <div className={styles.titleContainer}>
     <Typography.Text
       className={styles.title}
       strong
@@ -49,6 +54,8 @@ const Project = ({
   title,
   ...props
 }) => {
+  if (!props.project) return null;
+
   return (
     <div className={styles.container}>
       <Title 
@@ -56,9 +63,7 @@ const Project = ({
         extra={(<Extra {...props} />)} 
       />
       <ProjectWorkTable />
-      <ProjectAttachments 
-        {...props}
-      />
+      <ProjectAttachments {...props} />
       {children}
     </div>
   );

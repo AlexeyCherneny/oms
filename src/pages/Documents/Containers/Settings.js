@@ -5,7 +5,7 @@ import Settings from "../Components/Settings";
 
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
-import { getFullUserName } from "../../../services/formatters";
+import { getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
   users: selectors.getUsers(state),
@@ -44,7 +44,7 @@ const SettingsContainer = compose(
       data: {...item}, 
       uuid: item.uuid, 
       access: item.access, 
-      name: getFullUserName(users.find(user => user.uuid === item.userId)),
+      name: getFullName(users.find(user => user.uuid === item.userId)),
     })),
     usersData: users.filter(user => !accesses.find(item => user.uuid === item.userId)),
     isDocumentUpdating: isDocumentUpdating(selectedDocument?.uuid),
