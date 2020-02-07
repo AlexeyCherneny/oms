@@ -15,6 +15,7 @@ import usersPlanSagas from "./usersPlan";
 import modalSagas from "./modal";
 import projectWorkSagas from "./projectWork";
 import projectRateSagas from "./projectRate";
+import documentAccessesSagas from "./documentAccess";
 
 const rootSaga = function* root() {
   const api = API.create();
@@ -90,6 +91,7 @@ const rootSaga = function* root() {
 
   // DOCUMENTS SAGAS
   yield fork(documentsSagas, api);
+  yield fork(documentAccessesSagas, api);
 
   // PROJECT SAGAS
   yield fork(projectsSagas, api);

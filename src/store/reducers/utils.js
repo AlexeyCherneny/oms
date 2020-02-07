@@ -64,7 +64,7 @@ export const onChangeHandler = location => (state, payload) => ({
 });
 
 const addItemToArray = (arr, item) => {
-  if (!item) return arr;
+  if (!item && item !== 0) return arr;
 
   const isItemInArray = arr.some(a => a === item);
 

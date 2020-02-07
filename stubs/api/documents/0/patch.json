@@ -3,7 +3,7 @@
     "id": 0,
     "title": "Документ 0 изм",
     "content": "<p>Измененное тело документа 0</p>",
-    "access": [],
+    "access": "admin",
     "private": false,
     "parent_document": null,
     "createdAt": "",

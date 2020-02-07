@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": 3,
+    "user_id": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+    "document_id": 3,
+    "access": "admin"
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

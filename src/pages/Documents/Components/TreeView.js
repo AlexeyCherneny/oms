@@ -42,7 +42,9 @@ const TreeView = ({
   handleSelectNode,
   handleCreate,
   handleRename,
-  handleDelete
+  handleDelete,
+  canEditAccess,
+  openSettings,
 }) => {
   const treeContainerRef = React.useRef(null);
   const handleTreeRightClick = ({ event }) => {
@@ -54,8 +56,10 @@ const TreeView = ({
     <div className={styles.container}>
       <ListHeader
         title="Документы"
-        handleCreate={handleCreate}
+        canEditAccess={canEditAccess}
+        handleCreate={() => handleCreate()}
         handleUpdate={readDocuments}
+        handleConfig={openSettings}
       />
 
       <ContextMenu onCreate={() => handleCreate()} hideRename hideDelete>

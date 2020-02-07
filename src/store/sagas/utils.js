@@ -2,9 +2,9 @@
 import { put } from "redux-saga/effects";
 import { get } from "lodash";
 
-export function* handleSagaError(error, errorMessage, failureAction) {
+export function* handleSagaError(error, errorMessage, failureAction, payload) {
   try {
-    yield put(failureAction());
+    yield put(failureAction(payload));
 
     handleError(error, errorMessage);
   } catch (error) {

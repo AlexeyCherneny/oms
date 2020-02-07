@@ -5,13 +5,14 @@ import { withRouter } from "react-router-dom";
 
 import Header from "../Components";
 import actions from "../../../store/actions";
+import { url } from "../../../services/helpers";
 
 import { ROLES } from "../../../services/constants";
 
 const navigationTabs = [
   {
     title: "Главная",
-    path: "/app/cabinet/",
+    path: "/app/cabinet",
     icon: "home",
     forRoles: [ROLES.HR, ROLES.EMPLOYEE]
   },
@@ -76,10 +77,10 @@ const HeaderContainer = compose(
         roles.some(userRole => userRole === forRole)
       );
     const tabs = navigationTabs.filter(isTabAvailable);
-    const activeTab = tabs
-      .map(tab => tab.path)
-      .find(item => item.includes(location.pathname));
-
+    const activeTab = url.findPathInLocation(
+      location.pathname, 
+      tabs.map(({ path }) => path )
+    );
     return { activeTab, tabs };
   }),
   withHandlers({

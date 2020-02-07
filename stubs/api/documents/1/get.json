@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Документ 1",
     "content": "<p>Тело документа 1</p>",
-    "access": [],
+    "access": "admin",
     "private": false,
     "parent_document": 0,
     "createdAt": "",

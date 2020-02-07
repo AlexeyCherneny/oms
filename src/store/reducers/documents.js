@@ -5,7 +5,8 @@ import actions from "../actions";
 
 const documentsState = {
   ...CRUDState,
-  currentDocument: null,
+  selectedDocument: null,
+  editedDocument: {},
 }
 
 const documentsReducer = createReducer({
@@ -15,16 +16,21 @@ const documentsReducer = createReducer({
 
     // match: (i1, i2) => i1.id === i2.id,
   }),
-  [actions.setCurrentDocument]: (state, payload) => ({ 
+  [actions.selectDocument]: (state, payload) => ({ 
     ...state, 
-    currentDocument: payload 
+    selectedDocument: payload,
+    editedDocument: {},
   }),
-  [actions.editCurrentDocument]: (state, payload) => ({ 
-    ...state, 
-    currentDocument: { 
-      ...state.currentDocument, 
-      ...payload 
+  [actions.editSelectedDocument]: (state, payload) => ({
+    ...state,
+    editedDocument: {
+      ...state.editedDocument,
+      ...payload
     }
+  }),
+  [actions.resetEditDocument]: state => ({
+    ...state,
+    editedDocument: {}
   }),
 }, documentsState);
 

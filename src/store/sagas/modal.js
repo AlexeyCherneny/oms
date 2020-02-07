@@ -9,6 +9,7 @@ function* closeModal(api, action) {
     const onStart = get(action, "payload.meta.start");
     const onSuccess = get(action, "payload.meta.success");
     const onFailure = get(action, "payload.meta.failure");
+    const onDecline = get(action, "payload.meta.onDecline");
 
     let repeat = true;
 
@@ -36,6 +37,7 @@ function* closeModal(api, action) {
           }
         }
       } else {
+        if (typeof onDecline === 'function') onDecline(action.payload);
         repeat = false;
       }
     }

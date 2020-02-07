@@ -11,6 +11,7 @@ import eventsReducer from "./events";
 import paymentsReducer from "./payments";
 import documentReducer from "./documents";
 import modalReducer from "./modal";
+import documentAccessReducer from "./documentAccesses";
 
 const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
 const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
@@ -35,6 +36,8 @@ const createRootReducer = history =>
     documents: documentReducer,
     projects: projectReducer,
     modal: modalReducer,
+    documentAccesses: documentAccessReducer,
+
     usersPlan: usersPlanReducer,
     projectWorks: projectWorkReducer,
     projectRate: projectRateReducer,
