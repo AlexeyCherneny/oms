@@ -38,9 +38,9 @@ const DocumentsPageContainer = compose(
     goToDocument: ({ match, history }) => docId => history.push(match.url + (docId ? `/${docId}` : '')),
     handleSelectDocument: ({ documents, selectDocument, readAccesses }) => id => {
       const docId = String(id);
-      const newDocument = (id && documents.find(doc => String(doc.id) === docId)) || null;
+      const newDocument = (id && documents.find(doc => String(doc.uuid) === docId)) || null;
       selectDocument(newDocument);
-      newDocument && readAccesses({ documentId: docId });
+      newDocument && ALLOW_EDIT_ACCESS.includes(newDocument.access) && readAccesses({ documentId: docId });
     },
     checkChanges: ({ selectedDocument, editedDocument, openModal, resetEdit }) => (callback = noop) => {
       const newDocument = { ...selectedDocument, ...editedDocument };
@@ -72,8 +72,8 @@ const DocumentsPageContainer = compose(
     },
   }),
   withHandlers({
-    openEdit: ({ goToDocument, selectedDocument }) => () => selectedDocument && goToDocument(`${selectedDocument.id}/edit`),
-    openSettings: ({ goToDocument, selectedDocument }) => () => selectedDocument && goToDocument(`${selectedDocument.id}/settings`),
+    openEdit: ({ goToDocument, selectedDocument }) => () => selectedDocument && goToDocument(`${selectedDocument.uuid}/edit`),
+    openSettings: ({ goToDocument, selectedDocument }) => () => selectedDocument && goToDocument(`${selectedDocument.uuid}/settings`),
   }),
   lifecycle({
     componentDidMount() {

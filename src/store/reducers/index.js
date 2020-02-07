@@ -16,16 +16,12 @@ import documentAccessReducer from "./documentAccesses";
 const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
 const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
 const projectReducer = createReducer(createCRUDReducer("project", {
-  onUpdateDataMap: (data, payload) => data.map(item => item.id === payload.id ? payload : item),
-  onDeleteDataMap: (data, payload) => data.filter(item => item.id !== payload),
+  onUpdateDataMap: (data, payload) => data.map(item => item.uuid === payload.uuid ? payload : item),
+  onDeleteDataMap: (data, payload) => data.filter(item => item.uuid !== payload),
 }), CRUDState);
 
 const projectWorkReducer = createReducer(
   createCRUDReducer("projectWork"),
-  CRUDState
-);
-const projectRateReducer = createReducer(
-  createCRUDReducer("projectRate"),
   CRUDState
 );
 
@@ -44,7 +40,6 @@ const createRootReducer = history =>
 
     usersPlan: usersPlanReducer,
     projectWorks: projectWorkReducer,
-    projectRate: projectRateReducer,
 
     router: connectRouter(history)
   });

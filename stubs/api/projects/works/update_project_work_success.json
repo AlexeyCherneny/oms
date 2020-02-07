@@ -1,10 +1,14 @@
 {
   "data": {
-    "id": 0,
-    "date": "01.04.1997",
+    "uuid": 0,
+    "projectId": 0,
     "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
-    "workHours": 250,
-    "overtimeHours": 99
+    "date": "2020-01-02",
+    "workHours": 200,
+    "overtimeHours": 20,
+    "workRate": 15,
+    "overtimeRate": 20,
+    "currency": "USD"
   },
   "errors": [],
   "error": null,

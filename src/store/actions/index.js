@@ -12,7 +12,6 @@ const usersActions = createCRUDActions("user");
 const usersPlanActions = createCRUDActions("usersPlan");
 const projectsActions = createCRUDActions("project");
 const projectWorkActions = createCRUDActions("projectWork");
-const projectRateActions = createCRUDActions("projectRate");
 const documentAccessActions = createCRUDActions("documentAccess");
 
 export default {
@@ -27,6 +26,5 @@ export default {
   ...projectsActions,
   ...modalActions,
   ...projectWorkActions,
-  ...projectRateActions,
   ...documentAccessActions,
 };

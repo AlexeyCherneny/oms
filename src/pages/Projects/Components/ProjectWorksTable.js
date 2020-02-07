@@ -39,7 +39,7 @@ const staticColumns = [
     children: [
       {
         title: "Время",
-        dataIndex: "work_hours",
+        dataIndex: "workHours",
         key: "workHours",
         align: "center",
       },
@@ -58,7 +58,7 @@ const staticColumns = [
     children: [
       {
         title: "Время",
-        dataIndex: "overtime_hours",
+        dataIndex: "overtimeHours",
         key: "overtimeHours",
         align: "center",
       },
@@ -89,7 +89,7 @@ const staticColumns = [
 
 const addWarningClass = node => {
   const currentMonth = Moment().startOf('month');
-  const hasHours = node.work_hours || Moment(node.date).isAfter(currentMonth);
+  const hasHours = node.workHours || Moment(node.date).isAfter(currentMonth);
   return !hasHours ? 'row-warning' : '';
 }
 

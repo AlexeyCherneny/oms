@@ -6,9 +6,7 @@ const salariesSelectors = createCRUDSelectors("salary", "salaries");
 const usersSelectors = createCRUDSelectors("user", "users");
 const usersPlanSelectors = createCRUDSelectors("usersPlan");
 const documentSelectors = createCRUDSelectors("document", "documents");
-const projectSelectors = createCRUDSelectors("project", "projects", {
-  idKey: 'id'
-});
+const projectSelectors = createCRUDSelectors("project", "projects");
 const projectWorksSelectors = createCRUDSelectors(
   "projectWork",
   "projectWorks"

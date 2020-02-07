@@ -38,7 +38,7 @@ const Header = ({
         <Menu {...menuProps} selectedKeys={[selectedKey]}>
           {projects.map(project => (
             <Menu.Item
-              key={project.id}
+              key={project.uuid}
               style={{
                 lineHeight: "40px",
                 margin: 0,
@@ -53,7 +53,7 @@ const Header = ({
               >
                 <NavLink
                   to={{
-                    pathname: `${indexPath}/${project.id}`,
+                    pathname: `${indexPath}/${project.uuid}`,
                     search: location.search
                   }}
                 >

@@ -1,11 +1,11 @@
 {
   "data": {
-    "id": 3,
+    "uuid": 3,
     "title": "Документ 3 изм",
     "content": "<p>Измененное тело документа 3</p>",
     "access": "admin",
     "private": false,
-    "parent_document": null,
+    "parentDocument": null,
     "createdAt": "",
     "updatedAt": ""
   },

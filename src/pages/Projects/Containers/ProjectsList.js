@@ -56,7 +56,7 @@ const ProjectsListContainer = compose(
       cancelText: "Отменить",
       okText: "Удалить",
       meta: {
-        start: () => actions.deleteProjectRequest(project.id),
+        start: () => actions.deleteProjectRequest(project.uuid),
         success: () => actions.deleteProjectSuccess(),
         failure: () => actions.deleteProjectFailure()
       }

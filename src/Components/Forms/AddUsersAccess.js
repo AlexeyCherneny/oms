@@ -2,11 +2,12 @@ import React from "react";
 import { Form, Button, Col, Row, Select } from "antd";
 
 import * as styles from "./styles/AddUsersAccess.module.scss";
+import { getFullName } from "../../services/formatters";
 
 const renderUsersList = users =>
   users.length > 0 && users.map(user => (
     <Select.Option key={user.uuid}>
-      {user.first_name}&nbsp;{user.last_name}
+      {getFullName(user)}
     </Select.Option>
   ));
 

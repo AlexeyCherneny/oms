@@ -1,11 +1,11 @@
 {
   "data": {
-    "id": 5,
+    "uuid": 5,
     "title": "Созданный документ изменен",
     "content": "<p>If you are reading this text, creating document was completed successful.</p>",
     "access": "admin",
     "private": false,
-    "parent_document": null,
+    "parentDocument": null,
     "createdAt": "",
     "updatedAt": ""
   },

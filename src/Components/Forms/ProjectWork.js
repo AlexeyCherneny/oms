@@ -29,39 +29,39 @@ const getInputs = initialValues => ({
     style: { width: "100%" }
   },
   userId: {
-    name: "user_id",
+    name: "userId",
     placeholder: "Сотрудник",
     settings: {
-      initialValue: get(initialValues, "user_id", null),
+      initialValue: get(initialValues, "userId", null),
       rules: [{ required: true, message: "Обязательное поле" }]
     }
   },
   workHours: {
-    name: "work_hours",
+    name: "workHours",
     placeholder: "Рабочие часы",
     settings: {
-      initialValue: get(initialValues, "work_hours", 0),
+      initialValue: get(initialValues, "workHours", 0),
     }
   },
   overtimeHours: {
-    name: "overtime_hours",
+    name: "overtimeHours",
     placeholder: "Переработанные часы",
     settings: {
-      initialValue: get(initialValues, "overtime_hours", 0),
+      initialValue: get(initialValues, "overtimeHours", 0),
     }
   },
   workRate: {
-    name: "work_rate",
+    name: "workRate",
     placeholder: "Часовая ставка",
     settings: {
-      initialValue: get(initialValues, "work_rate", 0),
+      initialValue: get(initialValues, "workRate", 0),
     }
   },
   overtimeRate: {
-    name: "work_overtime",
+    name: "overtimeRate",
     placeholder: "Cтавка переработки",
     settings: {
-      initialValue: get(initialValues, "overtime_rate", 0),
+      initialValue: get(initialValues, "overtimeRate", 0),
     }
   }
 });
@@ -93,7 +93,7 @@ class Project extends React.Component {
     } = this.props;
 
     const userData = users.map(user => ({
-      label: `${user.first_name[0]}. ${user.last_name}`,
+      label: `${user.firstName[0]}. ${user.lastName}`,
       value: String(user.uuid)
     }))
 

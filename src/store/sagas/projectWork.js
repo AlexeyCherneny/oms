@@ -32,8 +32,8 @@ function* updateProjectWork(api, action) {
 
   try {
     const response = yield call(api.updateProjectWork, {
-      id: payload.id,
-      projectId: payload.project_id,
+      id: payload.uuid,
+      projectId: payload.projectId,
       params: qs.stringify(payload)
     });
 

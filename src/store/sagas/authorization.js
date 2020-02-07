@@ -1,4 +1,4 @@
-import { call, put, delay, select, takeLatest, all } from "redux-saga/effects";
+import { call, put, select, takeLatest, all } from "redux-saga/effects";
 import { get } from 'lodash';
 import { replace } from "connected-react-router";
 import qs from "qs";

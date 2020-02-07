@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import ProjectWorksList from "../Components/ProjectWorksTable";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
-import { formatCurrency } from "../../../services/formatters";
+import { formatCurrency, getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
   projectWorks: selectors.getProjectWorks(state),
@@ -30,9 +30,9 @@ const ProjectWorksListContainer = compose(
   
   withProps(({ projectWorks, getUserById, isDownloading, isProjectsDownloading }) => {
     const tableData = projectWorks.map(work => {
-      const user = getUserById(work.user_id);
-      const workAmount = (work.work_hours || 0) * (work.work_rate || 0);
-      const overtimeAmount = (work.overtime_hours || 0) * (work.overtime_rate || 0);
+      const user = getUserById(work.userId);
+      const workAmount = (work.workHours || 0) * (work.workRate || 0);
+      const overtimeAmount = (work.overtimeHours || 0) * (work.overtimeRate || 0);
       const totalAmount = workAmount + overtimeAmount;
       const currency = work.currency || '';
 
@@ -41,7 +41,7 @@ const ProjectWorksListContainer = compose(
         workAmount: formatCurrency(workAmount, currency),
         overtimeAmount: formatCurrency(overtimeAmount, currency),
         totalAmount: formatCurrency(totalAmount, currency),
-        fullName: `${user?.last_name} ${user?.first_name}`
+        fullName: getFullName(user),
       };
     });
 

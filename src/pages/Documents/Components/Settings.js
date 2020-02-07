@@ -32,12 +32,12 @@ const NodeAccessSelect = ({ access, node, updateAccess, isUpdating }) => {
 }
 
 const renderAccess = ({ isEditingNode, updateAccess, getIsUpdating }) => (access, node) => 
-  isEditingNode(node.id) ? (
+  isEditingNode(node.uuid) ? (
     <NodeAccessSelect 
       updateAccess={updateAccess}
       access={access}
       node={node}
-      isUpdating={getIsUpdating(node?.id)}
+      isUpdating={getIsUpdating(node?.uuid)}
     />
   ) : (
     <Tag
@@ -130,7 +130,7 @@ const Settings = ({
     <Divider style={{ marginTop: 12 }}/>
     <Table
       dataSource={accessesData}
-      rowKey="id"
+      rowKey="uuid"
       loading={isLoading}
     >
       <Table.Column
@@ -156,7 +156,7 @@ const Settings = ({
       />
       <Table.Column
         title="Управление"
-        dataIndex="id"
+        dataIndex="uuid"
         key="actions"
         align="center"
         width="20%"

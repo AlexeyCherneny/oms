@@ -1,11 +1,11 @@
 {
   "data": {
-    "id": 1,
+    "uuid": 1,
     "title": "Документ 1",
     "content": "<p>Тело документа 1</p>",
     "access": "admin",
     "private": false,
-    "parent_document": 0,
+    "parentDocument": 0,
     "createdAt": "",
     "updatedAt": ""
   },
