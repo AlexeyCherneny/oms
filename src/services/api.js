@@ -63,7 +63,9 @@ const create = (baseURL = `${hostURL}api/`) => {
     updateProject: ({ id, params }) => api.put(`projects/${id}`, params),
     deleteProject: id => api.delete(`projects/${id}`),
 
-    readProjectWorks: ({ projectId, params }) => api.get(`/projects/${projectId}/work?${params}`),
+    readProjectWorks: ({ projectId, userId, params }) => userId 
+      ? api.get(`/user/${userId}/work?${params}`)
+      : api.get(`/projects/${projectId}/work?${params}`),
     createProjectWork: ({ projectId, params }) => api.post(`projects/${projectId}/work`, params),
     updateProjectWork: ({ id, projectId, params }) => api.put(`projects/${projectId}/work/${id}`, params),
     deleteProjectWork: ({ id, projectId }) => api.delete(`projects/${projectId}/work/${id}`),

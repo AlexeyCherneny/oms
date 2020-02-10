@@ -8,7 +8,7 @@ const projectWorkReducer = createReducer({
     onUpdateDataMap: (data, payload) => data.map(item => item.uuid === payload.uuid ? payload : item),
     onDeleteDataMap: (data, payload) => data.filter(item => item.uuid !== payload),
   }),
-  [actions.cleanProjectWorks]: state => ({ ...state, data: []}),
+  [actions.cleanProjectWork]: state => ({ ...state, data: []}),
 }, CRUDState );
 
 export default projectWorkReducer;

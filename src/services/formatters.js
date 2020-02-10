@@ -1,4 +1,5 @@
 import moment from "moment";
+import { DATE_FORMATS } from "./constants";
 
 export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
@@ -9,6 +10,9 @@ export const getFullName = user => {
 
 export const getShortName = user => 
   user ? `${user.firstName[0]}. ${user.lastName}` : '';
+
+export const stringifyDate = date => 
+  moment(date).startOf('month').format(DATE_FORMATS.dashReverse);
 
 export const fromProgramToDisplayDate = date => {
   const mDate = moment(date, programDateFormat);

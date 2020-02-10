@@ -15,7 +15,7 @@ const projectsActions = createCRUDActions("project");
 
 const projectWorkActions = { 
   ...createCRUDActions("projectWork"),
-  cleanProjectWorks: createAction('CLEAN_PROJECTWORKS')
+  cleanProjectWork: createAction('CLEAN_PROJECTWORK'),
 };
 
 const documentAccessActions = createCRUDActions("documentAccess");

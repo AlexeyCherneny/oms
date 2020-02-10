@@ -22,7 +22,7 @@ const mapState = state => ({
 
 const mapDispatch = {
   readProjectWorks: actions.projectWorksRequest,
-  cleanProjectWorks: actions.cleanProjectWorks,
+  cleanProjectWork: actions.cleanProjectWork,
   openModal: actions.openModal,
 };
 
@@ -69,8 +69,8 @@ const ProjectContainer = compose(
       const search = qs.stringify(newSeachObj, { skipNulls: true });
       history.replace({ pathname, search });
     },
-    readProjectWorks: ({ readProjectWorks, cleanProjectWorks, searchObj, project }) => () => {
-      if (!project) return cleanProjectWorks();
+    readProjectWorks: ({ readProjectWorks, cleanProjectWork, searchObj, project }) => () => {
+      if (!project) return cleanProjectWork();
       readProjectWorks({ projectId: project.uuid, search: searchObj });
     },
     handleAddUser: ({ openModal, users, projectWorks, searchObj, project }) => () => openModal({

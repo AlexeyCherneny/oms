@@ -11,9 +11,9 @@ function* readProjectWorks(
   { payload = {}, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const { projectId, search } = payload;
+    const { projectId, userId, search } = payload;
     const paramsObj = pick(search, ['date']);
-    const response = yield call(api.readProjectWorks, { projectId, params: qs.stringify(paramsObj)});
+    const response = yield call(api.readProjectWorks, { projectId, userId, params: qs.stringify(paramsObj)});
     testResponse(response);
 
     yield put(actions.projectWorksSuccess(response.data.data));

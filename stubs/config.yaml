@@ -89,6 +89,16 @@
       file: api/user/fail_get_not_found.json
 
 - request:
+    url: ^/api/user/([^\/]+)/work$
+    method: GET
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/user/work/get_project_work_success.json
+
+- request:
     url: ^/api/user
   response:
     headers:
