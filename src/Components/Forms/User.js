@@ -1,11 +1,8 @@
 import React from "react";
-import { Form, Button, Row, Col, Icon } from "antd";
+import { Form, Button, Row, Col, Icon, Select, Input } from "antd";
 import { get } from "lodash";
 import moment from "moment";
 
-import FormInput from "../FormElements/Input/Input";
-import FormSelect from "../FormElements/Select/Select";
-import FormDatepicker from "../FormElements/Datepicker/Datepicker";
 import {
   displayDateFormat,
   programDateFormat
@@ -108,7 +105,7 @@ const inputs = initialValues => ({
     name: "birthday",
     placeholder: "01.04.1997",
     format: [displayDateFormat],
-    suffixIcon: <Icon type="calendar" style={{ color: "rgba(0,0,0,.25)" }} />,
+    suffix: <Icon type="calendar" style={{ color: "rgba(0,0,0,.25)" }} />,
     style: { width: "100%" },
     settings: {
       initialValue: get(initialValues, "birthday", "")
@@ -137,7 +134,9 @@ class CreateUser extends React.Component {
 
   render() {
     const { initialValues = {}, form, isLoading } = this.props;
-    console.log("initialValues: ", initialValues);
+
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Row
@@ -156,59 +155,56 @@ class CreateUser extends React.Component {
         </Row>
 
         <Form.Item {...formItemLayout} label="Роль">
-          <FormSelect
-            form={form}
-            {...inputs(initialValues).roles}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).roles.name,
+            inputs(initialValues).roles.settings
+          )(<Select {...inputs(initialValues).roles} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Email">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).email}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).email.name,
+            inputs(initialValues).email.settings
+          )(<Input {...inputs(initialValues).email} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Номер телефона">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).phone}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).phone.name,
+            inputs(initialValues).phone.settings
+          )(<Input {...inputs(initialValues).phone} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Фамилия">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).lastName}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).lastName.name,
+            inputs(initialValues).lastName.settings
+          )(<Input {...inputs(initialValues).lastName} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Имя">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).firstName}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).firstName.name,
+            inputs(initialValues).firstName.settings
+          )(
+            <Input {...inputs(initialValues).firstName} disabled={isLoading} />
+          )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Отчество">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).middleName}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).middleName.name,
+            inputs(initialValues).middleName.settings
+          )(
+            <Input {...inputs(initialValues).middleName} disabled={isLoading} />
+          )}
         </Form.Item>
 
         <Form.Item label="Дата рождения">
-          <FormDatepicker
-            form={form}
-            {...inputs(initialValues).birthday}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).birthday.name,
+            inputs(initialValues).birthday.settings
+          )(<Input {...inputs(initialValues).birthday} disabled={isLoading}  />)}
         </Form.Item>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>

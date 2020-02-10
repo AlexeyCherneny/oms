@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Col, Row, Select } from "antd";
+import { Form, Button, Col, Row, Select, Input, DatePicker } from "antd";
 import moment from "moment";
 import { get } from "lodash";
 
@@ -7,9 +7,6 @@ import {
   displayDateFormat,
   programDateFormat
 } from "../../services/formatters";
-import FormInput from "../FormElements/Input/Input";
-import FormSelect from "../FormElements/Select/Select";
-import FormDatepicker from "../FormElements/Datepicker/Datepicker";
 
 const inputs = initialValues => ({
   title: {
@@ -101,25 +98,29 @@ class EventForm extends React.Component {
 
     const values = form.getFieldsValue();
 
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <Form onSubmit={this.handleSubmit} hideRequiredMark>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Название">
-              <FormInput
-                form={form}
-                {...inputs(initialValues).title}
-                disabled={isLoading}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).title.name,
+                inputs(initialValues).title.settings
+              )(
+                <Input {...inputs(initialValues).title} disabled={isLoading} />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Тип">
-              <FormSelect
-                form={form}
-                {...inputs(initialValues).type}
-                disabled={isLoading}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).type.name,
+                inputs(initialValues).type.settings
+              )(
+                <Select {...inputs(initialValues).type} disabled={isLoading} />
+              )}
             </Form.Item>
           </Col>
         </Row>
@@ -127,21 +128,30 @@ class EventForm extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Сумма">
-              <FormInput
-                form={form}
-                {...inputs(initialValues).amount}
-                disabled={isLoading}
-                addonAfter={selectAfter}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).amount.name,
+                inputs(initialValues).amount.settings
+              )(
+                <Input
+                  {...inputs(initialValues).amount}
+                  disabled={isLoading}
+                  addonAfter={selectAfter}
+                />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Курс к доллару">
-              <FormInput
-                form={form}
-                {...inputs(initialValues).currency_rate}
-                disabled={isLoading}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).currency_rate.name,
+                inputs(initialValues).currency_rate.settings
+              )(
+                <Input
+                  {...inputs(initialValues).currency_rate}
+                  disabled={isLoading}
+                  addonAfter={selectAfter}
+                />
+              )}
             </Form.Item>
           </Col>
         </Row>
@@ -149,30 +159,44 @@ class EventForm extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label="Дата">
-              <FormDatepicker
-                form={form}
-                {...inputs(initialValues).date}
-                disabled={isLoading}
-                style={{ width: "100%" }}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).date.name,
+                inputs(initialValues).date.settings
+              )(
+                <DatePicker
+                  {...inputs(initialValues).date}
+                  disabled={isLoading}
+                  addonAfter={selectAfter}
+                />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
             {values.type === "income" || values.type === undefined ? (
               <Form.Item label="От кого">
-                <FormInput
-                  form={form}
-                  {...inputs(initialValues).payer}
-                  disabled={isLoading}
-                />
+                {getFieldDecorator(
+                  inputs(initialValues).payer.name,
+                  inputs(initialValues).payer.settings
+                )(
+                  <Input
+                    {...inputs(initialValues).payer}
+                    disabled={isLoading}
+                    addonAfter={selectAfter}
+                  />
+                )}
               </Form.Item>
             ) : (
               <Form.Item label="Кому">
-                <FormInput
-                  form={form}
-                  {...inputs(initialValues).receiver}
-                  disabled={isLoading}
-                />
+                {getFieldDecorator(
+                  inputs(initialValues).receiver.name,
+                  inputs(initialValues).receiver.settings
+                )(
+                  <Input
+                    {...inputs(initialValues).receiver}
+                    disabled={isLoading}
+                    addonAfter={selectAfter}
+                  />
+                )}
               </Form.Item>
             )}
           </Col>

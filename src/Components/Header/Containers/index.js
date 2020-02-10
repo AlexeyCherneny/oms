@@ -33,7 +33,7 @@ const navigationTabs = [
     path: "/app/cabinet/salaries",
     icon: "dollar",
     forRoles: [ROLES.HR]
-  },
+  }
   // {
   //   title: "Мероприятия",
   //   path: "/app/cabinet/events",
@@ -72,14 +72,18 @@ const HeaderContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
   withProps(({ roles, location }) => {
-    const isTabAvailable = tab =>
-      tab.forRoles.some(forRole =>
-        roles.some(userRole => userRole === forRole)
-      );
+    const isTabAvailable = tab => {
+      if (Array.isArray(tab.forRoles))
+        return tab.forRoles.some(forRole =>
+          roles.some(userRole => userRole === forRole)
+        );
+
+      return false;
+    };
     const tabs = navigationTabs.filter(isTabAvailable);
     const activeTab = url.findPathInLocation(
-      location.pathname, 
-      tabs.map(({ path }) => path )
+      location.pathname,
+      tabs.map(({ path }) => path)
     );
     return { activeTab, tabs };
   }),

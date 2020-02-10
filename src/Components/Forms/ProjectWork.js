@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, DatePicker, Select, Input } from "antd";
 import { get } from "lodash";
 import moment from "moment";
 
@@ -7,9 +7,6 @@ import {
   displayDateFormat,
   programDateFormat
 } from "../../services/formatters";
-import FormDatepicker from "../FormElements/Datepicker/Datepicker";
-import FormSelect from "../FormElements/Select/Select";
-import FormInput from "../FormElements/Input/Input";
 import { connect } from "react-redux";
 
 const formItemLayout = {
@@ -78,50 +75,54 @@ class Project extends React.Component {
       users
     } = this.props;
 
-    console.log("users: ", users);
-    console.log(
-      "users1: ",
-      users.map(user => ({
-        label: `${user.firstName[0]}. ${user.lastName}`,
-        value: String(user.uuid)
-      }))
-    );
+    const { getFieldDecorator } = form;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item {...formItemLayout} label="Дата">
-          <FormDatepicker
-            form={form}
-            {...inputs(initialValues).date}
-            disabled
-          />
+          {getFieldDecorator(
+            inputs(initialValues).date.name,
+            inputs(initialValues).date.settings
+          )(
+            <DatePicker {...inputs(initialValues).date} disabled={isLoading} />
+          )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Пользователь">
-          <FormSelect
-            form={form}
-            {...inputs(initialValues).userId}
-            disabled
-            options={users.map(user => ({
-              label: `${user.firstName[0]}. ${user.lastName}`,
-              value: String(user.uuid)
-            }))}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).userId.name,
+            inputs(initialValues).userId.settings
+          )(
+            <Select
+              {...inputs(initialValues).userId}
+              disabled={isLoading}
+              options={users.map(user => ({
+                label: `${user.firstName[0]}. ${user.lastName}`,
+                value: String(user.uuid)
+              }))}
+            />
+          )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Рабочие часы">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).workHours}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).workHours.name,
+            inputs(initialValues).workHours.settings
+          )(
+            <Input {...inputs(initialValues).workHours} disabled={isLoading} />
+          )}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Переработанные часы">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).overtimeHours}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).overtimeHours.name,
+            inputs(initialValues).overtimeHours.settings
+          )(
+            <Input
+              {...inputs(initialValues).overtimeHours}
+              disabled={isLoading}
+            />
+          )}
         </Form.Item>
 
         <div

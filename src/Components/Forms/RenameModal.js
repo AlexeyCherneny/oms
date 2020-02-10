@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, Input } from "antd";
 import { get } from "lodash";
-import FormInput from "../FormElements/Input/Input";
 
 const formItemLayout = {
   style: { marginBottom: 0 }
@@ -12,7 +11,7 @@ const inputs = initialValues => ({
     name: "title",
     placeholder: "Название документа",
     settings: {
-      initialValue: get(initialValues, "title", ''),
+      initialValue: get(initialValues, "title", ""),
       rules: [{ required: true, message: "Обязательное поле" }]
     }
   }
@@ -25,9 +24,8 @@ const RenameModal = ({
   submitTitle,
   rejectTitle,
   handleSubmit,
-  handleReject,
+  handleReject
 }) => {
-  
   const onSubmit = e => {
     e.preventDefault();
 
@@ -35,15 +33,15 @@ const RenameModal = ({
       if (!err) handleSubmit({ ...initialValues, ...values });
     });
   };
+  const { getFieldDecorator } = this.props.form;
 
   return (
     <Form onSubmit={onSubmit}>
       <Form.Item {...formItemLayout}>
-        <FormInput
-          form={form}
-          {...inputs(initialValues).title}
-          disabled={isLoading}
-        />
+        {getFieldDecorator(
+          inputs(initialValues).title.name,
+          inputs(initialValues).title.settings
+        )(<Input {...inputs(initialValues).title} disabled={isLoading} />)}
       </Form.Item>
       <div
         style={{ marginTop: 20, display: "flex", justifyContent: "flex-end" }}
@@ -65,6 +63,6 @@ const RenameModal = ({
       </div>
     </Form>
   );
-}
+};
 
 export default Form.create({ name: "rename_modal" })(RenameModal);

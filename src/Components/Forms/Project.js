@@ -1,8 +1,6 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, Input } from "antd";
 import { get } from "lodash";
-
-import FormInput from "../FormElements/Input/Input";
 
 const formItemLayout = {
   style: { marginBottom: 0 }
@@ -40,20 +38,20 @@ class Project extends React.Component {
   render() {
     const {
       initialValues = {},
-      form,
       isLoading,
       handleSubmit,
       handleReject
     } = this.props;
 
+    const { getFieldDecorator } = this.props.form;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Form.Item {...formItemLayout} label="Название">
-          <FormInput
-            form={form}
-            {...inputs(initialValues).title}
-            disabled={isLoading}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).title.name,
+            inputs(initialValues).title.settings
+          )(<Input {...inputs(initialValues).title} disabled={isLoading} />)}
         </Form.Item>
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>

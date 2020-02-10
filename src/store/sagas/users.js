@@ -1,4 +1,4 @@
-import { call, put, delay } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { defaultTo, get } from "lodash";
 import qs from "qs";
 
@@ -35,7 +35,6 @@ function* readUsers(
     const response = yield call(api.readUsers, { search });
 
     if (response.status === 200) {
-
       yield put(actions.usersSuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
