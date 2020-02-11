@@ -162,6 +162,7 @@
       content-type: application/json
     status: 404
 
+### Document access API
 - request:
     url: ^/api/documents/([0-9])/accesses/([0-9]+)$
     method: delete

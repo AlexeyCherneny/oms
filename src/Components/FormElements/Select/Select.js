@@ -1,14 +1,12 @@
 import React from "react";
-import { Select } from "antd";
-import { get } from "lodash";
+import { Form, Select } from "antd";
 
-class FormSelect extends React.Component {
-  render() {
-    const options = get(this.props, "options", []);
+const FormSelect = React.forwardRef(
+  ({ options, ...props }, ref) => {
 
     return (
-      <Select {...this.props}>
-        {options.map(option => (
+      <Select {...props} ref={ref}>
+        {options && options.map(option => (
           <Select.Option value={option.value} key={option.value}>
             {option.label}
           </Select.Option>
@@ -16,12 +14,22 @@ class FormSelect extends React.Component {
       </Select>
     );
   }
-}
+); 
 
-const SelectWrapper = props =>
-  props.form.getFieldDecorator(
-    props.name,
-    props.settings
-  )(<FormSelect {...props} />);
+const SelectWrapper = ({ 
+  form, 
+  name, 
+  settings, 
+  itemProps, 
+  ...props 
+}) => {
+  const decorateField = form ? form.getFieldDecorator(name, settings) : node => node;
+
+  return (
+    <Form.Item {...itemProps}>
+      {decorateField(<FormSelect {...props} />)}
+    </Form.Item>
+  );
+}
 
 export default SelectWrapper;

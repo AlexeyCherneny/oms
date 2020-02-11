@@ -11,12 +11,12 @@ const TableActions = ({
   isProjectWorkUpdating
 }) => {
 
-  const isUpdating = isProjectWorkUpdating(projectWork.id);
+  const isUpdating = isProjectWorkUpdating(projectWork.uuid);
 
   return (
     <>
       <Button
-        onClick={() => handleProjectWorkEdit(projectWork.id)}
+        onClick={() => handleProjectWorkEdit(projectWork)}
         icon="edit"
         loading={isUpdating}
         style={{ marginRight: 8 }}

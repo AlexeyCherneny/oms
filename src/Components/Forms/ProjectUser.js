@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from "antd";
 import { get } from "lodash";
 import Moment from "moment";
 
-import { DatePicker, Select, Input } from "../FormElements";
+import { DatePicker, Select, InputNumber } from "../FormElements";
 import { getShortName } from "../../services/formatters";
 import { DATE_FORMATS } from "../../services/constants";
 
@@ -24,6 +24,11 @@ const getInputs = (initialValues = {}) => ({
         : null,
       rules: [{ required: true, message: "Обязательное поле" }]
     },
+    itemProps: {
+      ...formItemLayout,
+      label: "Дата"
+    },
+    disabled: initialValues.isLoading,
     style: { width: "100%" }
   },
   users: {
@@ -32,21 +37,36 @@ const getInputs = (initialValues = {}) => ({
     mode: "multiple",
     settings: {
       rules: [{ required: true, message: "Обязательное поле" }]
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Сотрудники"
+    },
+    disabled: initialValues.isLoading,
   },
   workRate: {
     name: "workRate",
     placeholder: "Часовая ставка",
     settings: {
       initialValue: get(initialValues, "workRate", 0),
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Часовая ставка"
+    },
+    disabled: initialValues.isLoading,
   },
   overtimeRate: {
     name: "overtimeRate",
     placeholder: "Cтавка переработки",
     settings: {
       initialValue: get(initialValues, "overtimeRate", 0),
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Cтавка переработки"
+    },
+    disabled: initialValues.isLoading,
   }
 });
 
@@ -85,41 +105,33 @@ class Project extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} style={{ marginTop: -20 }}>
-        <Form.Item {...formItemLayout} label="Дата">
-          <DatePicker
-            form={form}
-            {...inputs.date}
-            disabled={isLoading}
-          />
-        </Form.Item>
+        <DatePicker
+          form={form}
+          {...inputs.date}
+        />
 
-        <Form.Item  {...formItemLayout} label="Сотрудники">
-          <Select
-            form={form}
-            options={userData}
-            {...inputs.users}
-            disabled={isLoading}
-          />
-        </Form.Item>
+        <Select
+          form={form}
+          options={userData}
+          {...inputs.users}
+        />
 
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item {...formItemLayout} label="Часовая ставка">
-              <Input
-                form={form}
-                {...inputs.workRate}
-                disabled={isLoading}
-              />
-            </Form.Item>
+            <InputNumber
+              form={form}
+              {...inputs.workRate}
+              positive
+              float
+            />
           </Col>
           <Col span={12}>
-            <Form.Item {...formItemLayout} label="Ставка переработки">
-              <Input
-                form={form}
-                {...inputs.overtimeRate}
-                disabled={isLoading}
-              />
-            </Form.Item>
+            <InputNumber
+              form={form}
+              {...inputs.overtimeRate}
+              positive
+              float
+            />
           </Col>
         </Row>
 

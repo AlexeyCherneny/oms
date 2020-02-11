@@ -1,56 +1,59 @@
 import React from "react";
-import { Form, Button, Row, Input, Col, DatePicker } from "antd";
+import { Form, Button, Row, Col } from "antd";
 import Moment from "moment";
 
+import { Input, DatePicker } from "../FormElements";
 import { programDateFormat } from "../../services/formatters";
 
 const formItemLayout = {
   style: { marginBottom: 0 }
 };
 
-const createInputs = ({ title, start_date, end_date }) => ({
+const createInputs = ({ title, startDate, endDate, isLoading }) => ({
   title: {
     name: "title",
     placeholder: "Название проекта",
     settings: {
-      initialValue: title || "",
+      initialValue: title || '',
       rules: [
-        {
-          required: true,
-          message: "Обязательное поле"
-        }
+        { required: true, message: "Обязательное поле" }
       ]
-    }
+    },
+    itemProps: {
+      ...formItemLayout,
+      label: "Начало проекта"
+    },
+    disabled: isLoading,
   },
   startDate: {
-    name: "start_date",
+    name: "startDate",
     placeholder: "Начало проекта",
     settings: {
-      initialValue: Moment(start_date).isValid()
-        ? Moment(start_date)
-        : Moment(),
+      initialValue: Moment(startDate).isValid() ? Moment(startDate) : Moment(),
       rules: [
-        {
-          required: true,
-          message: "Обязательное поле"
-        }
+        { required: true, message: "Обязательное поле" }
       ]
     },
-    style: { width: "100%" }
+    itemProps: { 
+      label: "Начало проекта" 
+    },
+    disabled: isLoading,
+    style: { width: '100%' }
   },
   endDate: {
-    name: "end_date",
+    name: "endDate",
     placeholder: "Окончание проекта",
     settings: {
-      initialValue: Moment(end_date).isValid() ? Moment(end_date) : Moment(),
+      initialValue: Moment(endDate).isValid() ? Moment(endDate) : Moment(),
       rules: [
-        {
-          required: true,
-          message: "Обязательное поле"
-        }
+        { required: true, message: "Обязательное поле" }
       ]
     },
-    style: { width: "100%" }
+    itemProps: {
+      label: "Окончание проекта"
+    },
+    disabled: isLoading,
+    style: { width: '100%' }
   }
 });
 
@@ -62,10 +65,10 @@ class Project extends React.Component {
 
     form.validateFields((err, values) => {
       if (!err) {
-        handleSubmit({
+        handleSubmit({ 
           ...values,
-          start_date: Moment(values.start_date).format(programDateFormat),
-          end_date: Moment(values.end_date).format(programDateFormat)
+          startDate: Moment(values.startDate).format(programDateFormat),
+          endDate: Moment(values.endDate).format(programDateFormat),
         });
       }
     });
@@ -75,47 +78,32 @@ class Project extends React.Component {
     const {
       initialValues = {},
       isLoading,
+      form,
       handleSubmit,
       handleReject
     } = this.props;
+
     const inputs = createInputs(initialValues);
-    const { getFieldDecorator } = this.props.form;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayout} label="Название проекта">
-          {getFieldDecorator(
-            inputs(initialValues).title.name,
-            inputs(initialValues).title.settings
-          )(<Input {...inputs(initialValues).title} disabled={isLoading} />)}
-        </Form.Item>
+      <Form onSubmit={this.handleSubmit} style={{ marginTop: -24 }}>
+        <Input
+          form={form}
+          {...inputs.title}
+        />
 
         <Row type="flex" gutter={16}>
           <Col span={12}>
-            <Form.Item label="Начало проекта">
-              {getFieldDecorator(
-                inputs(initialValues).startDate.name,
-                inputs(initialValues).startDate.settings
-              )(
-                <DatePicker
-                  {...inputs(initialValues).startDate}
-                  disabled={isLoading}
-                />
-              )}
-            </Form.Item>
+            <DatePicker
+              form={form}
+              {...inputs.startDate}
+            />
           </Col>
           <Col span={12}>
-            <Form.Item label="Окончание проекта">
-              {getFieldDecorator(
-                inputs(initialValues).endDate.name,
-                inputs(initialValues).endDate.settings
-              )(
-                <DatePicker
-                  {...inputs(initialValues).endDate}
-                  disabled={isLoading}
-                />
-              )}
-            </Form.Item>
+            <DatePicker
+              form={form}
+              {...inputs.endDate}
+            />
           </Col>
         </Row>
 
@@ -130,7 +118,11 @@ class Project extends React.Component {
             </Button>
           )}
           {handleSubmit && (
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button 
+              type="primary" 
+              htmlType="submit" 
+              loading={isLoading}
+            >
               {this.props.submitTitle}
             </Button>
           )}
