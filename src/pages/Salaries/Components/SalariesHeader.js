@@ -9,7 +9,7 @@ const menuProps = {
 
 const Header = ({ tabs, location, selectedKey }) => {
   return (
-    <Menu {...menuProps} theme="dark" selectedKeys={[selectedKey]}>
+    <Menu {...menuProps} theme="light" selectedKeys={[selectedKey]}>
       {tabs.map(tab => (
         <Menu.Item key={tab.pathname} style={{ lineHeight: "64px" }}>
           <NavLink
