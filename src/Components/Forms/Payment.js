@@ -149,7 +149,6 @@ class EventForm extends React.Component {
                 <Input
                   {...inputs(initialValues).currency_rate}
                   disabled={isLoading}
-                  addonAfter={selectAfter}
                 />
               )}
             </Form.Item>
@@ -166,7 +165,6 @@ class EventForm extends React.Component {
                 <DatePicker
                   {...inputs(initialValues).date}
                   disabled={isLoading}
-                  addonAfter={selectAfter}
                 />
               )}
             </Form.Item>
@@ -181,7 +179,6 @@ class EventForm extends React.Component {
                   <Input
                     {...inputs(initialValues).payer}
                     disabled={isLoading}
-                    addonAfter={selectAfter}
                   />
                 )}
               </Form.Item>
@@ -194,7 +191,6 @@ class EventForm extends React.Component {
                   <Input
                     {...inputs(initialValues).receiver}
                     disabled={isLoading}
-                    addonAfter={selectAfter}
                   />
                 )}
               </Form.Item>
