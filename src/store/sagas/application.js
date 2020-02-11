@@ -1,4 +1,4 @@
-import { call, put,  all, takeLatest } from "redux-saga/effects";
+import { call, put, all, takeLatest } from "redux-saga/effects";
 import { replace } from "connected-react-router";
 
 import { handleSagaError } from "./utils";

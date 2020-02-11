@@ -1,11 +1,16 @@
 import React from "react";
 import { Input } from "antd";
 
-const InputWrapper = props =>
-  props.form &&
-  props.form.getFieldDecorator(
-    props.name,
-    props.settings
-  )(<Input {...props} />);
+class FormInput extends React.Component {
+  render() {
+    return <Input {...this.props} />;
+  }
+}
+
+const InputWrapper = ({ name, settings, form, ...props } ) =>
+  form.getFieldDecorator(
+    name,
+    settings
+  )(<FormInput {...props} />);
 
 export default InputWrapper;

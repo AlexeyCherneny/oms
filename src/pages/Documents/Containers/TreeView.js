@@ -20,7 +20,7 @@ const TreeViewContainer = compose(
   withProps(({ documents, match }) => {
     const selectedId = match.params.id || '';
     const parentIds = tree.getAllParents(documents, selectedId);
-    const rootChildren = documents.filter(doc => (!doc.parent_document && doc.parent_document !== 0));
+    const rootChildren = documents.filter(doc => (!doc.parentDocument && doc.parentDocument !== 0));
     
     return {
       selectedId,
@@ -40,7 +40,7 @@ const TreeViewContainer = compose(
       const document = {
         title: 'Новый документ',
         content: '',
-        parent_document: get(selectedDoc, 'id', null),
+        parentDocument: get(selectedDoc, 'uuid', null),
       }
 
       return openModal({
@@ -79,9 +79,9 @@ const TreeViewContainer = compose(
       cancelText: "Отменить",
       okText: "Удалить",
       meta: {
-        start: () => actions.deleteDocumentRequest(selectedDoc.id, {
+        start: () => actions.deleteDocumentRequest(selectedDoc.uuid, {
           data: selectedDoc,
-          onSuccess: () => selectedId === String(selectedDoc.id) && goToDocument(),
+          onSuccess: () => selectedId === String(selectedDoc.uuid) && goToDocument(),
         }),
         success: () => actions.deleteDocumentSuccess(),
         failure: () => actions.deleteDocumentFailure(),

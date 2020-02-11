@@ -1,35 +1,69 @@
 import React from "react";
-import { Typography } from "antd";
+import { Button, Typography, Tooltip } from "antd";
 
 import ProjectWorkTable from "../Containers/ProjectWorksTable";
 import ProjectAttachments from "../Containers/ProjectAttachments";
 import Filter from "../Containers/Filter";
 
-const Title = props => (
-  <div
-    style={{
-      background: "#001529",
-      display: "flex",
-      justifyContent: "space-between"
-    }}
-  >
-    <Typography.Text
-      style={{ color: "rgba(255, 255, 255, 0.65)", margin: 10 }}
-      strong
-    >
-      {props.title}
-    </Typography.Text>
+import * as styles from "./styles/Project.module.scss";
 
-    <>{props.extra}</>
+const Extra = ({
+  handleAddUser,
+  project,
+  readProjectWorks,
+  ...props
+}) => (
+    <div className={styles.extraContainer}>
+    <Tooltip placement="top" title="Добавить пользователей" >
+      <Button 
+        type="link"
+        icon="usergroup-add"
+        onClick={handleAddUser}
+        className={styles.btnCreate}
+        disabled={!project}
+      />
+    </Tooltip>
+      <Tooltip placement="top" title="Обновить" >
+        <Button
+          type="link"
+          icon="sync"
+          onClick={readProjectWorks}
+          className={styles.btn}
+          disabled={!project}
+        />
+      </Tooltip>
+    <Filter {...props} />
   </div>
 );
 
-const Project = ({ children }) => {
+const Title = ({ title, extra }) => (
+  <div className={styles.titleContainer}>
+    <Typography.Text
+      className={styles.title}
+      strong
+    >
+      {title}
+    </Typography.Text>
+
+    {extra}
+  </div>
+);
+
+const Project = ({ 
+  children, 
+  title,
+  ...props
+}) => {
+  if (!props.project) return null;
+
   return (
-    <div style={{ backgroundColor: "white" }}>
-      <Title title="Отработка" extra={<Filter />} />
+    <div className={styles.container}>
+      <Title 
+        title={`Информация по проекту ${title}`} 
+        extra={(<Extra {...props} />)} 
+      />
       <ProjectWorkTable />
-      <ProjectAttachments />
+      <ProjectAttachments {...props} />
       {children}
     </div>
   );

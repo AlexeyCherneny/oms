@@ -5,7 +5,7 @@ import Dashboard from "../Components/Dashboard";
 import selectors from "../../../store/selectors";
 
 const mapState = ({ authorization, events, ...state }) => ({
-  role: authorization.user && authorization.user.role,
+  roles: authorization.user?.roles || [],
   salary: authorization.user && authorization.user.salary,
   currentSalary: 900,
   nextSalary: 1200,

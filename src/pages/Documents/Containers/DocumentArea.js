@@ -31,8 +31,8 @@ const DocumentAreaContainer = compose(
       });
     },
     checkPermission: ({ isOpenEdit, isOpenSettings, canEditAccess, canEditDocument, selectedDocument, goToDocument }) => () => {
-      if (isOpenEdit && selectedDocument && !canEditDocument) goToDocument(selectedDocument.id);
-      if (isOpenSettings && selectedDocument && !canEditAccess) goToDocument(selectedDocument.id);
+      if (isOpenEdit && selectedDocument && !canEditDocument) goToDocument(selectedDocument.uuid);
+      if (isOpenSettings && selectedDocument && !canEditAccess) goToDocument(selectedDocument.uuid);
     },
   }),
   lifecycle({

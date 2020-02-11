@@ -8,6 +8,7 @@ import {
 import Moment from "moment";
 
 import { Card } from "../../../Components";
+import PojectsCard from "../Containers/ProjectCard";
 import { formatCurrency, formatCount } from "../../../services/formatters";
 import {
   // DATE_FORMATS,
@@ -94,7 +95,7 @@ const Dashboard = props => {
           tooltip="Дополнительная информация"
         />
       </Col> */}
-      {props.role === ROLES.hr && (
+      {props.roles.includes(ROLES.HR) && (
         <Col {...colProps}>
           <Card
             header="Количество сотрудников"
@@ -102,6 +103,11 @@ const Dashboard = props => {
             // footer={employeesFooter}
             tooltip="Дополнительная информация"
           />
+        </Col>
+      )}
+      {props.roles.includes(ROLES.EMPLOYEE) && (
+        <Col {...colProps}>
+          <PojectsCard />
         </Col>
       )}
     </Row>

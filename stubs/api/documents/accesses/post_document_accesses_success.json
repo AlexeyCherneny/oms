@@ -1,15 +1,15 @@
 {
   "data": [
     {
-      "id": 11,
-      "user_id": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
-      "document_id": 3,
+      "uuid": 11,
+      "userId": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+      "documentId": 3,
       "access": "member"
     },
     {
-      "id": 12,
-      "user_id": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
-      "document_id": 3,
+      "uuid": 12,
+      "userId": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
+      "documentId": 3,
       "access": "member"
     }
   ],

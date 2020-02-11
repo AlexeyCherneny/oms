@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { get } from "lodash";
 
 import { connect } from "react-redux";
@@ -27,8 +27,8 @@ class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path="/app/sign-in" component={SignIn} />
-
         <Route path="/app/cabinet" component={Cabinet} />
+        <Redirect to="/app/cabinet" />
       </Switch>
     );
   }

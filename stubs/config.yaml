@@ -89,6 +89,16 @@
       file: api/user/fail_get_not_found.json
 
 - request:
+    url: ^/api/user/([^\/]+)/work$
+    method: GET
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/user/work/get_project_work_success.json
+
+- request:
     url: ^/api/user
   response:
     headers:
@@ -236,80 +246,87 @@
       content-type: application/json
     file: api/salaries/create_salary_success.json
 
-### ProjectRate API
+### Projects API
 - request:
-    url: ^/api/projectRate
-    method: get
-  response:
-    latency: 800
-    code: 200
-    headers:
-      content-type: application/json
-    file: api/projectRate/get_project_rates_success.json
-
-### ProjectWork API
-- request:
-    url: ^/api/projectWork
-    method: get
-  response:
-    latency: 800
-    code: 200
-    headers:
-      content-type: application/json
-    file: api/projectWork/get_project_work_success.json
-
-- request:
-    url: ^/api/projectWork
-    method: put
-  response:
-    latency: 800
-    code: 200
-    headers:
-      content-type: application/json
-    file: api/projectWork/update_project_work_success.json
-
-### Project API
-- request:
-    url: ^/api/project
+    url: ^/api/projects$
     method: post
-    headers:
-      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
   response:
     latency: 800
-    code: 200
+    status: 201
     headers:
       content-type: application/json
-    file: api/project/create_project_success.json
+    file: api/projects/create_project_success.json
 
 - request:
-    url: ^/api/project
+    url: ^/api/projects$
     method: get
   response:
     latency: 800
-    code: 200
+    status: 200
     headers:
       content-type: application/json
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
-    file: api/project/get_projects_success.json
+    file: api/projects/get_projects_success.json
 
 - request:
-    url: ^/api/project
+    url: ^/api/projects/([^/]+)$
     method: put
   response:
     latency: 800
-    code: 200
+    status: 200
     headers:
       content-type: application/json
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
-    file: api/project/update_project_success.json
+    file: api/projects/update_project_success.json
 
 - request:
-    url: ^/api/project
+    url: ^/api/projects/([^/]+)$
     method: delete
   response:
     latency: 800
-    code: 200
+    status: 200
     headers:
       content-type: application/json
       token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiMzU3ODZhNjItNzAwYS00OWRlLTljMzUtZTVkZDk2ZTgzMWU0In0.2u35q2EGYqZMCW7xfnDHb8TMhOy0ricpnGTUDoUVvEc
-    file: api/project/delete_project_success.json
+    file: api/projects/delete_project_success.json
+
+### Project Work API
+- request:
+    url: ^/api/projects/([^/]+)/work([^/]*)$
+    method: get
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/projects/work/get_project_work_success.json
+
+- request:
+    url: ^/api/projects/([^/]+)/work$
+    method: post
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/projects/work/post_project_work_success.json
+
+- request:
+    url: ^/api/projects/([^/]+)/work/([^/]+)$
+    method: put
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/projects/work/update_project_work_success.json
+
+- request:
+    url: ^/api/projects/([^/]+)/work/([^/]+)$
+    method: delete
+  response:
+    latency: 800
+    status: 200
+    headers:
+      content-type: application/json
+    file: api/projects/work/delete_project_work_success.json

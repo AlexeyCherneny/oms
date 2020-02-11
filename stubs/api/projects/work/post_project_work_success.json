@@ -1,0 +1,31 @@
+{
+  "data": [
+    {
+      "uuid": 3,
+      "projectId": 0,
+      "userId": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+      "date": "2020-01-02",
+      "workHours": 160,
+      "overtimeHours": 0,
+      "workRate": 9,
+      "overtimeRate": 11,
+      "currency": "USD"
+    },
+    {
+      "uuid": 4,
+      "projectId": 0,
+      "userId": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+      "date": "2020-01-02",
+      "workHours": 160,
+      "overtimeHours": 0,
+      "workRate": 8,
+      "overtimeRate": 10,
+      "currency": "USD"
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

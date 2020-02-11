@@ -5,6 +5,7 @@ import { routerMiddleware as createRouterMiddleware } from "connected-react-rout
 import history from "../services/history";
 import createRootReducer from "./reducers";
 import rootSaga from "./sagas";
+import actions from "./actions";
 
 const sagaMiddleware = createSagaMiddleware();
 const routerMiddleware = createRouterMiddleware(history);
@@ -18,7 +19,15 @@ const enhancers = compose(
     : f => f
 );
 
-const rootReducer = createRootReducer(history);
+const appReducer = createRootReducer(history);
+
+const rootReducer = (state, action) => {
+  if (action.type === actions.resetUser.toString()) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+}
 
 const configureStore = () => {
   let store = createStore(rootReducer, enhancers);

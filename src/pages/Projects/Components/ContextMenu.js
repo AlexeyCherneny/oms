@@ -1,8 +1,10 @@
 import React from "react";
 import { Dropdown, Menu, Icon } from "antd";
 
-const handleClick = func => e => {
-  e.domEvent.stopPropagation();
+const handleClick = func => ({ domEvent }) => {
+  domEvent.stopPropagation();
+  domEvent.persist();
+
   if (typeof func === "function") func();
 };
 

@@ -22,8 +22,8 @@ const mapDispatch = {
 const DocumentContainer = compose(
   connect(mapState, mapDispatch),
   withProps(({ isDownloading, isUpdating, isDeleting, documents, selectedDocument }) => ({
-    isDocument: selectedDocument && !documents.find(doc => doc.parent_document === selectedDocument.id),
-    isLoading: isDownloading || isUpdating(selectedDocument?.id) || isDeleting(selectedDocument?.id) || false,
+    isDocument: selectedDocument && !documents.find(doc => doc.parentDocument === selectedDocument.uuid),
+    isLoading: isDownloading || isUpdating(selectedDocument?.uuid) || isDeleting(selectedDocument?.uuid) || false,
   })),
   withHandlers({
     handleEditContent: ({ editDocument }) => content => editDocument({ content }),

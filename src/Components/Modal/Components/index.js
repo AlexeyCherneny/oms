@@ -3,12 +3,15 @@ import { Modal } from "antd";
 
 import ProjectForm from "../../Forms/Project";
 import ProjectWorkForm from "../../Forms/ProjectWork";
+import ProjectUser from "../../Forms/ProjectUser";
 import RenameModal from "../../Forms/RenameModal";
 import CustomSalary from "../../Forms/CustomSalary";
 
-const MODAL_TYPES = {
+export const MODAL_TYPES = {
   project: 'project',
   projectWork: 'projectWork',
+  projectUser: 'projectUser',
+  customSalary: 'customSalary',
   rename: 'rename',
   confirm: 'confirm'
 }
@@ -37,7 +40,17 @@ const ModalContent = props => {
         />
       );
     }
-    case "customSalary": {
+    case MODAL_TYPES.projectUser: {
+      return (
+        <ProjectUser
+          {...props.form}
+          handleSubmit={props.handleSubmit}
+          handleReject={props.handleReject}
+          isLoading={isLoading}
+        />
+      );
+    }
+    case MODAL_TYPES.customSalary: {
       return (
         <CustomSalary
           {...props.form}
@@ -63,21 +76,42 @@ const ModalContent = props => {
         : <span>{props.content}</span>;
   }
 };
-const CustomModal = props => {
-  let modalSettings = { footer: null, onCancel: () => props.handleReject() };
 
-  if (props.type === MODAL_TYPES.confirm) {
-    modalSettings = {
-      cancelText: props.cancelText,
-      okText: props.okText,
-      onOk: props.handleSubmit,
-      title: props.title,
-      content: props.content,
-      closable: !props.isLoading,
-      confirmLoading: props.isLoading,
-      cancelButtonProps: { disabled: props.isLoading }
-    };
+const getModalSettings = props => {
+  const defaultProps = {
+    afterClose: props.handleClose,
+    onCancel: props.handleReject,
+    destroyOnClose: true,
+    closable: !props.isLoading,
   }
+
+  switch (props.type) {
+    case MODAL_TYPES.confirm: 
+      return {
+        ...defaultProps,
+        onOk: props.handleSubmit,
+        cancelText: props.cancelText,
+        okText: props.okText,
+        title: props.title,
+        content: props.content,
+        okButtonProps: {
+          loading: props.isLoading,
+        },
+        cancelButtonProps: {
+          disabled: props.isLoading,
+        },
+      };
+    default: 
+      return {
+        ...defaultProps,
+        footer: null,
+      }
+  }
+}
+
+const CustomModal = props => {
+  const modalSettings = getModalSettings(props);
+
   return (
     <Modal {...props} {...modalSettings}>
       <ModalContent {...props}></ModalContent>

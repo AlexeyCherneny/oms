@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import qs from "qs";
 
 import actions from "../../../store/actions";
-import { programDateFormat } from "../../../services/formatters";
+import { programDateFormat, getShortName } from "../../../services/formatters";
 import Filter from "../Components/Filter";
 
 const mapState = ({ users, authorization }) => ({
@@ -58,7 +58,7 @@ const FilterContainer = compose(
   }),
   withProps(({ users, location }) => {
     const usersOptions = defaultTo(get(users, "data", []), []).map(user => ({
-      label: `${user.firstName[0]}. ${user.lastName}`,
+      label: getShortName(user),
       value: String(user.uuid)
     }));
 

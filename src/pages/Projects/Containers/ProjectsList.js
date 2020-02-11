@@ -30,59 +30,53 @@ const ProjectsListContainer = compose(
   }),
   withHandlers({
     handleCreate: ({ openModal }) => () => {
+      const initialValues = {
+        title: 'Новый проект',
+      }
+
       return openModal({
         form: {
           submitTitle: "Создать",
-          rejectTitle: "Отменить"
+          rejectTitle: "Отменить",
+          initialValues
         },
+        title: "Создать новый проект",
         type: "project",
         meta: {
-          start: params => actions.createProjectRequest(params),
+          start: params => actions.createProjectRequest({ ...initialValues, ...params }),
           success: () => actions.createProjectSuccess(),
           failure: () => actions.createProjectFailure()
         }
       });
     },
-    handleDelete: ({ openModal, getProjectById }) => projectId => {
-      const project = getProjectById(projectId);
-
-      return openModal({
-        type: "confirm",
-        title: `Удалить проект ${project.title}`,
-        content: "Вы действительно хотите выполнить это действие?",
-        cancelText: "Отменить",
-        okText: "Удалить",
-        meta: {
-          start: () =>
-            actions.deleteProjectRequest({
-              id: projectId
-            }),
-          success: () => actions.deleteProjectSuccess(),
-          failure: () => actions.deleteProjectFailure()
-        }
-      });
-    },
-    handleRename: ({ openModal, getProjectById }) => projectId => {
-      const project = getProjectById(projectId);
-
-      return openModal({
-        form: {
-          initialValues: project,
-          submitTitle: "Обновить",
-          rejectTitle: "Отменить"
-        },
-        type: "project",
-        meta: {
-          start: params =>
-            actions.updateProjectRequest({
-              id: projectId,
-              params
-            }),
-          success: () => actions.updateProjectSuccess(),
-          failure: () => actions.updateProjectFailure()
-        }
-      });
-    }
+    handleDelete: ({ openModal, selectedKey, indexPath, history }) => project => openModal({
+      type: "confirm",
+      title: `Удалить проект ${project.title}`,
+      content: "Вы действительно хотите выполнить это действие?",
+      cancelText: "Отменить",
+      okText: "Удалить",
+      meta: {
+        start: () => actions.deleteProjectRequest(project.uuid, {
+          onSuccess: () => String(project.uuid) === selectedKey && history.push(indexPath)
+        }),
+        success: () => actions.deleteProjectSuccess(),
+        failure: () => actions.deleteProjectFailure()
+      }
+    }),
+    handleRename: ({ openModal }) => project => openModal({
+      form: {
+        initialValues: project,
+        submitTitle: "Сохранить",
+        rejectTitle: "Отменить"
+      },
+      title: `Редактирование проекта ${project.title}`,
+      type: "project",
+      meta: {
+        start: params => actions.updateProjectRequest({ ...project, ...params }),
+        success: () => actions.updateProjectSuccess(),
+        failure: () => actions.updateProjectFailure()
+      }
+    }),
   })
 )(ProjectsList);
 

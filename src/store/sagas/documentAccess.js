@@ -49,7 +49,7 @@ function* createAccess(api, { payload = {}, meta = {} }) {
 function* updateAccess(api, { payload = {}, meta = {} }) {
 
   try {
-    const response = yield call(api.updateDocumentAccess, { id: payload.id, documentId: payload.document_id, params: qs.stringify(payload) });
+    const response = yield call(api.updateDocumentAccess, { id: payload.uuid, documentId: payload.documentId, params: qs.stringify(payload) });
 
     if (testResponse(response)) {
       yield put(actions.updateDocumentAccessSuccess(response.data.data));
@@ -70,7 +70,7 @@ function* updateAccess(api, { payload = {}, meta = {} }) {
 function* deleteAccess(api, { payload = {}, meta = {} }) {
   try {
     const { data } = meta;
-    const response = yield call(api.deleteDocumentAccess, { id: data.id, documentId: data.document_id });
+    const response = yield call(api.deleteDocumentAccess, { id: data.uuid, documentId: data.documentId });
 
     if (testResponse(response)) {
       yield put(actions.deleteDocumentAccessSuccess(payload));

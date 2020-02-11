@@ -1,8 +1,8 @@
 {
   "data": {
-    "id": 3,
-    "user_id": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
-    "document_id": 3,
+    "uuid": 3,
+    "userId": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+    "documentId": 3,
     "access": "admin"
   },
   "errors": [],

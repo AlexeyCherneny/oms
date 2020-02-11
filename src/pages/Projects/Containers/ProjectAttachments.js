@@ -1,16 +1,13 @@
 import { connect } from "react-redux";
-import { compose, withHandlers, withProps } from "recompose";
-import { withRouter } from "react-router-dom";
-import { get } from "lodash";
+import { compose, withHandlers } from "recompose";
 
 import ProjectAttachments from "../Components/ProjectAttachments";
 import actions from "../../../store/actions";
 import selectors from "../../../store/selectors";
 
 const mapState = state => ({
-  projects: selectors.getProjects(state),
-  getProjectById: selectors.getProjectById(state),
-  isLoading: selectors.isProjectsDownloading(state)
+  isLoading: selectors.isProjectsDownloading(state),
+  isProjectUpdating: selectors.isProjectUpdating(state),
 });
 
 const mapDispatch = {
@@ -19,16 +16,7 @@ const mapDispatch = {
 };
 
 const ProjectAttachmentsContainer = compose(
-  withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ getProjectById, match }) => {
-    const projectId = match.params.projectId;
-    const project = getProjectById(projectId);
-
-    const attachments = get(project, "attachments", []);
-
-    return { project, attachments, projectId };
-  }),
   withHandlers({
     handleUpload: ({ updateProject, projectId }) => file => {
       updateProject({ id: projectId, params: { attachments: file } });

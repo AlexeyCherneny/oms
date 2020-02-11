@@ -1,0 +1,42 @@
+.antd-table-custom {
+  .ant-table-thead, 
+  .ant-table-tbody {
+    & > tr {
+
+      & > td, & > th {
+        padding: 16px 8px;
+        
+        &:first-child {
+          padding-left: 16px;
+        }
+
+        &:last-child {
+          padding-right: 16px;
+        }
+      }
+
+      & > td {
+        padding: 16px 8px;
+      }
+    }
+  }
+
+  .ant-table-thead {
+
+    & > tr > th[colspan] {
+      padding-bottom: 4px;
+    }
+
+    & > tr:last-child > th {
+      padding-top: 4px;
+    }
+  }
+
+  .row-warning {
+    background-color: #ffe6e6;
+
+    &:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+      background-color: #ffc6c6;
+    }
+  }
+}

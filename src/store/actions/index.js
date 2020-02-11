@@ -1,3 +1,4 @@
+import { createAction } from "redux-act";
 import { createCRUDActions } from "./utils";
 
 import authorizationActions from "./authorization";
@@ -11,8 +12,12 @@ import salariesActions from "./salaries";
 const usersActions = createCRUDActions("user");
 const usersPlanActions = createCRUDActions("usersPlan");
 const projectsActions = createCRUDActions("project");
-const projectWorkActions = createCRUDActions("projectWork");
-const projectRateActions = createCRUDActions("projectRate");
+
+const projectWorkActions = { 
+  ...createCRUDActions("projectWork"),
+  cleanProjectWork: createAction('CLEAN_PROJECTWORK'),
+};
+
 const documentAccessActions = createCRUDActions("documentAccess");
 
 export default {
@@ -27,6 +32,5 @@ export default {
   ...projectsActions,
   ...modalActions,
   ...projectWorkActions,
-  ...projectRateActions,
   ...documentAccessActions,
 };

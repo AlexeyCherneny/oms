@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "uuid": 0,
+      "projectId": 0,
+      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
+      "date": "2020-01-02",
+      "workHours": 160,
+      "overtimeHours": 12
+    },
+    {
+      "uuid": 1,
+      "projectId": 1,
+      "userId": "35786a62-700a-49de-9c35-e5dd96e831e4",
+      "date": "2020-01-02",
+      "workHours": 152,
+      "overtimeHours": null
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

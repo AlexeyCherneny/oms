@@ -3,7 +3,6 @@ import { Menu, Spin } from "antd";
 import { NavLink } from "react-router-dom";
 
 import { ListHeader } from "../../../Components";
-import { BASE_URL } from "../constants";
 import ContextMenu from "./ContextMenu";
 
 const menuProps = {
@@ -22,7 +21,8 @@ const Header = ({
   isLoading,
   handleDelete,
   handleRename,
-  location
+  location,
+  indexPath
 }) => {
   return (
     <div>
@@ -38,7 +38,7 @@ const Header = ({
         <Menu {...menuProps} selectedKeys={[selectedKey]}>
           {projects.map(project => (
             <Menu.Item
-              key={project.id}
+              key={project.uuid}
               style={{
                 lineHeight: "40px",
                 margin: 0,
@@ -48,12 +48,12 @@ const Header = ({
               }}
             >
               <ContextMenu
-                onDelete={() => handleDelete(project.id)}
-                onRename={() => handleRename(project.id)}
+                onDelete={() => handleDelete(project)}
+                onRename={() => handleRename(project)}
               >
                 <NavLink
                   to={{
-                    pathname: `${BASE_URL}/${project.id}/users`,
+                    pathname: `${indexPath}/${project.uuid}`,
                     search: location.search
                   }}
                 >

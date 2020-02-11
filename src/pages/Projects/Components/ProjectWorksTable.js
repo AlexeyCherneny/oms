@@ -1,22 +1,30 @@
 import React from "react";
 import { Table, Button } from "antd";
+import Moment from "moment";
 
-const TableActions = props => {
-  const { projectWork, handleProjectWorkEdit, isProjectWorkUpdating } = props;
+import './styles/ProjectWorkTable.scss';
+
+const TableActions = ({
+  projectWork, 
+  handleProjectWorkEdit,
+  handleDelete, 
+  isProjectWorkUpdating
+}) => {
 
   const isUpdating = isProjectWorkUpdating(projectWork.id);
-
-  const isDisabled = isUpdating;
 
   return (
     <>
       <Button
         onClick={() => handleProjectWorkEdit(projectWork.id)}
         icon="edit"
-        disabled={isDisabled}
         loading={isUpdating}
         style={{ marginRight: 8 }}
-        size="small"
+      />
+      <Button
+        onClick={() => handleDelete(projectWork)}
+        icon="delete"
+        loading={isUpdating}
       />
     </>
   );
@@ -27,60 +35,89 @@ const staticColumns = [
     title: "Пользователь",
     dataIndex: "fullName",
     key: "fullName",
-    align: "center"
+    align: "left",
   },
   {
-    title: "Время",
-    dataIndex: "workHours",
-    key: "workHours",
-    align: "center"
-  },
-  {
-    title: "Сумма работы",
-    dataIndex: "workAmount",
-    key: "workAmount",
-    align: "center"
+    title: "Отработано",
+    key: "work",
+    width: '25%',
+    children: [
+      {
+        title: "Время",
+        dataIndex: "workHours",
+        key: "workHours",
+        align: "center",
+      },
+      {
+        title: "Сумма",
+        dataIndex: "workAmount",
+        key: "workAmount",
+        align: "center",
+      },
+    ]
   },
   {
     title: "Переработка",
-    dataIndex: "overtimeHours",
-    key: "overtimeHours",
-    align: "center"
+    key: "overtime",
+    width: '25%',
+    children: [
+      {
+        title: "Время",
+        dataIndex: "overtimeHours",
+        key: "overtimeHours",
+        align: "center",
+      },
+      {
+        title: "Сумма",
+        dataIndex: "overtimeAmount",
+        key: "overtimeAmount",
+        align: "center",
+      },
+    ]
   },
   {
-    title: "Сумма переработок",
-    dataIndex: "overtimeAmount",
-    key: "overtimeAmount",
-    align: "center"
+    title: <b>Итого</b>,
+    dataIndex: "totalAmount",
+    key: "totalAmount",
+    width: '12%',
+    render: text => (<b>{text}</b>)
   },
   {
     title: "Действия",
     key: "action",
-    width: "100px",
-    align: "center",
+    width: '12%',
     renderFn: props => (_, record) => (
       <TableActions projectWork={record} {...props} />
     )
   }
 ];
 
+const addWarningClass = node => {
+  const currentMonth = Moment().startOf('month');
+  const hasHours = node.workHours || Moment(node.date).isAfter(currentMonth);
+  return !hasHours ? 'row-warning' : '';
+}
+
 const ProjectWorkTable = props => {
   return (
     <Table
+      className="antd-table-custom"
+      rowClassName={addWarningClass}
       dataSource={props.tableData}
-      rowKey="id"
+      rowKey="uuid"
       size="medium"
-      loading={props.isDownloading}
+      loading={props.isLoadingData}
       pagination={{
         defaultPageSize: 5,
         style: { marginRight: 10 },
         size: "medium"
       }}
     >
-      {staticColumns.map(column => (
+      {staticColumns.map(({ renderFn, ...column }) => (
         <Table.Column
+          align="center"
+          render={renderFn && renderFn(props)}
           {...column}
-          render={column.renderFn && column.renderFn(props)}
         />
       ))}
     </Table>

@@ -20,11 +20,11 @@ const getTreeNodeTitle = (el, handleCreate, handleRename, handleDelete) => (
 
 const renderJSXTree = (tree, documents, ...args) =>
   tree.map(el => {
-    const children = documents.filter(doc => doc.parent_document === el.id);
+    const children = documents.filter(doc => doc.parentDocument === el.uuid);
     return (
       <TreeNode
         title={getTreeNodeTitle(el, ...args)}
-        key={String(el.id)}
+        key={String(el.uuid)}
         className={styles.treeNode}
       >
         {children.length > 0 && renderJSXTree(children, documents, ...args)}

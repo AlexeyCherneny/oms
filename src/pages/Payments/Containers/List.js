@@ -9,7 +9,8 @@ import { get, defaultTo } from "lodash";
 import {
   formatPaymentType,
   programDateFormat,
-  displayDateFormat
+  displayDateFormat,
+  getFullName
 } from "../../../services/formatters";
 import selectors from "../../../store/selectors";
 import actions from "../../../store/actions";
@@ -26,9 +27,6 @@ const mapState = state => ({
 const mapDispatch = {
   handleDelete: actions.deletePaymentRequest,
   push
-};
-const getFullName = user => {
-  return user ? `${user.firstName} ${user.lastName}` : "";
 };
 
 const dateFormat = "YYYY-MM-DD";
