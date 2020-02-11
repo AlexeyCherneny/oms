@@ -84,8 +84,14 @@ export const formatPaymentType = type => {
   }
 };
 
-export const isPermitted = (availableRoles = [], roles = []) =>
-  availableRoles.some(availableRole =>
-    roles.some(role => availableRole === role)
-  );
+export const isPermitted = (availableRoles = [], roles = []) => {
+  if (Array.isArray(availableRoles)) {
+    return availableRoles.some(availableRole =>
+      roles.some(role => availableRole === role)
+    );
+  }
+  return false;
+};
 
+export const getFullUserName = user =>
+  user ? user.first_name + " " + user.last_name : "John Dow";

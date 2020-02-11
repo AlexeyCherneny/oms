@@ -1,16 +1,19 @@
 import React from "react";
-import { Form, Button, Row, Col } from "antd";
+import { Form, Button, Row, Input, Col, DatePicker } from "antd";
 import Moment from "moment";
 
-import { Input, DatePicker } from "../FormElements";
 import { programDateFormat } from "../../services/formatters";
+
+const formItemLayout = {
+  style: { marginBottom: 0 }
+};
 
 const createInputs = ({ title, start_date, end_date }) => ({
   title: {
     name: "title",
     placeholder: "Название проекта",
     settings: {
-      initialValue: title || '',
+      initialValue: title || "",
       rules: [
         {
           required: true,
@@ -23,7 +26,9 @@ const createInputs = ({ title, start_date, end_date }) => ({
     name: "start_date",
     placeholder: "Начало проекта",
     settings: {
-      initialValue: Moment(start_date).isValid() ? Moment(start_date) : Moment(),
+      initialValue: Moment(start_date).isValid()
+        ? Moment(start_date)
+        : Moment(),
       rules: [
         {
           required: true,
@@ -31,7 +36,7 @@ const createInputs = ({ title, start_date, end_date }) => ({
         }
       ]
     },
-    style: { width: '100%' }
+    style: { width: "100%" }
   },
   endDate: {
     name: "end_date",
@@ -45,7 +50,7 @@ const createInputs = ({ title, start_date, end_date }) => ({
         }
       ]
     },
-    style: { width: '100%' }
+    style: { width: "100%" }
   }
 });
 
@@ -57,10 +62,10 @@ class Project extends React.Component {
 
     form.validateFields((err, values) => {
       if (!err) {
-        handleSubmit({ 
+        handleSubmit({
           ...values,
           start_date: Moment(values.start_date).format(programDateFormat),
-          end_date: Moment(values.end_date).format(programDateFormat),
+          end_date: Moment(values.end_date).format(programDateFormat)
         });
       }
     });
@@ -69,41 +74,47 @@ class Project extends React.Component {
   render() {
     const {
       initialValues = {},
-      form,
       isLoading,
       handleSubmit,
       handleReject
     } = this.props;
-
     const inputs = createInputs(initialValues);
+    const { getFieldDecorator } = this.props.form;
 
     return (
-      <Form onSubmit={this.handleSubmit} style={{ marginTop: -24 }}>
-        <Form.Item label="Название проекта">
-          <Input
-            form={form}
-            {...inputs.title}
-            disabled={isLoading}
-          />
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Item {...formItemLayout} label="Название проекта">
+          {getFieldDecorator(
+            inputs(initialValues).title.name,
+            inputs(initialValues).title.settings
+          )(<Input {...inputs(initialValues).title} disabled={isLoading} />)}
         </Form.Item>
 
         <Row type="flex" gutter={16}>
           <Col span={12}>
             <Form.Item label="Начало проекта">
-              <DatePicker
-                form={form}
-                {...inputs.startDate}
-                disabled={isLoading}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).startDate.name,
+                inputs(initialValues).startDate.settings
+              )(
+                <DatePicker
+                  {...inputs(initialValues).startDate}
+                  disabled={isLoading}
+                />
+              )}
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item label="Окончание проекта">
-              <DatePicker
-                form={form}
-                {...inputs.endDate}
-                disabled={isLoading}
-              />
+              {getFieldDecorator(
+                inputs(initialValues).endDate.name,
+                inputs(initialValues).endDate.settings
+              )(
+                <DatePicker
+                  {...inputs(initialValues).endDate}
+                  disabled={isLoading}
+                />
+              )}
             </Form.Item>
           </Col>
         </Row>
@@ -119,11 +130,7 @@ class Project extends React.Component {
             </Button>
           )}
           {handleSubmit && (
-            <Button 
-              type="primary" 
-              htmlType="submit" 
-              loading={isLoading}
-            >
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               {this.props.submitTitle}
             </Button>
           )}

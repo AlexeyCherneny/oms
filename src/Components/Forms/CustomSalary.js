@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, Input, DatePicker, Select } from "antd";
 import moment from "moment";
 import { get } from "lodash";
 import { connect } from "react-redux";
@@ -9,9 +9,6 @@ import {
   programDateFormat,
   getShortName
 } from "../../services/formatters";
-import FormInput from "../FormElements/Input/Input";
-import MonthPicker from "../FormElements/MonthPicker/MonthPicker";
-import FormSelect from "../FormElements/Select/Select";
 
 const inputs = initialValues => ({
   value: {
@@ -95,29 +92,38 @@ class EventForm extends React.Component {
   render() {
     const { initialValues, form, isLoading, disabled, users } = this.props;
 
+    const { getFieldDecorator } = this.props.form;
+
     const dis = isLoading || disabled;
     return (
       <Form onSubmit={this.handleSubmit} hideRequiredMark>
         <Form.Item label="Сумма" style={{ marginBottom: 0 }}>
-          <FormInput
-            form={form}
-            {...inputs(initialValues).value}
-            disabled={dis}
-            // addonAfter={selectAfter}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).value.name,
+            inputs(initialValues).value.settings
+          )(
+            <Input
+              {...inputs(initialValues).value}
+              disabled={isLoading} // addonAfter={selectAfter}
+            />
+          )}
         </Form.Item>
 
         <Form.Item label="С" style={{ marginBottom: 0 }}>
-          <MonthPicker
-            form={form}
-            {...inputs(initialValues).dateFrom}
-            disabled={dis}
-            style={{ width: "100%" }}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).dateFrom.name,
+            inputs(initialValues).dateFrom.settings
+          )(
+            <Input
+              {...inputs(initialValues).dateFrom}
+              disabled={isLoading}
+              style={{ width: "100%" }}
+            />
+          )}
         </Form.Item>
 
         <Form.Item label="По" style={{ marginBottom: 0 }}>
-          <MonthPicker
+          <DatePicker.MonthPicker
             form={form}
             {...inputs(initialValues).dateTo}
             disabled={dis}
@@ -126,15 +132,19 @@ class EventForm extends React.Component {
         </Form.Item>
 
         <Form.Item label="Пользователь" style={{ marginBottom: 0 }}>
-          <FormSelect
-            form={form}
-            {...inputs(initialValues).user}
-            disabled
-            options={users.map(user => ({
-              label: getShortName(user),
-              value: String(user.uuid)
-            }))}
-          />
+          {getFieldDecorator(
+            inputs(initialValues).user.name,
+            inputs(initialValues).user.settings
+          )(
+            <Select
+              {...inputs(initialValues).user}
+              disabled
+              options={users.map(user => ({
+                label: getShortName(user),
+                value: String(user.uuid)
+              }))}
+            />
+          )}
         </Form.Item>
 
         <div

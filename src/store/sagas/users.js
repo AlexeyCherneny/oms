@@ -35,7 +35,6 @@ function* readUsers(
     const response = yield call(api.readUsers, { search });
 
     if (response.status === 200) {
-
       yield put(actions.usersSuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
