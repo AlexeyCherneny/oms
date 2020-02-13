@@ -1,18 +1,30 @@
 import moment from "moment";
 import { DATE_FORMATS } from "./constants";
+import { get } from "lodash";
 
 export const formatEventsForCalendar = events =>
   events.map(e => ({ ...e, start: new Date(e.date) }));
 
-export const getFullName = user => {
-  return user ? `${user.firstName} ${user.lastName}` : '';
+export const getFullName = user =>
+  `${get(user, "firstName", "")} ${get(user, "lastName", "")}`;
+
+export const formatPhone = phone => {
+  if (!phone) return "";
+  phone = phone.replace(/\D/g, "");
+
+  return (
+    `+${phone.substr(0, 3)} ${phone.substr(3, 2)} ${phone.substr(5, 3)}` +
+    `-${phone.substr(8, 2)}-${phone.substr(10, 2)}`
+  );
 };
 
-export const getShortName = user => 
-  user ? `${user.firstName[0]}. ${user.lastName}` : '';
+export const getShortName = user =>
+  user ? `${user.firstName[0]}. ${user.lastName}` : "";
 
-export const stringifyDate = date => 
-  moment(date).startOf('month').format(DATE_FORMATS.dashReverse);
+export const stringifyDate = date =>
+  moment(date)
+    .startOf("month")
+    .format(DATE_FORMATS.dashReverse);
 
 export const fromProgramToDisplayDate = date => {
   const mDate = moment(date, programDateFormat);
@@ -54,7 +66,7 @@ export const formatCurrency = (num, curr) => {
     case "RUR":
       return `${count} ₽`;
     default:
-      return String(count) + curr ? ` ${curr}` : '';
+      return String(count) + curr ? ` ${curr}` : "";
   }
 };
 
@@ -92,4 +104,3 @@ export const isPermitted = (availableRoles = [], roles = []) => {
   }
   return false;
 };
-

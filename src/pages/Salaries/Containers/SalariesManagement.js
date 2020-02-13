@@ -13,7 +13,7 @@ import selectors from "../../../store/selectors";
 
 const mapState = state => ({
   projects: selectors.getProjects(state),
-  getProjectById: selectors.getProjectById(state),
+  getProjectByUuid: selectors.getProjectByUuid(state),
   isLoading: selectors.isProjectsDownloading(state),
   salaries: selectors.getSalaries(state),
   users: selectors.getUsers(state)
@@ -31,12 +31,12 @@ const SalariesManagementContainer = compose(
 
   withHandlers({
     handleCreate: ({ openModal, match, salaries }) => () => {
-      const userId = get(match, "params.userId");
+      const userUuid = get(match, "params.userUuid");
 
       const defaultValue = get(salaries, `[${salaries.length - 1}].value`, "");
 
       const initialValues = {
-        user: userId,
+        user: userUuid,
         dateFrom: moment().format(programDateFormat),
         dateTo: moment().format(programDateFormat),
         value: defaultValue
@@ -57,12 +57,12 @@ const SalariesManagementContainer = compose(
       });
     },
     initializeRoute: ({ history, users, match }) => () => {
-      const userId = get(match, "params.userId");
+      const userUuid = get(match, "params.userUuid");
 
-      if (!userId) {
-        const defaultUserId = get(users, "[0].uuid", "");
-        if (defaultUserId) {
-          history.replace(`${BASE_URL}/${defaultUserId}`);
+      if (!userUuid) {
+        const defaultUserUuid = get(users, "[0].uuid", "");
+        if (defaultUserUuid) {
+          history.replace(`${BASE_URL}/${defaultUserUuid}`);
         }
       }
     }
@@ -73,9 +73,9 @@ const SalariesManagementContainer = compose(
       const { initializeRoute, readSalaries } = this.props;
       initializeRoute();
 
-      const currUserId = get(this.props, "match.params.userId");
-      if (currUserId) {
-        const query = qs.stringify({ uuid: [currUserId] }, { encode: false });
+      const currUserUuid = get(this.props, "match.params.userUuid");
+      if (currUserUuid) {
+        const query = qs.stringify({ uuid: [currUserUuid] }, { encode: false });
         readSalaries({ search: `?${query}` });
       }
     },
@@ -83,11 +83,11 @@ const SalariesManagementContainer = compose(
       const { readSalaries, resetSalaries, initializeRoute } = this.props;
       initializeRoute();
 
-      const currUserId = get(this.props, "match.params.userId");
-      const prevUserId = get(prevProps, "match.params.userId");
+      const currUserUuid = get(this.props, "match.params.userUuid");
+      const prevUserUuid = get(prevProps, "match.params.userUuid");
 
-      if (prevUserId !== currUserId && currUserId) {
-        const query = qs.stringify({ uuid: [currUserId] }, { encode: false });
+      if (prevUserUuid !== currUserUuid && currUserUuid) {
+        const query = qs.stringify({ uuid: [currUserUuid] }, { encode: false });
 
         resetSalaries();
         readSalaries({ search: `?${query}` });

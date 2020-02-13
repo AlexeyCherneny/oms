@@ -7,8 +7,8 @@ import DocumentArea from "../Components/DocumentArea";
 const DocumentAreaContainer = compose(
   withRouter,
   withProps(({ selectedDocument, match }) => {
-    const { operation, id } = match.params;
-    const selectedId = id || '';
+    const { operation, uuid } = match.params;
+    const selectedUuid = uuid || '';
 
     const isOpenEdit = operation === 'edit';
     const isOpenSettings = Boolean(selectedDocument) && operation === 'settings';
@@ -16,13 +16,13 @@ const DocumentAreaContainer = compose(
     return {
       isOpenEdit,
       isOpenSettings,
-      selectedId,
+      selectedUuid,
     }
   }),
   withHandlers({
-    closeSettings: ({ goToDocument, selectedId }) => () => goToDocument(selectedId),
-    closeEdit: ({ goToDocument, selectedId, checkChanges }) => () => {
-      checkChanges(() => selectedId && goToDocument(selectedId));
+    closeSettings: ({ goToDocument, selectedUuid }) => () => goToDocument(selectedUuid),
+    closeEdit: ({ goToDocument, selectedUuid, checkChanges }) => () => {
+      checkChanges(() => selectedUuid && goToDocument(selectedUuid));
     },
     closeDocument: ({ goToDocument, checkChanges, handleSelectDocument }) => () => {
       checkChanges(() => {
@@ -37,13 +37,13 @@ const DocumentAreaContainer = compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { checkPermission, selectedId, handleSelectDocument } = this.props;
-      handleSelectDocument(selectedId);
+      const { checkPermission, selectedUuid, handleSelectDocument } = this.props;
+      handleSelectDocument(selectedUuid);
       checkPermission();
     },
     componentDidUpdate(prevProps) {
-      const { selectedDocument, checkPermission, documents, selectedId, handleSelectDocument } = this.props;
-      if (!isEqual(documents, prevProps.documents)) handleSelectDocument(selectedId);
+      const { selectedDocument, checkPermission, documents, selectedUuid, handleSelectDocument } = this.props;
+      if (!isEqual(documents, prevProps.documents)) handleSelectDocument(selectedUuid);
       if (!isEqual(selectedDocument, prevProps.selectedDocument)) checkPermission();
     }
   }),

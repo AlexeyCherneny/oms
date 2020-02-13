@@ -7,7 +7,7 @@ import actions from "../actions";
 
 function* readAccesses(api, { payload = {}, meta = {} }) {
   try {
-    const response = yield call(api.readDocumentAccesses, payload.documentId);
+    const response = yield call(api.readDocumentAccesses, payload.documentUuid);
 
     if (testResponse(response)) {
       yield put(actions.documentAccessesSuccess(response.data.data));
@@ -25,10 +25,10 @@ function* readAccesses(api, { payload = {}, meta = {} }) {
 }
 
 function* createAccess(api, { payload = {}, meta = {} }) {
-  const { documentId, data } = payload;
+  const { documentUuid, data } = payload;
 
   try {
-    const response = yield call(api.createDocumentAccesses, { documentId, params: qs.stringify(data)});
+    const response = yield call(api.createDocumentAccesses, { documentUuid, params: qs.stringify(data)});
 
     if (testResponse(response)) {
       yield put(actions.createDocumentAccessSuccess(response.data.data));
@@ -49,7 +49,7 @@ function* createAccess(api, { payload = {}, meta = {} }) {
 function* updateAccess(api, { payload = {}, meta = {} }) {
 
   try {
-    const response = yield call(api.updateDocumentAccess, { id: payload.uuid, documentId: payload.documentId, params: qs.stringify(payload) });
+    const response = yield call(api.updateDocumentAccess, { uuid: payload.uuid, documentUuid: payload.documentUuid, params: qs.stringify(payload) });
 
     if (testResponse(response)) {
       yield put(actions.updateDocumentAccessSuccess(response.data.data));
@@ -70,7 +70,7 @@ function* updateAccess(api, { payload = {}, meta = {} }) {
 function* deleteAccess(api, { payload = {}, meta = {} }) {
   try {
     const { data } = meta;
-    const response = yield call(api.deleteDocumentAccess, { id: data.uuid, documentId: data.documentId });
+    const response = yield call(api.deleteDocumentAccess, { uuid: data.uuid, documentUuid: data.documentUuid });
 
     if (testResponse(response)) {
       yield put(actions.deleteDocumentAccessSuccess(payload));

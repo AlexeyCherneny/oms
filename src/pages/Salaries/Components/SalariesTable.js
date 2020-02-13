@@ -25,7 +25,7 @@ const staticColumns = [
 const SalariesTable = props => (
   <Table
     dataSource={props.tableData}
-    rowKey="id"
+    rowKey="uuid"
     pagination={{
       pageSize: 5,
       style: { marginRight: 10 },

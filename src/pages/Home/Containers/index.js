@@ -18,8 +18,8 @@ const HomeContainer = compose(
   connect(mapState, mapDispatch),
   lifecycle({
     componentDidMount() {
-      const { search } = this.props.location;
-      this.props.fetchEvents({ search });
+      // const { search } = this.props.location;
+      // this.props.fetchEvents({ search });
     }
   })
 )(Home);

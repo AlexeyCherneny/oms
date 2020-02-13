@@ -8,7 +8,7 @@ import history from "./services/history";
 import { store } from "./store";
 import Navigation from "./Navigation/App";
 
-import "./services/firebase";
+// import "./services/firebase";
 
 import "antd/dist/antd.css";
 // import "ant-design-pro/dist/ant-design-pro.css";

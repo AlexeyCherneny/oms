@@ -16,7 +16,7 @@ import { splitRange } from "../../../services/chartUtils";
 const mapState = state => ({
   users: selectors.getUsers(state),
   salaries: selectors.getSalaries(state),
-  getUserById: selectors.getUserById(state),
+  getUserByUuid: selectors.getUserByUuid(state),
   state
 });
 
@@ -29,7 +29,7 @@ const SalariesAnalyticsContainer = compose(
   Authenticated,
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ users, salaries, location, getUserById }) => {
+  withProps(({ users, salaries, location, getUserByUuid }) => {
     const values = qs.parse(location.search, { ignoreQueryPrefix: true });
 
     const range = splitRange(values.dateFrom, values.dateTo, "month");
@@ -48,7 +48,7 @@ const SalariesAnalyticsContainer = compose(
 
         if (Array.isArray(salaries)) {
           salaries.forEach(salary => {
-            const userName = getFullName(getUserById(salary.uuid));
+            const userName = getFullName(getUserByUuid(salary.uuid));
 
             acc[date][userName] = salary.value;
           });
@@ -61,8 +61,8 @@ const SalariesAnalyticsContainer = compose(
 
     const usersLines = values.uuid ? values.uuid : [];
 
-    const chartLines = usersLines.map((userId, i) => ({
-      dataKey: getFullName(getUserById(userId)),
+    const chartLines = usersLines.map((userUuid, i) => ({
+      dataKey: getFullName(getUserByUuid(userUuid)),
       type: "stepAfter",
       stroke: colors[i]
     }));

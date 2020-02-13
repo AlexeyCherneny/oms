@@ -27,7 +27,7 @@ const PaymentContainer = compose(
     defaultBackLocation: "/app/cabinet/payments"
   }),
   withProps(({ state, match }) => {
-    const payment = selectors.getPayment(state, get(match, "params.id"));
+    const payment = selectors.getPayment(state, get(match, "params.uuid"));
 
     return { initialValues: payment, sbmtButton: "Обновить" };
   })

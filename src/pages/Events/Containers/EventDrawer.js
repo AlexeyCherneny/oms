@@ -33,14 +33,14 @@ const enchance = compose(withRouter, connect(mapState, mapDispatch));
 
 class EventDrawerContainer extends React.PureComponent {
   componentDidMount() {
-    const { id } = this.props.match.params;
-    if (id) this.props.fetchEvent({ id });
+    const { uuid } = this.props.match.params;
+    if (uuid) this.props.fetchEvent({ uuid });
   }
 
   componentDidUpdate(prevProps) {
-    const { id } = this.props.match.params;
-    if (id && id !== prevProps.match.params.id) {
-      this.props.fetchEvent({ id });
+    const { uuid } = this.props.match.params;
+    if (uuid && uuid !== prevProps.match.params.uuid) {
+      this.props.fetchEvent({ uuid });
     }
     if (this.props.isErrorFetchEvent) {
       this.props.resetEvent();
@@ -55,7 +55,7 @@ class EventDrawerContainer extends React.PureComponent {
   };
 
   handleSave = data => {
-    const { operation, id } = this.props.match.params;
+    const { operation, uuid } = this.props.match.params;
     const meta = { onSuccess: this.handleClose };
 
     if (operation === "new")
@@ -64,12 +64,12 @@ class EventDrawerContainer extends React.PureComponent {
         meta
       );
     if (operation === "edit")
-      return this.props.updateEvent({ ...data, id }, meta);
+      return this.props.updateEvent({ ...data, uuid }, meta);
   };
 
   handleDelete = () => {
-    const { id } = this.props.match.params;
-    this.props.deleteEvent({ id }, { onSuccess: this.handleClose });
+    const { uuid } = this.props.match.params;
+    this.props.deleteEvent({ uuid }, { onSuccess: this.handleClose });
   };
 
   render() {

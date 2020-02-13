@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import { createReducer } from "redux-act";
+import { reducer as formReducer } from 'redux-form'
 
 import { createCRUDReducer, CRUDState } from "./utils";
 
@@ -37,6 +38,7 @@ const createRootReducer = history =>
     usersPlan: usersPlanReducer,
     projectWorks: projectWorkReducer,
 
+    form: formReducer,
     router: connectRouter(history)
   });
 

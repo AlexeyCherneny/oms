@@ -10,8 +10,8 @@ import { formatCurrency, getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
   projectWorks: selectors.getProjectWorks(state),
-  getUserById: selectors.getUserById(state),
-  getProjectWorkById: selectors.getProjectWorkById(state),
+  getUserByUuid: selectors.getUserByUuid(state),
+  getProjectWorkByUuid: selectors.getProjectWorkByUuid(state),
   isLoading: selectors.isProjectWorksDownloading(state),
   isDownloading: selectors.isProjectWorksDownloading(state),
   isProjectsDownloading: selectors.isProjectsDownloading(state),
@@ -26,9 +26,9 @@ const ProjectWorksListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
   
-  withProps(({ projectWorks, getUserById, isDownloading, isProjectsDownloading }) => {
+  withProps(({ projectWorks, getUserByUuid, isDownloading, isProjectsDownloading }) => {
     const tableData = projectWorks.map(work => {
-      const user = getUserById(work.userId);
+      const user = getUserByUuid(work.userUuid);
       const workAmount = (work.workHours || 0) * (work.workRate || 0);
       const overtimeAmount = (work.overtimeHours || 0) * (work.overtimeRate || 0);
       const totalAmount = workAmount + overtimeAmount;
@@ -51,9 +51,9 @@ const ProjectWorksListContainer = compose(
   withHandlers({
     handleProjectWorkEdit: ({
       openModal,
-      getProjectWorkById
+      getProjectWorkByUuid
     }) => ({ uuid }) => {
-      const projectWork = getProjectWorkById(uuid);
+      const projectWork = getProjectWorkByUuid(uuid);
 
       return openModal({
         form: {
@@ -74,10 +74,10 @@ const ProjectWorksListContainer = compose(
         }
       });
     },
-    handleDelete: ({ openModal, getUserById }) => work => openModal({
+    handleDelete: ({ openModal, getUserByUuid }) => work => openModal({
       type: "confirm",
       title: `Удалить сотрудника`,
-      content: `Вы действительно желаете удалить сотрудника ${getFullName(getUserById(work.userId))} из проекта?`,
+      content: `Вы действительно желаете удалить сотрудника ${getFullName(getUserByUuid(work.userUuid))} из проекта?`,
       cancelText: "Отменить",
       okText: "Удалить",
       meta: {

@@ -55,14 +55,14 @@ const renderActions = ({
   deleteAccess, 
   getIsUpdating, 
   getIsDeleting 
-}) => (id, node) => {
-  const isUpdating = getIsUpdating(id);
-  const isDeleting = getIsDeleting(id);
+}) => (uuid, node) => {
+  const isUpdating = getIsUpdating(uuid);
+  const isDeleting = getIsDeleting(uuid);
 
   return (
     <>
       <Button
-        onClick={() => isEditingNode(id) ? deleteEditingNode(id) : addEditingNode(id)}
+        onClick={() => isEditingNode(uuid) ? deleteEditingNode(uuid) : addEditingNode(uuid)}
         icon="edit"
         disabled={isDeleting}
         loading={isUpdating}

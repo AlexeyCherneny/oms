@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Avatar } from "antd";
+
 import * as styles from "./styles.module.scss";
 
 // import UserInfoForm from "../../../Components/Forms/UserInfo";
@@ -8,7 +9,6 @@ const UserInfo = props => {
   const { user } = props;
 
   if (!user) return null;
-  console.log("user: ", user);
   return (
     <>
       <Row className={styles.userPhotoNameWrapper}>
@@ -16,12 +16,21 @@ const UserInfo = props => {
           <Avatar src={user.photo} size={64} />
         </Col>
         <Col span={18}>
-          <h1 className={styles.userName}>
-            {user.firstName + " " + user.lastName + " " + user.middleName}
-          </h1>
+          <h1 className={styles.userName}>{user.fullName}</h1>
         </Col>
       </Row>
       <Row className={styles.addInfoWrapper}>
+        {user.role && (
+          <Row>
+            <Col span={18}>
+              <h2>Деятельность:</h2>
+            </Col>
+            <Col span={18}>
+              <p className={styles.addInfo}>{user.role}</p>
+            </Col>
+          </Row>
+        )}
+
         {user.phone && (
           <Row>
             <Col span={18}>
@@ -32,20 +41,11 @@ const UserInfo = props => {
             </Col>
           </Row>
         )}
-        {user.position && (
-          <Row>
-            <Col span={18}>
-              <h2>Должность:</h2>
-            </Col>
-            <Col span={18}>
-              <p className={styles.addInfo}>{user.position}</p>
-            </Col>
-          </Row>
-        )}
+
         {user.birthday && (
           <Row>
             <Col span={18}>
-              <h2>Дата рождения:</h2>
+              <h2>День рождения:</h2>
             </Col>
             <Col span={18}>
               <p className={styles.addInfo}>{user.birthday}</p>

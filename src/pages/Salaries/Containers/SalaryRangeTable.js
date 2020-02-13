@@ -18,7 +18,7 @@ const mapState = state => ({
   isDownloading: selectors.isSalariesDownloading(state),
   isSalaryDeleting: selectors.isSalaryDeleting(state),
   isSalaryUpdating: selectors.isSalaryUpdating(state),
-  getUserById: selectors.getUserById(state)
+  getUserByUuid: selectors.getUserByUuid(state)
 });
 
 const mapDispatch = {

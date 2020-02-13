@@ -62,11 +62,11 @@ const ListContainer = compose(
       ...payment,
       type: formatPaymentType(payment.type),
       date: moment(payment.date, programDateFormat).format(displayDateFormat),
-      author: getFullName(usersList.find(user => String(user.id) === String(payment.author)))
+      author: getFullName(usersList.find(user => String(user.uuid) === String(payment.author)))
     }));
 
-    const handleEdit = payment => push(`payments/${payment.id}/edit`);
-    const handleInfo = payment => push(`payments/${payment.id}/info`);
+    const handleEdit = payment => push(`payments/${payment.uuid}/edit`);
+    const handleInfo = payment => push(`payments/${payment.uuid}/info`);
 
     return {
       payments: formattedPayments,

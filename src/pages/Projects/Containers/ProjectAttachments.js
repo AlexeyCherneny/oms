@@ -18,8 +18,8 @@ const mapDispatch = {
 const ProjectAttachmentsContainer = compose(
   connect(mapState, mapDispatch),
   withHandlers({
-    handleUpload: ({ updateProject, projectId }) => file => {
-      updateProject({ id: projectId, params: { attachments: file } });
+    handleUpload: ({ updateProject, projectUuid }) => file => {
+      updateProject({ uuid: projectUuid, params: { attachments: file } });
     }
   })
 )(ProjectAttachments);

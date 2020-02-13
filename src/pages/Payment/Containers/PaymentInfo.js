@@ -22,7 +22,7 @@ const PaymentInfoContainer = compose(
   connect(mapState, mapDispatch),
   withRouter,
   withProps(({ match, state }) => {
-    const payment = selectors.getPayment(state, get(match, "params.id"));
+    const payment = selectors.getPayment(state, get(match, "params.uuid"));
 
     return {
       payment

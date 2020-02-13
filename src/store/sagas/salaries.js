@@ -25,7 +25,7 @@ function* createSalaryRange(
         rangeActions.push(
           put(
             actions.updateSalaryRequest({
-              id: existedSalary.id,
+              uuid: existedSalary.uuid,
               params: {
                 user: payload.user,
                 value: payload.value,
@@ -78,7 +78,7 @@ function* deleteSalaryRange(
       if (!existedSalary) {
         debugger;
       }
-      rangeActions.push(put(actions.deleteSalaryRequest(existedSalary.id)));
+      rangeActions.push(put(actions.deleteSalaryRequest(existedSalary.uuid)));
     });
 
     yield all(rangeActions);
@@ -150,7 +150,7 @@ function* updateSalary(
     if (response.status === 200) {
       yield put(
         actions.updateSalarySuccess({
-          id: payload.id,
+          uuid: payload.uuid,
           item: response.data.data
         })
       );
@@ -163,7 +163,7 @@ function* updateSalary(
 
     if (meta.onFailure) meta.onFailure(error);
     yield handleSagaError(error, errorMessage, () =>
-      actions.updateSalaryFailure({ id: get(payload, "id") })
+      actions.updateSalaryFailure({ uuid: get(payload, "uuid") })
     );
   }
 }
@@ -186,7 +186,7 @@ function* deleteSalary(
 
     if (meta.onFailure) meta.onFailure(error);
     yield handleSagaError(error, errorMessage, () =>
-      actions.deleteSalaryFailure({ id: get(payload, "id") })
+      actions.deleteSalaryFailure({ uuid: get(payload, "uuid") })
     );
   }
 }

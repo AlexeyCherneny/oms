@@ -34,8 +34,8 @@ const UsersTableContainer = compose(
 
     return {
       tableData,
-      handleUserInfo: userId => history.push(`${BASE_URL}/${userId}/info`),
-      handleUserEdit: userId => history.push(`${BASE_URL}/${userId}/edit`)
+      handleUserInfo: userUuid => history.push(`${BASE_URL}/${userUuid}/info`),
+      handleUserEdit: userUuid => history.push(`${BASE_URL}/${userUuid}/edit`)
     };
   })
 )(UsersTable);

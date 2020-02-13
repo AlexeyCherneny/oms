@@ -31,11 +31,11 @@ const getInputs = initialValues => ({
     disabled: true,
     style: { width: "100%" }
   },
-  userId: {
-    name: "userId",
+  userUuid: {
+    name: "userUuid",
     placeholder: "Сотрудник",
     settings: {
-      initialValue: get(initialValues, "userId", null),
+      initialValue: get(initialValues, "userUuid", null),
     },
     itemProps: { 
       ...formItemLayout, 
@@ -139,7 +139,7 @@ class Project extends React.Component {
             <Select
               form={form}
               options={userData}
-              {...inputs.userId}
+              {...inputs.userUuid}
             />
           </Col>
         </Row>

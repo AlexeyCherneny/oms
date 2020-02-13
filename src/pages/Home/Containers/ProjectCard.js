@@ -25,8 +25,8 @@ const ProjectsCardContainer = compose(
   connect(mapState, mapDispatch),
   withState('selectedProject', 'setSelectedProject', ''),
   withProps(({ projectWork, selectedProject, projects, isProjectsLoading, isWorkLoading, getIsWorkUpdating }) => {
-    const projectsData = projects.filter(project => projectWork.find(work => work.projectId === project.uuid));
-    const selectedWork = projectWork.find(work => String(work.projectId) === String(selectedProject));
+    const projectsData = projects.filter(project => projectWork.find(work => work.projectUuid === project.uuid));
+    const selectedWork = projectWork.find(work => String(work.projectUuid) === String(selectedProject));
     
     return {
       projectsData,
@@ -38,9 +38,9 @@ const ProjectsCardContainer = compose(
   withHandlers({
     handleLoadProjectWork: ({ loadProjectWork, user, setSelectedProject }) => date => {
       const search = { date: stringifyDate(date) };
-      loadProjectWork({ userId: user?.uuid, search }, { onSuccess: data => setSelectedProject(data[0].projectId)});
+      loadProjectWork({ userUuid: user?.uuid, search }, { onSuccess: data => setSelectedProject(data[0].projectUuid)});
     },
-    hadnleSelectProject: ({ setSelectedProject }) => id => setSelectedProject(id),
+    handleSelectProject: ({ setSelectedProject }) => uuid => setSelectedProject(uuid),
   }),
   lifecycle({
     componentDidMount() {

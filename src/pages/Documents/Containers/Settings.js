@@ -30,13 +30,13 @@ const SettingsContainer = compose(
   withStateHandlers({ 
     editingNodes: [] 
   }, {
-    addEditingNode: state => id => ({
+    addEditingNode: state => uuid => ({
       ...state,
-      editingNodes: [id, ...state.editingNodes]
+      editingNodes: [uuid, ...state.editingNodes]
     }),
-    deleteEditingNode: state => id => ({
+    deleteEditingNode: state => uuid => ({
       ...state,
-      editingNodes: state.editingNodes.filter(el => id !== el)
+      editingNodes: state.editingNodes.filter(el => uuid !== el)
     }),
   }),
   withProps(({ users, accesses, isDocumentUpdating, selectedDocument, isCreating, isDownloading }) => ({
@@ -44,14 +44,14 @@ const SettingsContainer = compose(
       data: {...item}, 
       uuid: item.uuid, 
       access: item.access, 
-      name: getFullName(users.find(user => user.uuid === item.userId)),
+      name: getFullName(users.find(user => user.uuid === item.userUuid)),
     })),
-    usersData: users.filter(user => !accesses.find(item => user.uuid === item.userId)),
+    usersData: users.filter(user => !accesses.find(item => user.uuid === item.userUuid)),
     isDocumentUpdating: isDocumentUpdating(selectedDocument?.uuid),
     isLoading: isCreating || isDownloading || isDocumentUpdating(selectedDocument?.uuid),
   })),
   withHandlers({
-    isEditingNode: ({ editingNodes }) => id => editingNodes.includes(id),
+    isEditingNode: ({ editingNodes }) => uuid => editingNodes.includes(uuid),
     updateAccess: ({ updateAccess, deleteEditingNode }) => access => {
       updateAccess(access, { onSuccess: () => deleteEditingNode(access.uuid) })
     },
@@ -59,9 +59,9 @@ const SettingsContainer = compose(
     changePrivateAccess: ({ selectedDocument, updateDocument }) => access => 
       updateDocument({ ...selectedDocument, private: access }),
     submitAddAccess: ({ createAccesses, selectedDocument }) => (data, callback) => {
-      const documentId = selectedDocument.uuid;
-      const preparedData = data.users.map(user => ({ userId: user, access: data.access, documentId: documentId }));
-      createAccesses({ data: preparedData, documentId }, { onSuccess: callback })
+      const documentUuid = selectedDocument.uuid;
+      const preparedData = data.users.map(user => ({ userUuid: user, access: data.access, documentUuid: documentUuid }));
+      createAccesses({ data: preparedData, documentUuid }, { onSuccess: callback })
     }
   }),
   lifecycle({

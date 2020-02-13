@@ -6,7 +6,7 @@ import actions from "../actions";
 
 const payments = [
   {
-    id: 1,
+    uuid: 1,
     title: "Аренда",
     currency: "RUR",
     currencyRate: 21.3,
@@ -18,7 +18,7 @@ const payments = [
     receiver: "ООО АРЕНДОТ"
   },
   {
-    id: 2,
+    uuid: 2,
     title: "Закрытие спринта",
     currency: "RUR",
     currencyRate: 23,
@@ -30,7 +30,7 @@ const payments = [
     receiver: ""
   },
   {
-    id: 3,
+    uuid: 3,
     title: "Зарплата",
     currency: "RUR",
     currencyRate: 21,
@@ -42,7 +42,7 @@ const payments = [
     receiver: "Уборщик"
   },
   {
-    id: 4,
+    uuid: 4,
     title: "Продажа системы",
     currency: "RUR",
     currencyRate: 21,
@@ -54,7 +54,7 @@ const payments = [
     receiver: "ITNER"
   },
   {
-    id: 5,
+    uuid: 5,
     title: "Закупка оборудования",
     currency: "RUR",
     currencyRate: 21,
@@ -133,7 +133,7 @@ function* updatePayment(api, action) {
 
 function* deletePayment(api, action) {
   try {
-    // const response = yield call(api.deletePayment, get(action, "payload.id"));
+    // const response = yield call(api.deletePayment, get(action, "payload.uuid"));
 
     yield delay(1000);
     yield put(actions.deletePaymentSuccess(payments[0]));

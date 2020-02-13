@@ -46,7 +46,7 @@ function* createDocument(api, { payload = {}, meta = {}}) {
 
 function* updateDocument(api, { payload = {}, meta = {} }) {
   try {
-    const response = yield call(api.updateDocument, { id: payload.uuid, params: qs.stringify(payload)});
+    const response = yield call(api.updateDocument, { uuid: payload.uuid, params: qs.stringify(payload)});
 
     if (testResponse(response)) {
       yield put(actions.updateDocumentSuccess(response.data.data));

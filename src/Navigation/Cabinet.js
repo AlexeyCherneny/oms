@@ -44,7 +44,7 @@ const Cabinet = () => (
               component={Events}
             />
             <Route
-              path="/app/cabinet/events/:operation(edit)/:id"
+              path="/app/cabinet/events/:operation(edit)/:uuid"
               component={Events}
             />
             <Redirect to="/app/cabinet/events" />
@@ -59,14 +59,14 @@ const Cabinet = () => (
               component={UsersPlan}
             />
             <Route
-              path="/app/cabinet/users/plan/:operation(edit)/:id"
+              path="/app/cabinet/users/plan/:operation(edit)/:uuid"
               component={UsersPlan}
             />
             <Route path="/app/cabinet/users">
               <Users />
               <Route path="/app/cabinet/users/create" component={CreateUser} />
-              <Route path="/app/cabinet/users/:id/info" component={UserInfo} />
-              <Route path="/app/cabinet/users/:id/edit" component={EditUser} />
+              <Route path="/app/cabinet/users/:uuid/info" component={UserInfo} />
+              <Route path="/app/cabinet/users/:uuid/edit" component={EditUser} />
             </Route>
           </Switch>
         </Route>
@@ -82,10 +82,10 @@ const Cabinet = () => (
                 component={SalaryAnalytics}
               />
 
-              <Route exact path="/app/cabinet/salaries/:userId?">
+              <Route exact path="/app/cabinet/salaries/:userUuid?">
                 <SalariesManagement>
                   <Route
-                    path="/app/cabinet/salaries/:userId"
+                    path="/app/cabinet/salaries/:userUuid"
                     component={SalaryRangeTable}
                   />
                 </SalariesManagement>
@@ -102,11 +102,11 @@ const Cabinet = () => (
             component={CreatePayment}
           />
           <Route
-            path="/app/cabinet/payments/:id/edit"
+            path="/app/cabinet/payments/:uuid/edit"
             component={UpdatePayment}
           />
           <Route
-            path="/app/cabinet/payments/:id/info"
+            path="/app/cabinet/payments/:uuid/info"
             component={PaymentInfo}
           />
         </Route>

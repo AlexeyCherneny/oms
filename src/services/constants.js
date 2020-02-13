@@ -3,12 +3,18 @@ export const DATE_FORMATS = {
   dashFull: "DD-MM-YYYY",
   dashReverse: "YYYY-MM-DD",
   fullString: "D MMMM YYYY",
-  monthString: "MMMM YYYY"
+  monthString: "MMMM YYYY",
+  dayMonthString: "D MMMM"
 };
 
 export const ROLES = {
   HR: "ROLE_HR",
   EMPLOYEE: "ROLE_USER"
+};
+
+export const ROLES_MEANING = {
+  ROLE_HR: "Hr",
+  ROLE_USER: "Разработчик"
 };
 
 export const colors = [

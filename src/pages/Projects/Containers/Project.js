@@ -15,8 +15,8 @@ import { programDateFormat, getFullName } from "../../../services/formatters";
 const mapState = state => ({
   projectWorks: selectors.getProjectWorks(state),
   isLoadingProject: selectors.isProjectsDownloading(state),
-  getProjectById: selectors.getProjectById(state),
-  getUserById: selectors.getUserById(state),
+  getProjectByUuid: selectors.getProjectByUuid(state),
+  getUserByUuid: selectors.getUserByUuid(state),
   users: selectors.getUsers(state)
 });
 
@@ -29,18 +29,18 @@ const mapDispatch = {
 const ProjectContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ match, location, getProjectById, getUserById }) => {
-    const projectId = get(match, "params.projectId", '');
+  withProps(({ match, location, getProjectByUuid, getUserByUuid }) => {
+    const projectUuid = get(match, "params.projectUuid", '');
     const searchObj = qs.parse(location.search, { ignoreQueryPrefix: true });
-    const project = getProjectById(projectId);
+    const project = getProjectByUuid(projectUuid);
 
     const title = get(project, "title", "");
     const attachments = get(project, "attachments", []);
 
-    const usersTabs = get(project, "users", []).map(userId => {
+    const usersTabs = get(project, "users", []).map(userUuid => {
       return {
-        title: getFullName(getUserById(userId)),
-        id: userId
+        title: getFullName(getUserByUuid(userUuid)),
+        uuid: userUuid
       };
     });
 
@@ -49,7 +49,7 @@ const ProjectContainer = compose(
       attachments,
       usersTabs,
       project,
-      projectId,
+      projectUuid,
       searchObj,
     };
   }),
@@ -71,22 +71,22 @@ const ProjectContainer = compose(
     },
     readProjectWorks: ({ readProjectWorks, cleanProjectWork, searchObj, project }) => () => {
       if (!project) return cleanProjectWork();
-      readProjectWorks({ projectId: project.uuid, search: searchObj });
+      readProjectWorks({ projectUuid: project.uuid, search: searchObj });
     },
     handleAddUser: ({ openModal, users, projectWorks, searchObj, project }) => () => openModal({
       form: {
         initialValues: {
           date: searchObj.date,
-          projectId: project.uuid
+          projectUuid: project.uuid
         },
-        users: users.filter(user => !projectWorks.find(work => work.userId === user.uuid)),
+        users: users.filter(user => !projectWorks.find(work => work.userUuid === user.uuid)),
         submitTitle: "Добавить",
         rejectTitle: "Отменить"
       },
       title: "Добавить сотрудников",
       type: MODAL_TYPES.projectUser,
       meta: {
-        start: params => actions.createProjectWorkRequest({ projectId: project.uuid, params }),
+        start: params => actions.createProjectWorkRequest({ projectUuid: project.uuid, params }),
         success: () => actions.createProjectWorkSuccess(),
         failure: () => actions.createProjectWorkFailure()
       },

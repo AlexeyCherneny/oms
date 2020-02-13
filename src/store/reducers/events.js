@@ -76,7 +76,7 @@ const reducer = createReducer(
 
     [actions.updateEventToEventsList]: (state, payload) => {
       const data = Array.isArray(state.eventsList.data) ? [...state.eventsList.data] : [];
-      const idx = data.findIndex(event => event.id === payload.id);
+      const idx = data.findIndex(event => event.uuid === payload.uuid);
       data[idx] = payload;
 
       return {
@@ -86,9 +86,9 @@ const reducer = createReducer(
     },
 
     [actions.deleteEventFromEventsList]: (state, payload) => {
-      const id = Number(payload.id);
+      const uuid = Number(payload.uuid);
       const data = Array.isArray(state.eventsList.data) 
-        ? [...state.eventsList.data].filter(event => event.id !== id) 
+        ? [...state.eventsList.data].filter(event => event.uuid !== uuid) 
         : [];
       
       return {

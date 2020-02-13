@@ -53,7 +53,7 @@ function* updateProject(api, action) {
 
   try {
     const response = yield call(api.updateProject, {
-      id: payload.uuid,
+      uuid: payload.uuid,
       params: qs.stringify(payload)
     });
 

@@ -18,7 +18,7 @@ const mapState = state => ({
   isDownloading: selectors.isSalariesDownloading(state),
   isSalaryDeleting: selectors.isSalaryDeleting(state),
   isSalaryUpdating: selectors.isSalaryUpdating(state),
-  getUserById: selectors.getUserById(state)
+  getUserByUuid: selectors.getUserByUuid(state)
 });
 
 const mapDispatch = {
@@ -28,12 +28,12 @@ const mapDispatch = {
 const SalariesTableContainer = compose(
   connect(mapState, mapDispatch),
   withRouter,
-  withProps(({ salaries, getUserById }) => {
+  withProps(({ salaries, getUserByUuid }) => {
     const tableData = salaries.map(salary => {
       return {
         ...salary,
         date: moment(salary.date, programDateFormat).format(displayDateFormat),
-        fullName: getFullName(getUserById(salary.userId)),
+        fullName: getFullName(getUserByUuid(salary.userUuid)),
         amount: formatCurrency(salary.value, "USD")
       };
     });

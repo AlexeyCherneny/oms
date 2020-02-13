@@ -80,7 +80,7 @@ class Project extends React.Component {
       if (!err) {
         const date = Moment(values.date).startOf('month').format(DATE_FORMATS.dashReverse);
         const extra = { ...initialValues, ...values, date };
-        const formData = users.map(userId => ({ ...extra, userId }));
+        const formData = users.map(userUuid => ({ ...extra, userUuid }));
         handleSubmit(formData);
       }
     });

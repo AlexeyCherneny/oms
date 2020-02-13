@@ -1,12 +1,15 @@
 import React from "react";
-import { Form, Button, Row, Col, Icon, Select, Input } from "antd";
+import { Form, Button, Row, Col, Icon } from "antd";
 import { get } from "lodash";
 import moment from "moment";
 
+import validators from "../../services/validators/validators";
+import { buildRules } from "../../services/validators/utils";
 import {
   displayDateFormat,
   programDateFormat
 } from "../../services/formatters";
+import { Select, Input } from "../FormElements";
 import Avatar from "../FormElements/Avatar/Avatar";
 import { ROLES } from "../../services/constants";
 
@@ -19,12 +22,14 @@ const roles = [
   { label: "Пользователь", value: ROLES.EMPLOYEE }
 ];
 
-const inputs = initialValues => ({
+const getInputs = initialValues => ({
   roles: {
     name: "roles",
-    mode: "multiple",
     placeholder: "Пользователь",
-    options: roles,
+    itemProps: {
+      ...formItemLayout,
+      label: "Роль"
+    },
     settings: {
       initialValue: Array.isArray(get(initialValues, "roles", []))
         ? get(initialValues, "roles", [])
@@ -41,28 +46,39 @@ const inputs = initialValues => ({
     name: "email",
     placeholder: "a.cherneny@gmail.com",
     suffix: <Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />,
+    itemProps: {
+      ...formItemLayout,
+      label: "Email"
+    },
     settings: {
       initialValue: get(initialValues, "email", ""),
-      rules: [
-        {
-          required: true,
-          message: "Обязательное поле"
-        }
-      ]
+      rules: buildRules([
+        validators.validateEmailFormat,
+        validators.validateRequired
+      ])
     }
   },
   phone: {
     name: "phone",
     placeholder: "+375296878112",
     suffix: <Icon type="phone" style={{ color: "rgba(0,0,0,.25)" }} />,
+    itemProps: {
+      ...formItemLayout,
+      label: "Номер телефона"
+    },
     settings: {
       initialValue: get(initialValues, "phone", ""),
-      rules: [
-        {
-          required: true,
-          message: "Обязательное поле"
-        }
-      ]
+      rules: buildRules([
+        validators.validatePhoneFormat,
+        validators.validateRequired
+      ]),
+      normalize: (value, prevValue = []) => {
+        console.log("normalize");
+        return value;
+      },
+      format: () => {
+        console.log("format");
+      }
     }
   },
   lastName: {
@@ -116,7 +132,7 @@ const inputs = initialValues => ({
   }
 });
 
-class CreateUser extends React.Component {
+class User extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
 
@@ -135,7 +151,7 @@ class CreateUser extends React.Component {
   render() {
     const { initialValues = {}, form, isLoading } = this.props;
 
-    const { getFieldDecorator } = this.props.form;
+    const inputs = getInputs(initialValues);
 
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -154,58 +170,53 @@ class CreateUser extends React.Component {
           </Col>
         </Row>
 
-        <Form.Item {...formItemLayout} label="Роль">
-          {getFieldDecorator(
-            inputs(initialValues).roles.name,
-            inputs(initialValues).roles.settings
-          )(<Select {...inputs(initialValues).roles} disabled={isLoading} />)}
-        </Form.Item>
+        <Select
+          form={form}
+          options={roles}
+          {...inputs.roles}
+          disabled={isLoading}
+        />
 
-        <Form.Item {...formItemLayout} label="Email">
-          {getFieldDecorator(
-            inputs(initialValues).email.name,
-            inputs(initialValues).email.settings
-          )(<Input {...inputs(initialValues).email} disabled={isLoading} />)}
-        </Form.Item>
+        <Input form={form} {...inputs.email} disabled={isLoading} />
+
+        <Input form={form} {...inputs.phone} disabled={isLoading} />
+
+        {/*
 
         <Form.Item {...formItemLayout} label="Номер телефона">
           {getFieldDecorator(
-            inputs(initialValues).phone.name,
-            inputs(initialValues).phone.settings
-          )(<Input {...inputs(initialValues).phone} disabled={isLoading} />)}
+            inputs.phone.name,
+            inputs.phone.settings
+          )(<Input {...inputs.phone} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Фамилия">
           {getFieldDecorator(
-            inputs(initialValues).lastName.name,
-            inputs(initialValues).lastName.settings
-          )(<Input {...inputs(initialValues).lastName} disabled={isLoading} />)}
+            inputs.lastName.name,
+            inputs.lastName.settings
+          )(<Input {...inputs.lastName} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Имя">
           {getFieldDecorator(
-            inputs(initialValues).firstName.name,
-            inputs(initialValues).firstName.settings
-          )(
-            <Input {...inputs(initialValues).firstName} disabled={isLoading} />
-          )}
+            inputs.firstName.name,
+            inputs.firstName.settings
+          )(<Input {...inputs.firstName} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item {...formItemLayout} label="Отчество">
           {getFieldDecorator(
-            inputs(initialValues).middleName.name,
-            inputs(initialValues).middleName.settings
-          )(
-            <Input {...inputs(initialValues).middleName} disabled={isLoading} />
-          )}
+            inputs.middleName.name,
+            inputs.middleName.settings
+          )(<Input {...inputs.middleName} disabled={isLoading} />)}
         </Form.Item>
 
         <Form.Item label="Дата рождения">
           {getFieldDecorator(
-            inputs(initialValues).birthday.name,
-            inputs(initialValues).birthday.settings
-          )(<Input {...inputs(initialValues).birthday} disabled={isLoading}  />)}
-        </Form.Item>
+            inputs.birthday.name,
+            inputs.birthday.settings
+          )(<DatePicker {...inputs.birthday} disabled={isLoading} />)}
+        </Form.Item> */}
 
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button type="primary" htmlType="submit" loading={isLoading}>
@@ -217,4 +228,4 @@ class CreateUser extends React.Component {
   }
 }
 
-export default Form.create({ name: "login_form" })(CreateUser);
+export default Form.create({ name: "login_form" })(User);

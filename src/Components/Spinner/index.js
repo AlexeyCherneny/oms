@@ -17,8 +17,8 @@ export default ({
   const [ isSpinnig, setSpinnig ] = React.useState(false);
   React.useEffect(() => {
     if (delay && isSpinnig && !spinning) {
-      const timerId = setTimeout(() => setSpinnig(spinning), delay);
-      return () => clearTimeout(timerId);
+      const timerUuid = setTimeout(() => setSpinnig(spinning), delay);
+      return () => clearTimeout(timerUuid);
     } else {
       setSpinnig(spinning);
     }

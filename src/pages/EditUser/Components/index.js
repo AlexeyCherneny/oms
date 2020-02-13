@@ -1,7 +1,7 @@
 import React from "react";
 
-import UserForm from "../../../Components/Forms/User";
+import UserForm from "../../../Components/Forms/User/index";
 
-const EditUserPage = props => <UserForm {...props} submitTitle="Обновить" />;
+const EditUserPage = props => <UserForm {...props} />;
 
 export default EditUserPage;

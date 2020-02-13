@@ -23,7 +23,7 @@ const Footer = ({ handleChangeDate }) => (
 
 const ProjectCard = ({
   handleLoadProjectWork,
-  hadnleSelectProject,
+  handleSelectProject,
   updateProjectWork,
   selectedProject,
   projectsData,
@@ -38,7 +38,7 @@ const ProjectCard = ({
   >
     <Select
       size="small"
-      onChange={hadnleSelectProject}
+      onChange={handleSelectProject}
       className={styles.select}
       value={String(selectedProject)}
       loading={isLoading}
