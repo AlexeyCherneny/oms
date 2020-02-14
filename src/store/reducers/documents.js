@@ -12,9 +12,9 @@ const documentsState = {
 const documentsReducer = createReducer({
   ...createCRUDReducer("document", { 
     onUpdateDataMap: (data, payload) => data.map(item => item.uuid !== payload.uuid ? item : payload),
-    onDeleteDataMap: (data, id) => data.filter(item => item.uuid !== id),
+    onDeleteDataMap: (data, uuid) => data.filter(item => item.uuid !== uuid),
 
-    // match: (i1, i2) => i1.id === i2.id,
+    // match: (i1, i2) => i1.uuid === i2.uuid,
   }),
   [actions.selectDocument]: (state, payload) => ({ 
     ...state, 

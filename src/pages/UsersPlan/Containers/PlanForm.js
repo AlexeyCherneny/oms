@@ -19,7 +19,7 @@ const mapDispatch = {
 };
 
 const mergeProps = (state, dispatch, own) => {
-  const selectedPeriod = state.data.find(item => item.date_from === own.match.params.id);
+  const selectedPeriod = state.data.find(item => item.date_from === own.match.params.uuid);
   return { ...state, ...dispatch, ...own, selectedPeriod }
 };
 

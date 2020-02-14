@@ -4,11 +4,16 @@ import qs from "qs";
 
 import actions from "../actions";
 import Notification from "../../services/notification";
+import { getFullName } from "../../services/formatters";
 import { handleSagaError } from "./utils";
+
+const notificationTitle = "Внимание";
 
 function* createUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
   try {
-    const response = yield call(api.createUser, qs.stringify(payload));
+    const params = qs.stringify({ user: payload });
+
+    const response = yield call(api.createUser, params);
 
     if (response.status === 200) {
       yield put(actions.createUserSuccess(response.data.data));
@@ -50,43 +55,42 @@ function* readUsers(
 }
 
 function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
+  let notificationMessage = "";
+  let notificationType = "";
+
   try {
-    const response = yield call(api.updateUser, {
-      ...payload,
-      params: qs.stringify(payload.params)
-    });
+    const uuid = payload.uuid;
+    const params = qs.stringify({ user: payload.params });
+
+    const response = yield call(api.updateUser, { uuid, params });
 
     if (response.status === 200) {
-      yield put(
-        actions.updateUserSuccess({
-          id: payload.uuid,
-          ...response.data.data
-        })
-      );
+      yield put(actions.updateUserSuccess(response.data.data));
+
       if (meta.onSuccess) meta.onSuccess(response.data);
-      const { firstName, lastName } = response.data;
-      Notification.success(
-        "Сотрудники",
-        `Информция о сотруднике ${firstName || ""} ${lastName ||
-          ""} успешно обновлена.`
-      );
+
+      notificationType = "success";
+      notificationMessage = `Информция о сотруднике ${getFullName(
+        response.data
+      )} успешно обновлена.`;
     } else {
       throw response;
     }
   } catch (error) {
     const errorMessage = "Error while updating user";
 
-    const { firstName, lastName } = payload.params;
-    Notification.error(
-      "Сотрудники",
-      `Ошибка обновления информации о сотруднике ${firstName ||
-        ""} ${lastName || ""}.`
-    );
+    notificationType = "error";
+    notificationMessage = `Ошибка обновления информации о сотруднике ${getFullName(
+      payload
+    )}.`;
+
     if (meta.onFailure) meta.onFailure(error);
 
     yield handleSagaError(error, errorMessage, () =>
       actions.updateUserFailure(payload)
     );
+  } finally {
+    Notification[notificationType](notificationTitle, notificationMessage);
   }
 }
 

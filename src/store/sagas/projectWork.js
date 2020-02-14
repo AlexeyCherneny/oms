@@ -11,9 +11,9 @@ function* readProjectWorks(
   { payload = {}, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const { projectId, userId, search } = payload;
+    const { projectUuid, userUuid, search } = payload;
     const paramsObj = pick(search, ['date']);
-    const response = yield call(api.readProjectWorks, { projectId, userId, params: qs.stringify(paramsObj)});
+    const response = yield call(api.readProjectWorks, { projectUuid, userUuid, params: qs.stringify(paramsObj)});
     testResponse(response);
 
     yield put(actions.projectWorksSuccess(response.data.data));
@@ -32,7 +32,7 @@ function* createProjectWork(api, action) {
 
   try {
     const response = yield call(api.createProjectWork, {
-      projectId: payload.projectId,
+      projectUuid: payload.projectUuid,
       params: qs.stringify(payload.params)
     });
 
@@ -54,8 +54,8 @@ function* updateProjectWork(api, action) {
 
   try {
     const response = yield call(api.updateProjectWork, {
-      id: payload.uuid,
-      projectId: payload.projectId,
+      uuid: payload.uuid,
+      projectUuid: payload.projectUuid,
       params: qs.stringify(payload)
     });
 
@@ -76,7 +76,7 @@ function* deleteProjectWork(api, action) {
   const { payload, onSuccess, onFailure, data } = spreadAction(action);
   
   try {
-    const response = yield call(api.deleteProjectWork, { id: payload, projectId: data.projectId });
+    const response = yield call(api.deleteProjectWork, { uuid: payload, projectUuid: data.projectUuid });
     testResponse(response);
 
     yield put(actions.deleteProjectWorkSuccess(payload));

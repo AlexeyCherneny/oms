@@ -10,12 +10,12 @@ const DocumentsPage = ({ path, ...props }) => {
     <>
       <Layout style={{ height: '100%', maxWidth: 1280, margin: 'auto' }}>
         <Layout.Sider width={300} style={{ marginRight: 30 }}>
-          <Route path={path + '/:id?'}>
+          <Route path={path + '/:uuid?'}>
             <TreeView {...props} />
           </Route>
         </Layout.Sider>
         <Layout.Content>
-          <Route path={path + '/:id?/:operation?'}>
+          <Route path={path + '/:uuid?/:operation?'}>
             <DocumentArea {...props}/>
           </Route>
         </Layout.Content>

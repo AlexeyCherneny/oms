@@ -1,7 +1,7 @@
 import React from "react";
 
-import CreateUserForm from "../../../Components/Forms/User";
+import UserForm from "../../../Components/Forms/User/index";
 
-const CreateUser = props => <CreateUserForm {...props} submitTitle="Создать" />;
+const CreateUser = props => <UserForm {...props} />;
 
 export default CreateUser;

@@ -99,7 +99,7 @@ function* updateUsersPlan(
 
     if (meta.onFailure) meta.onFailure(error);
     yield handleSagaError(error, errorMessage, () =>
-      actions.updateUsersPlanFailure({ id: get(payload, "id") })
+      actions.updateUsersPlanFailure({ uuid: get(payload, "uuid") })
     );
   }
 }
@@ -129,7 +129,7 @@ function* deleteUsersPlan(
     );
     if (meta.onFailure) meta.onFailure(error);
     yield handleSagaError(error, errorMessage, () =>
-      actions.deleteUsersPlanFailure({ id: get(payload, "id") })
+      actions.deleteUsersPlanFailure({ uuid: get(payload, "uuid") })
     );
   }
 }

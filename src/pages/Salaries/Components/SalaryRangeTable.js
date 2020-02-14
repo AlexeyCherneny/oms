@@ -10,8 +10,8 @@ const SalaryActions = props => {
     isSalaryDeleting
   } = props;
 
-  const isUpdating = isSalaryUpdating(salary.id);
-  const isDeleting = isSalaryDeleting(salary.id);
+  const isUpdating = isSalaryUpdating(salary.uuid);
+  const isDeleting = isSalaryDeleting(salary.uuid);
 
   const isDisabled = isUpdating || isDeleting;
 

@@ -85,7 +85,7 @@ function* initializeApplication(api, action) {
 
 //     setApiAuthorizationHeader(api, token);
 
-//     const response = yield call(api.fetchUser, user.id);
+//     const response = yield call(api.fetchUser, user.uuid);
 
 //     if (response.status === 200) {
 //       yield put(actions.setUser({ user: response.data }));

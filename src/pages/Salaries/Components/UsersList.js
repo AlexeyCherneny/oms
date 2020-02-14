@@ -27,7 +27,7 @@ const Header = ({ selectedKey, tabs, isLoading }) => {
       >
         {tabs.map(tab => (
           <Menu.Item
-            key={tab.id}
+            key={tab.uuid}
             className={styles.menuItem}
             style={{
               lineHeight: "40px",

@@ -10,8 +10,8 @@ import selectors from "../../../store/selectors";
 import { getFullName } from "../../../services/formatters"
 
 const mapState = state => ({
-  getProjectById: selectors.getProjectById(state),
-  getUserById: selectors.getUserById(state),
+  getProjectByUuid: selectors.getProjectByUuid(state),
+  getUserByUuid: selectors.getUserByUuid(state),
   users: selectors.getUsers(state)
 });
 
@@ -25,11 +25,11 @@ const UsersListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
   withProps(({ match, location, users }) => {
-    const userId = get(match, "params.userId");
+    const userUuid = get(match, "params.userUuid");
 
     const userTabs = users.map(user => ({
       title: getFullName(user),
-      id: user.uuid,
+      uuid: user.uuid,
       to: {
         pathname: `${BASE_URL}/${user.uuid}`,
         search: location.search
@@ -37,7 +37,7 @@ const UsersListContainer = compose(
     }));
 
     return {
-      selectedKey: userId,
+      selectedKey: userUuid,
       tabs: userTabs
     };
   })

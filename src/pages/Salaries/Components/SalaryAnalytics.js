@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "antd";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
-import SalariesTable from "../Containers/SalariesTable";
+// import SalariesTable from "../Containers/SalariesTable";
 import Filter from "../Containers/Filter";
 
 const SalaryAnalytics = props => {
@@ -27,7 +27,7 @@ const SalaryAnalytics = props => {
         </div>
       </Card>
 
-      <SalariesTable />
+      {/* <SalariesTable /> */}
     </div>
   );
 };

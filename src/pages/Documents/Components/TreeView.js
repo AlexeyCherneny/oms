@@ -34,7 +34,7 @@ const renderJSXTree = (tree, documents, ...args) =>
 
 const TreeView = ({
   isLoading,
-  selectedId,
+  selectedUuid,
   expandedKeys,
   rootChildren,
   documents,
@@ -69,7 +69,7 @@ const TreeView = ({
           ) : (
             <Tree
               onSelect={handleSelectNode}
-              selectedKeys={[selectedId]}
+              selectedKeys={[selectedUuid]}
               defaultExpandedKeys={expandedKeys}
               style={{ margin: 10 }}
               onRightClick={handleTreeRightClick}

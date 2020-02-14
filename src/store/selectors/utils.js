@@ -30,7 +30,7 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
       }
     },
 
-    [`get${firstUppercase(name)}ById`]: state => id => {
+    [`get${firstUppercase(name)}ByUuid`]: state => uuid => {
       const { idKey = 'uuid' } = settings;
       try {
         const items = get(state, `${path}`);
@@ -49,7 +49,7 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
 
         return data.find(
           item =>
-            String(item[idKey]) === String(id) || String(item.id) === String(id)
+            String(item[idKey]) === String(uuid) || String(item.uuid) === String(uuid)
         );
       } catch (error) {
         console.error(error);
@@ -57,7 +57,7 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
       }
     },
 
-    [`is${firstUppercase(name)}Deleting`]: state => id => {
+    [`is${firstUppercase(name)}Deleting`]: state => uuid => {
       try {
         const items = get(state, `${path}`);
 
@@ -65,14 +65,14 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
           return false;
         }
 
-        const { deletingIds } = items;
+        const { deletingUuids } = items;
 
-        if (!Array.isArray(deletingIds)) {
+        if (!Array.isArray(deletingUuids)) {
           return false;
         }
 
-        return deletingIds.some(
-          deletingId => String(deletingId) === String(id)
+        return deletingUuids.some(
+          deletingUuid => String(deletingUuid) === String(uuid)
         );
       } catch (error) {
         console.error(error);
@@ -80,7 +80,7 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
       }
     },
 
-    [`is${firstUppercase(name)}Updating`]: state => id => {
+    [`is${firstUppercase(name)}Updating`]: state => uuid => {
       try {
         const items = get(state, `${path}`);
 
@@ -88,14 +88,14 @@ export const createCRUDSelectors = (name, path = name, settings = {}) => {
           return false;
         }
 
-        const { updatingIds } = items;
+        const { updatingUuids } = items;
 
-        if (!Array.isArray(updatingIds)) {
+        if (!Array.isArray(updatingUuids)) {
           return false;
         }
 
-        return updatingIds.some(
-          updatingId => String(updatingId) === String(id)
+        return updatingUuids.some(
+          updatingUuid => String(updatingUuid) === String(uuid)
         );
       } catch (error) {
         console.error(error);

@@ -22,7 +22,7 @@ function* closeModal(api, action) {
       if (confirmAction) {
         yield put(onStart(confirmAction.payload));
 
-        if (onSuccess || onFailure) {
+        if (onSuccess && onFailure) {
           yield put(actions.startModalLoading());
 
           const { successAction } = yield race({
@@ -35,9 +35,11 @@ function* closeModal(api, action) {
           if (successAction) {
             yield put(actions.hideModal());
           }
+        } else {
+          yield put(actions.hideModal());
         }
       } else {
-        if (typeof onDecline === 'function') onDecline(action.payload);
+        if (typeof onDecline === "function") onDecline(action.payload);
         repeat = false;
       }
     }

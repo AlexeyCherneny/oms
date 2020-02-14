@@ -35,12 +35,12 @@ const DocumentsPageContainer = compose(
     canEditAccess: ALLOW_EDIT_ACCESS.includes(selectedDocument?.access),
   })),
   withHandlers({
-    goToDocument: ({ match, history }) => docId => history.push(match.url + (docId ? `/${docId}` : '')),
-    handleSelectDocument: ({ documents, selectDocument, readAccesses }) => id => {
-      const docId = String(id);
-      const newDocument = (id && documents.find(doc => String(doc.uuid) === docId)) || null;
+    goToDocument: ({ match, history }) => docUuid => history.push(match.url + (docUuid ? `/${docUuid}` : '')),
+    handleSelectDocument: ({ documents, selectDocument, readAccesses }) => uuid => {
+      const docUuid = String(uuid);
+      const newDocument = (uuid && documents.find(doc => String(doc.uuid) === docUuid)) || null;
       selectDocument(newDocument);
-      newDocument && ALLOW_EDIT_ACCESS.includes(newDocument.access) && readAccesses({ documentId: docId });
+      newDocument && ALLOW_EDIT_ACCESS.includes(newDocument.access) && readAccesses({ documentUuid: docUuid });
     },
     checkChanges: ({ selectedDocument, editedDocument, openModal, resetEdit }) => (callback = noop) => {
       const newDocument = { ...selectedDocument, ...editedDocument };

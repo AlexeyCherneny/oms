@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { compose, withProps, withHandlers } from "recompose";
-import { get, sortBy } from "lodash";
+import { get, sortBy, pick } from "lodash";
 import moment from "moment";
 
 import {
@@ -12,13 +12,15 @@ import { splitRange } from "../../../services/chartUtils";
 import selectors from "../../../store/selectors";
 import actions from "../../../store/actions";
 import SalaryRangeTable from "../Components/SalaryRangeTable";
+import { getAvailableFieldsNames } from "../../../Components/Forms/SalaryRange";
 
 const mapState = state => ({
   salaries: selectors.getSalaries(state),
   isDownloading: selectors.isSalariesDownloading(state),
   isSalaryDeleting: selectors.isSalaryDeleting(state),
   isSalaryUpdating: selectors.isSalaryUpdating(state),
-  getUserById: selectors.getUserById(state)
+  getUserByUuid: selectors.getUserByUuid(state),
+  me: state.authorization.user
 });
 
 const mapDispatch = {
@@ -29,8 +31,9 @@ const mapDispatch = {
 const SalaryRangeTableContainer = compose(
   connect(mapState, mapDispatch),
   withRouter,
-  withProps(({ salaries }) => {
+  withProps(({ salaries, match }) => {
     const sortedSalaries = sortBy(salaries, s => s.date).reverse();
+    const { userUuid } = match.params;
 
     const lS = sortedSalaries[0];
     const fS = sortedSalaries[sortedSalaries.length - 1];
@@ -51,7 +54,11 @@ const SalaryRangeTableContainer = compose(
       if (salary) {
         range[date] = salary;
       } else {
-        range[date] = { date, value: 0, uuid: sortedSalaries[0].uuid };
+        range[date] = {
+          date,
+          value: 0,
+          userUuid
+        };
       }
     });
 
@@ -94,18 +101,19 @@ const SalaryRangeTableContainer = compose(
     };
   }),
   withHandlers({
-    handleSalaryRangeEdit: ({ openModal }) => salary => {
+    handleSalaryRangeEdit: ({ openModal, me }) => salary => {
+      const fields = getAvailableFieldsNames(get(me, "roles", []), []);
+      const initialValues = pick(salary, fields);
+
       return openModal({
         form: {
-          initialValues: { ...salary, user: salary.uuid },
-          submitTitle: "Создать",
+          initialValues,
+          submitTitle: "Сохранить",
           rejectTitle: "Отменить"
         },
-        type: "customSalary",
+        type: "salaryRange",
         meta: {
-          start: params => actions.createSalaryRangeRequest(params),
-          success: () => actions.createSalaryRangeSuccess(),
-          failure: () => actions.createSalaryRangeFailure()
+          start: actions.createSalaryRangeRequest
         }
       });
     }

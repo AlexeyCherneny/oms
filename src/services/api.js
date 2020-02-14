@@ -31,22 +31,22 @@ const create = (baseURL = `${hostURL}api/`) => {
     logout: args => api.post("auth/logout", args),
 
     createUser: params => api.put(`user`, params),
-    readUser: id => api.get(`user/${id}`),
+    readUser: uuid => api.get(`user/${uuid}`),
     readUsers: ({ search }) => api.get(`user${search}`),
     updateUser: ({ uuid, params }) => api.patch(`user/${uuid}`, params),
-    deleteUser: id => api.delete(`user/${id}`),
+    deleteUser: uuid => api.delete(`user/${uuid}`),
 
     createEvent: args => api.post(`events`, args),
-    fetchEvent: args => api.get(`events/${args.id}`),
+    fetchEvent: args => api.get(`events/${args.uuid}`),
     fetchEvents: query => api.get(`events${query ? query : ""}`),
-    updateEvent: args => api.put(`events/${args.id}`, args),
-    deleteEvent: args => api.delete(`events/${args.id}`),
+    updateEvent: args => api.put(`events/${args.uuid}`, args),
+    deleteEvent: args => api.delete(`events/${args.uuid}`),
 
     createSalary: params => api.put(`salary`, params),
-    readSalary: id => api.get(`salary/${id}`),
+    readSalary: uuid => api.get(`salary/${uuid}`),
     readSalaries: ({ search }) => api.get(`salary${search}`),
-    updateSalary: ({ id, params }) => api.put(`salary/${id}`, params),
-    deleteSalary: id => api.delete(`salary/${id}`),
+    updateSalary: ({ uuid, params }) => api.patch(`salary/${uuid}`, params),
+    deleteSalary: uuid => api.delete(`salary/${uuid}`),
 
     fetchPayments: query => api.get(`payments${query ? query : ""}`),
     createPayment: args => api.post(`payments`, args),
@@ -55,25 +55,25 @@ const create = (baseURL = `${hostURL}api/`) => {
 
     readDocuments: () => api.get("documents"),
     createDocument: args => api.post("documents", args),
-    updateDocument: ({ id, params }) => api.patch(`documents/${id}`, params),
-    deleteDocument: id => api.delete(`documents/${id}`),
+    updateDocument: ({ uuid, params }) => api.patch(`documents/${uuid}`, params),
+    deleteDocument: uuid => api.delete(`documents/${uuid}`),
 
     createProject: params => api.post("projects", params),
     readProjects: () => api.get("projects"),
-    updateProject: ({ id, params }) => api.put(`projects/${id}`, params),
-    deleteProject: id => api.delete(`projects/${id}`),
+    updateProject: ({ uuid, params }) => api.put(`projects/${uuid}`, params),
+    deleteProject: uuid => api.delete(`projects/${uuid}`),
 
-    readProjectWorks: ({ projectId, userId, params }) => userId 
-      ? api.get(`/user/${userId}/work?${params}`)
-      : api.get(`/projects/${projectId}/work?${params}`),
-    createProjectWork: ({ projectId, params }) => api.post(`projects/${projectId}/work`, params),
-    updateProjectWork: ({ id, projectId, params }) => api.put(`projects/${projectId}/work/${id}`, params),
-    deleteProjectWork: ({ id, projectId }) => api.delete(`projects/${projectId}/work/${id}`),
+    readProjectWorks: ({ projectUuid, userUuid, params }) => userUuid 
+      ? api.get(`/user/${userUuid}/work?${params}`)
+      : api.get(`/projects/${projectUuid}/work?${params}`),
+    createProjectWork: ({ projectUuid, params }) => api.post(`projects/${projectUuid}/work`, params),
+    updateProjectWork: ({ uuid, projectUuid, params }) => api.put(`projects/${projectUuid}/work/${uuid}`, params),
+    deleteProjectWork: ({ uuid, projectUuid }) => api.delete(`projects/${projectUuid}/work/${uuid}`),
     
-    readDocumentAccesses: documentId => api.get(`documents/${documentId}/accesses`),
-    createDocumentAccesses: ({ documentId, params }) => api.post(`documents/${documentId}/accesses`, params),
-    updateDocumentAccess: ({ id, documentId, params }) => api.patch(`documents/${documentId}/accesses/${id}`, params),
-    deleteDocumentAccess: ({ id, documentId }) => api.delete(`documents/${documentId}/accesses/${id}`),
+    readDocumentAccesses: documentUuid => api.get(`documents/${documentUuid}/accesses`),
+    createDocumentAccesses: ({ documentUuid, params }) => api.post(`documents/${documentUuid}/accesses`, params),
+    updateDocumentAccess: ({ uuid, documentUuid, params }) => api.patch(`documents/${documentUuid}/accesses/${uuid}`, params),
+    deleteDocumentAccess: ({ uuid, documentUuid }) => api.delete(`documents/${documentUuid}/accesses/${uuid}`),
     
   };
 };

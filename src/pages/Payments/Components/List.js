@@ -107,7 +107,7 @@ class UsersList extends React.Component {
       <Table
         dataSource={payments}
         pagination={false}
-        rowKey="id"
+        rowKey="uuid"
         style={{ width: "100%" }}
       >
         {this.renderStaticColumns()}

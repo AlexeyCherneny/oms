@@ -36,7 +36,7 @@ const CalendarContainer = compose(
     return {
       events: formattedEvents,
       handleEventClick: ({ event }) => {
-        history.push(`${match.path}/edit/${event.id}`);
+        history.push(`${match.path}/edit/${event.uuid}`);
       }
     };
   })

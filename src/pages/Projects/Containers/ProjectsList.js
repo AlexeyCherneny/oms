@@ -9,7 +9,7 @@ import selectors from "../../../store/selectors";
 
 const mapState = state => ({
   projects: selectors.getProjects(state),
-  getProjectById: selectors.getProjectById(state),
+  getProjectByUuid: selectors.getProjectByUuid(state),
   isLoading: selectors.isProjectsDownloading(state)
 });
 
@@ -23,7 +23,7 @@ const ProjectsListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
   withProps(({ match }) => {
-    const selectedKey = get(match, "params.projectId");
+    const selectedKey = get(match, "params.projectUuid");
     return {
       selectedKey
     };

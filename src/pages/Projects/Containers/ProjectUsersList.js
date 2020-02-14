@@ -10,8 +10,8 @@ import selectors from "../../../store/selectors";
 import { getFullName } from "../../../services/formatters";
 
 const mapState = state => ({
-  getProjectById: selectors.getProjectById(state),
-  getUserById: selectors.getUserById(state),
+  getProjectByUuid: selectors.getProjectByUuid(state),
+  getUserByUuid: selectors.getUserByUuid(state),
   users: selectors.getUsers(state)
 });
 
@@ -24,23 +24,23 @@ const mapDispatch = {
 const ProjectUsersListContainer = compose(
   withRouter,
   connect(mapState, mapDispatch),
-  withProps(({ match, location, getProjectById, getUserById }) => {
-    const projectId = get(match, "params.projectId");
-    const project = getProjectById(projectId);
+  withProps(({ match, location, getProjectByUuid, getUserByUuid }) => {
+    const projectUuid = get(match, "params.projectUuid");
+    const project = getProjectByUuid(projectUuid);
 
-    const userId = get(match, "params.userId");
+    const userUuid = get(match, "params.userUuid");
 
-    const userTabs = get(project, "users", []).map(userId => ({
-      title: getFullName(getUserById(userId)),
-      id: userId,
+    const userTabs = get(project, "users", []).map(userUuid => ({
+      title: getFullName(getUserByUuid(userUuid)),
+      uuid: userUuid,
       to: {
-        pathname: `${BASE_URL}/${projectId}/users/${userId}`,
+        pathname: `${BASE_URL}/${projectUuid}/users/${userUuid}`,
         search: location.search
       }
     }));
 
     return {
-      selectedKey: userId,
+      selectedKey: userUuid,
       tabs: userTabs
     };
   })

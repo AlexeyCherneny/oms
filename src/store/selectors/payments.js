@@ -22,7 +22,7 @@ const getPayments = (state, settings = {}) => {
   }
 };
 
-const getPayment = (state, paymentId, settings = {}) => {
+const getPayment = (state, paymentUuid, settings = {}) => {
   try {
     const paymentsList = get(state, "payments.paymentsList");
 
@@ -38,7 +38,7 @@ const getPayment = (state, paymentId, settings = {}) => {
       return null;
     }
 
-    return data.find(payment => String(payment.id) === String(paymentId));
+    return data.find(payment => String(payment.uuid) === String(paymentUuid));
   } catch (error) {
     console.error(error);
   }
@@ -63,9 +63,9 @@ const getPaymentsFlags = state => {
 
 const isPaymentLoading = state => payment => {
   try {
-    const loadingIds = defaultTo(get(state, "payments.loadingIds", []));
+    const loadingUuids = defaultTo(get(state, "payments.loadingUuids", []));
 
-    return loadingIds.some(id => id === get(payment, "id"));
+    return loadingUuids.some(uuid => uuid === get(payment, "uuid"));
   } catch (error) {
     console.error(error);
   }

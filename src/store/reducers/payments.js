@@ -13,7 +13,7 @@ const initialState = {
     isLoading: false
   },
 
-  loadingIds: []
+  loadingUuids: []
 };
 
 const addToArray = (arr, item) => {
@@ -111,21 +111,21 @@ const reducer = createReducer(
       return {
         ...state,
 
-        loadingIds: addToArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: addToArray(state.loadingUuids, get(payload, "uuid"))
       };
     },
     [actions.updatePaymentSuccess]: (state, payload) => {
       return {
         ...state,
 
-        loadingIds: removeFromArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: removeFromArray(state.loadingUuids, get(payload, "uuid"))
       };
     },
     [actions.updatePaymentFailure]: (state, payload) => {
       return {
         ...state,
 
-        loadingIds: removeFromArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: removeFromArray(state.loadingUuids, get(payload, "uuid"))
       };
     },
 
@@ -134,7 +134,7 @@ const reducer = createReducer(
       return {
         ...state,
 
-        loadingIds: addToArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: addToArray(state.loadingUuids, get(payload, "uuid"))
       };
     },
     [actions.deletePaymentSuccess]: (state, payload) => {
@@ -144,17 +144,17 @@ const reducer = createReducer(
         paymentsList: {
           ...state.paymentsList,
           data: state.paymentsList.data.filter(
-            payment => payment.id !== get(payload, "id")
+            payment => payment.uuid !== get(payload, "uuid")
           )
         },
-        loadingIds: removeFromArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: removeFromArray(state.loadingUuids, get(payload, "uuid"))
       };
     },
     [actions.deletePaymentFailure]: (state, payload) => {
       return {
         ...state,
 
-        loadingIds: removeFromArray(state.loadingIds, get(payload, "id"))
+        loadingUuids: removeFromArray(state.loadingUuids, get(payload, "uuid"))
       };
     }
   },

@@ -18,22 +18,22 @@ const TreeViewContainer = compose(
   withRouter,
   connect(mapState),
   withProps(({ documents, match }) => {
-    const selectedId = match.params.id || '';
-    const parentIds = tree.getAllParents(documents, selectedId);
+    const selectedUuid = match.params.uuid || '';
+    const parentUuids = tree.getAllParents(documents, selectedUuid);
     const rootChildren = documents.filter(doc => (!doc.parentDocument && doc.parentDocument !== 0));
     
     return {
-      selectedId,
+      selectedUuid,
       rootChildren,
-      expandedKeys: parentIds,
+      expandedKeys: parentUuids,
     };
   }),
   withHandlers({
-    handleSelectNode: ({ goToDocument, checkChanges, handleSelectDocument }) => documentIds => {
-      const id = documentIds[0] || '';
+    handleSelectNode: ({ goToDocument, checkChanges, handleSelectDocument }) => documentUuids => {
+      const uuid = documentUuids[0] || '';
       checkChanges(() => {
-        handleSelectDocument(id);
-        goToDocument(id);
+        handleSelectDocument(uuid);
+        goToDocument(uuid);
       });
     },
     handleCreate: ({ openModal }) => selectedDoc => {
@@ -72,7 +72,7 @@ const TreeViewContainer = compose(
         failure: () => actions.updateDocumentFailure()
       }
     }),
-    handleDelete: ({ openModal, selectedId, goToDocument }) => selectedDoc => openModal({
+    handleDelete: ({ openModal, selectedUuid, goToDocument }) => selectedDoc => openModal({
       type: "confirm",
       title: `Удалить документ ${selectedDoc?.title}`,
       content: DeleteModal,
@@ -81,7 +81,7 @@ const TreeViewContainer = compose(
       meta: {
         start: () => actions.deleteDocumentRequest(selectedDoc.uuid, {
           data: selectedDoc,
-          onSuccess: () => selectedId === String(selectedDoc.uuid) && goToDocument(),
+          onSuccess: () => selectedUuid === String(selectedDoc.uuid) && goToDocument(),
         }),
         success: () => actions.deleteDocumentSuccess(),
         failure: () => actions.deleteDocumentFailure(),

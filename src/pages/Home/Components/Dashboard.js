@@ -8,7 +8,7 @@ import {
 import Moment from "moment";
 
 import { Card } from "../../../Components";
-import PojectsCard from "../Containers/ProjectCard";
+// import ProjectsCard from "../Containers/ProjectCard";
 import { formatCurrency, formatCount } from "../../../services/formatters";
 import {
   // DATE_FORMATS,
@@ -59,14 +59,13 @@ const Dashboard = props => {
             props.salary ? formatCurrency(props.salary, "USD") : "Неизвестна"
           }
           // footer={salaryFooter}
-          tooltip="Дополнительная информация"
           hideContent={props.isPrivate}
         />
       </Col>
       {/* <Col {...colProps} >
         <Card header="Ближайшие события">
         {props.events.length > 0 ? props.events.map(event => (
-          <div className={styles.cell} key={`event_${event.id}`}>
+          <div className={styles.cell} key={`event_${event.uuid}`}>
             <Text strong ellipsis>{event.title}</Text>
             <Text type='secondary'>{Moment(event.date).format(DATE_FORMATS.pointFull)}</Text>
           </div>
@@ -83,7 +82,6 @@ const Dashboard = props => {
           header="Зарплата за текущий месяц"
           title={formatCurrency(props.currentSalary, 'USD')}
           footer={currentSalaryFooter}
-          tooltip="Дополнительная информация"
           hideContent={props.isPrivate}
         />
       </Col> */}
@@ -92,7 +90,6 @@ const Dashboard = props => {
           header="Доступное кол-во дней отпуска"
           title={formatCount(props.vacation, ...daysText)}
           footer={vacationFooter}
-          tooltip="Дополнительная информация"
         />
       </Col> */}
       {props.roles.includes(ROLES.HR) && (
@@ -101,15 +98,14 @@ const Dashboard = props => {
             header="Количество сотрудников"
             title={formatCount(props.employees, ...peopleText)}
             // footer={employeesFooter}
-            tooltip="Дополнительная информация"
           />
         </Col>
       )}
-      {props.roles.includes(ROLES.EMPLOYEE) && (
+      {/* {props.roles.includes(ROLES.EMPLOYEE) && (
         <Col {...colProps}>
-          <PojectsCard />
+          <ProjectsCard />
         </Col>
-      )}
+      )} */}
     </Row>
   );
 };

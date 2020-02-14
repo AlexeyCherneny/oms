@@ -3,17 +3,17 @@ import { get } from "lodash";
 import { compose, withHandlers, lifecycle } from "recompose";
 import { withRouter } from "react-router-dom";
 import qs from "qs";
+import { sortBy, merge } from "lodash";
 import moment from "moment";
 
 import { BASE_URL } from "../constants";
 import SalariesManagement from "../Components/SalariesManagement";
 import actions from "../../../store/actions";
-import { programDateFormat } from "../../../services/formatters";
 import selectors from "../../../store/selectors";
+import { DATE_FORMATS } from "../../../services/constants";
 
 const mapState = state => ({
   projects: selectors.getProjects(state),
-  getProjectById: selectors.getProjectById(state),
   isLoading: selectors.isProjectsDownloading(state),
   salaries: selectors.getSalaries(state),
   users: selectors.getUsers(state)
@@ -31,16 +31,34 @@ const SalariesManagementContainer = compose(
 
   withHandlers({
     handleCreate: ({ openModal, match, salaries }) => () => {
-      const userId = get(match, "params.userId");
+      const userUuid = get(match, "params.userUuid");
 
-      const defaultValue = get(salaries, `[${salaries.length - 1}].value`, "");
+      const sortedSalaries = sortBy(salaries, s => s.date);
+      const lastSalary = get(sortedSalaries, `[${sortedSalaries.length - 1}]`);
 
-      const initialValues = {
-        user: userId,
-        dateFrom: moment().format(programDateFormat),
-        dateTo: moment().format(programDateFormat),
-        value: defaultValue
-      };
+      let initialValues = { userUuid };
+
+      if (lastSalary) {
+        const lastDate = moment(lastSalary.date, DATE_FORMATS.dashReverse);
+
+        initialValues = merge(initialValues, {
+          dateFrom: lastDate
+            .clone()
+            .add(1, "month")
+            .format(DATE_FORMATS.dashReverse),
+          dateTo: lastDate
+            .clone()
+            .add(1, "month")
+            .format(DATE_FORMATS.dashReverse),
+          value: lastSalary.value
+        });
+      } else {
+        initialValues = merge(initialValues, {
+          dateFrom: moment().format(DATE_FORMATS.dashReverse),
+          dateTo: moment().format(DATE_FORMATS.dashReverse),
+          value: 0
+        });
+      }
 
       return openModal({
         form: {
@@ -48,21 +66,20 @@ const SalariesManagementContainer = compose(
           submitTitle: "Создать",
           rejectTitle: "Отменить"
         },
-        type: "customSalary",
+        type: "salaryRange",
         meta: {
-          start: params => actions.createSalaryRangeRequest(params),
-          success: () => actions.createSalaryRangeSuccess(),
-          failure: () => actions.createSalaryRangeFailure()
+          start: actions.createSalaryRangeRequest,
+          failure: actions.createSalaryRangeFailure
         }
       });
     },
     initializeRoute: ({ history, users, match }) => () => {
-      const userId = get(match, "params.userId");
+      const userUuid = get(match, "params.userUuid");
 
-      if (!userId) {
-        const defaultUserId = get(users, "[0].uuid", "");
-        if (defaultUserId) {
-          history.replace(`${BASE_URL}/${defaultUserId}`);
+      if (!userUuid) {
+        const defaultUserUuid = get(users, "[0].uuid", "");
+        if (defaultUserUuid) {
+          history.replace(`${BASE_URL}/${defaultUserUuid}`);
         }
       }
     }
@@ -73,9 +90,9 @@ const SalariesManagementContainer = compose(
       const { initializeRoute, readSalaries } = this.props;
       initializeRoute();
 
-      const currUserId = get(this.props, "match.params.userId");
-      if (currUserId) {
-        const query = qs.stringify({ uuid: [currUserId] }, { encode: false });
+      const currUserUuid = get(this.props, "match.params.userUuid");
+      if (currUserUuid) {
+        const query = qs.stringify({ uuid: [currUserUuid] }, { encode: false });
         readSalaries({ search: `?${query}` });
       }
     },
@@ -83,11 +100,11 @@ const SalariesManagementContainer = compose(
       const { readSalaries, resetSalaries, initializeRoute } = this.props;
       initializeRoute();
 
-      const currUserId = get(this.props, "match.params.userId");
-      const prevUserId = get(prevProps, "match.params.userId");
+      const currUserUuid = get(this.props, "match.params.userUuid");
+      const prevUserUuid = get(prevProps, "match.params.userUuid");
 
-      if (prevUserId !== currUserId && currUserId) {
-        const query = qs.stringify({ uuid: [currUserId] }, { encode: false });
+      if (prevUserUuid !== currUserUuid && currUserUuid) {
+        const query = qs.stringify({ uuid: [currUserUuid] }, { encode: false });
 
         resetSalaries();
         readSalaries({ search: `?${query}` });
