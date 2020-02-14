@@ -45,7 +45,7 @@ const Header = props => {
           justifyContent: "space-between"
         }}
       >
-        Публичный доступ&nbsp;&nbsp;
+        Приватный доступ&nbsp;&nbsp;
         <Switch
           checked={props.isPublic}
           style={{
