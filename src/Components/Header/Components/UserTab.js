@@ -8,11 +8,12 @@ const UserTab = ({
   isMenuCollapsed, 
   fullName, 
   handleLogout, 
-  menuProps 
+  menuProps,
+  user
 }) => (
   <div className={cn(isMenuCollapsed && styles.containerCollapsed)}>
     <div className={styles.avatar}>
-      <Avatar size={isMenuCollapsed ? 36 : 64} icon="user" />
+      <Avatar size={isMenuCollapsed ? 36 : 64} icon="user" src={user.photo} />
     </div>
     <Menu {...menuProps} >
       <Menu.SubMenu
