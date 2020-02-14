@@ -26,7 +26,7 @@ export default {
     label: "Сумма",
     name: "value",
     inputProps: {
-      placeholder: "Алексей Черненый",
+      placeholder: "0",
       suffix: (
         <Icon type="user" style={{ color: "rgba(0,0,0,.25)", fontSize: 14 }} />
       )
@@ -44,7 +44,7 @@ export default {
       style: { width: "100%" }
     },
     validate: [validators.validateRequired],
-    format: formatters.birthdayFormatter(DATE_FORMATS.dashReverse),
+    format: formatters.dateFormatter(DATE_FORMATS.dashReverse),
     normalize: normalizers.momentDateNormalizer(DATE_FORMATS.dashReverse)
   },
 
@@ -58,7 +58,7 @@ export default {
       style: { width: "100%" }
     },
     validate: [validators.validateRequired],
-    format: formatters.birthdayFormatter(DATE_FORMATS.dashReverse),
+    format: formatters.dateFormatter(DATE_FORMATS.dashReverse),
     normalize: normalizers.momentDateNormalizer(DATE_FORMATS.dashReverse)
   }
 };

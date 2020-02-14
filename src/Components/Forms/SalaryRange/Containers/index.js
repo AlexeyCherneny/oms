@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { compose, withProps } from "recompose";
-import { reduxForm } from "redux-form";
+import { reduxForm, formValueSelector } from "redux-form";
 import { get } from "lodash";
 
 import SalaryRange from "../Components";
@@ -8,9 +8,13 @@ import { getShortName } from "../../../../services/formatters";
 import selectors from "../../../../store/selectors";
 import { getAvailableFieldsNames } from "../index";
 
+const selector = formValueSelector("salary");
+
 const mapState = state => ({
   user: state.authorization.user,
-  users: selectors.getUsers(state)
+  users: selectors.getUsers(state),
+  dateFrom: selector(state, "dateFrom"),
+  dateTo: selector(state, "dateTo")
 });
 
 const SalaryRangeContainer = compose(

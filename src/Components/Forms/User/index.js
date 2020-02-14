@@ -32,6 +32,7 @@ class User extends React.Component {
     const { handleSubmit, isLoading } = this.props;
 
     const fieldSettings = { disabled: isLoading };
+
     return (
       <Form onSubmit={handleSubmit} className="wrapper-my-component">
         {this.isAvailable("photo") && (

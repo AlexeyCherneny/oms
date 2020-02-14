@@ -1,12 +1,14 @@
 import React from "react";
-import { Form, Button, Select, DatePicker, Col, Row, Input } from "antd";
+import { Form, Button, Select, DatePicker, Col, Row } from "antd";
 import { Field } from "redux-form";
+import moment from "moment";
 import "./styles/styles.scss";
 
+import InputNumber from "../../../FormElements/InputNumber/InputNumber";
 import { makeReduxField } from "../../utils";
 import options from "../options";
 
-const ReduxInput = makeReduxField(Input);
+const ReduxNumberInput = makeReduxField(InputNumber);
 const ReduxSelect = makeReduxField(Select);
 const ReduxMonthPicker = makeReduxField(DatePicker.MonthPicker);
 
@@ -18,13 +20,23 @@ class User extends React.Component {
   };
 
   render() {
-    const { handleSubmit, isLoading, usersOptions } = this.props;
+    const {
+      handleSubmit,
+      isLoading,
+      usersOptions,
+      dateFrom,
+      dateTo
+    } = this.props;
 
     const fieldSettings = { disabled: isLoading };
     return (
       <Form onSubmit={handleSubmit} className="wrapper-my-component">
         {this.isAvailable("value") && (
-          <Field {...options.value} component={ReduxInput} {...fieldSettings} />
+          <Field
+            {...options.value}
+            component={ReduxNumberInput}
+            {...fieldSettings}
+          />
         )}
 
         {this.isAvailable("dateFrom") && (
@@ -34,6 +46,7 @@ class User extends React.Component {
             name="dateFrom"
             onFocus={e => e.preventDefault()}
             onBlur={e => e.preventDefault()}
+            disabledDate={d => !d || d.isAfter(moment(dateTo))}
             {...fieldSettings}
           />
         )}
@@ -45,16 +58,13 @@ class User extends React.Component {
             name="dateTo"
             onFocus={e => e.preventDefault()}
             onBlur={e => e.preventDefault()}
+            disabledDate={d => !d || d.isBefore(moment(dateFrom))}
             {...fieldSettings}
           />
         )}
 
         {this.isAvailable("userUuid") && (
-          <Field
-            {...options.userUuid}
-            component={ReduxSelect}
-            {...fieldSettings}
-          >
+          <Field {...options.userUuid} component={ReduxSelect} disabled={true}>
             {usersOptions.map(role => (
               <Select.Option key={role.value} value={role.value}>
                 {role.label}

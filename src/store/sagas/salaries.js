@@ -3,11 +3,14 @@ import { get, defaultTo } from "lodash";
 import qs from "qs";
 
 import { splitRange } from "../../services/chartUtils";
+import Notification from "../../services/notification";
 import { programDateFormat } from "../../services/formatters";
 import { handleSagaError } from "./utils";
 import actions from "../actions";
 import selectors from "../selectors";
 import moment from "moment";
+
+const notificationTitle = "Внимание";
 
 function* createSalaryRange(
   api,
@@ -106,6 +109,8 @@ function* createSalary(
 
     if (meta.onFailure) meta.onFailure(error);
     yield handleSagaError(error, errorMessage, actions.createSalaryFailure);
+
+    Notification.error(notificationTitle, "Ошибка создания зарплаты.");
   }
 }
 
@@ -154,6 +159,8 @@ function* updateSalary(
     yield handleSagaError(error, errorMessage, () =>
       actions.updateSalaryFailure({ uuid: get(payload, "uuid") })
     );
+
+    Notification.error(notificationTitle, "Ошибка обновления зарплаты.");
   }
 }
 
@@ -177,6 +184,9 @@ function* deleteSalary(
     yield handleSagaError(error, errorMessage, () =>
       actions.deleteSalaryFailure({ uuid: get(payload, "uuid") })
     );
+
+    Notification.error(notificationTitle, "Ошибка удаления зарплаты.");
+  } finally {
   }
 }
 

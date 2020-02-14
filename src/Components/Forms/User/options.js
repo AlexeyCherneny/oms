@@ -24,7 +24,8 @@ export default {
       ),
       showArrow: true
     },
-    validate: [validators.validateRequired]
+    validate: [validators.validateRequired],
+    format: formatters.arrayFormatter
   },
 
   email: {
@@ -89,7 +90,7 @@ export default {
       style: { width: "100%" }
     },
     validate: [validators.validateRequired],
-    format: formatters.birthdayFormatter(DATE_FORMATS.dashReverse),
+    format: formatters.dateFormatter(DATE_FORMATS.dashReverse),
     normalize: normalizers.momentDateNormalizer(DATE_FORMATS.dashReverse)
   }
 };

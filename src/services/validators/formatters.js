@@ -1,15 +1,18 @@
 import moment from "moment";
 
-const birthdayFormatter = dateFormat => date => {
-  const birthday = moment(date, dateFormat);
+const dateFormatter = dateFormat => value => {
+  const date = moment(value, dateFormat);
 
-  if (!birthday.isValid()) {
-    return moment();
+  if (!date.isValid()) {
+    return null;
   }
 
-  return birthday;
+  return date;
 };
 
+const arrayFormatter = value => (Array.isArray(value) ? value : []);
+
 export default {
-  birthdayFormatter
+  dateFormatter,
+  arrayFormatter
 };

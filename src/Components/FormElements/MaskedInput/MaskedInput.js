@@ -3,15 +3,11 @@ import { Input } from "antd";
 import InputMask from "react-input-mask";
 
 const FunctionalInput = props => {
-  return <Input {...props} {...props.meta} />;
+  return <Input {...props} />;
 };
 
-const CustomMaskedInput = props => {
-  return (
-    <InputMask {...props} meta={{ disabled: props.disabled }}>
-      {FunctionalInput}
-    </InputMask>
-  );
+const CustomMaskedInput = ({ disabled, ...props }) => {
+  return <InputMask {...props}>{FunctionalInput}</InputMask>;
 };
 
 export default CustomMaskedInput;

@@ -108,7 +108,7 @@ const SalaryRangeTableContainer = compose(
       return openModal({
         form: {
           initialValues,
-          submitTitle: "Создать",
+          submitTitle: "Сохранить",
           rejectTitle: "Отменить"
         },
         type: "salaryRange",
