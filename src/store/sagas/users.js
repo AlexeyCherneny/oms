@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { defaultTo, get } from "lodash";
 import qs from "qs";
 
@@ -66,6 +66,12 @@ function* updateUser(api, { payload, meta = {} } = { payload: {}, meta: {} }) {
 
     if (response.status === 200) {
       yield put(actions.updateUserSuccess(response.data.data));
+
+      const userUuid = yield select(state => state.authorization.user.uuid);
+
+      if (userUuid === response.data.data.uuid) {
+        yield put(actions.setUser({ user: response.data.data }));
+      }
 
       if (meta.onSuccess) meta.onSuccess(response.data);
 
