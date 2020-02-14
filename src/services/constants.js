@@ -1,5 +1,6 @@
 export const DATE_FORMATS = {
   pointFull: "DD.MM.YYYY",
+  pointMonthYear: "MM.YYYY",
   dashFull: "DD-MM-YYYY",
   dashReverse: "YYYY-MM-DD",
   fullString: "D MMMM YYYY",

@@ -18,33 +18,25 @@ function* createSalaryRange(
     const range = splitRange(payload.dateFrom, payload.dateTo, "month");
 
     const rangeActions = [];
+
     Object.keys(range).forEach(date => {
       const existedSalary = salaries.find(salary => salary.date === date);
 
+      const params = {
+        value: payload.value,
+        user: payload.userUuid,
+        date: moment(date, "YYYY-MM-DD").format("YYYY-MM")
+      };
+      let action;
+
       if (existedSalary) {
-        rangeActions.push(
-          put(
-            actions.updateSalaryRequest({
-              uuid: existedSalary.uuid,
-              params: {
-                user: payload.user,
-                value: payload.value,
-                date: moment(date, "YYYY-MM-DD").format("YYYY/MM")
-              }
-            })
-          )
+        action = put(
+          actions.updateSalaryRequest({ uuid: existedSalary.uuid, params })
         );
       } else {
-        rangeActions.push(
-          put(
-            actions.createSalaryRequest({
-              user: payload.user,
-              value: payload.value,
-              date: moment(date, "YYYY-MM-DD").format("YYYY/MM")
-            })
-          )
-        );
+        action = put(actions.createSalaryRequest(params));
       }
+      rangeActions.push(action);
     });
 
     yield all(rangeActions);
@@ -99,10 +91,9 @@ function* createSalary(
   { payload, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const response = yield call(
-      api.createSalary,
-      qs.stringify({ salary: payload })
-    );
+    const params = qs.stringify({ salary: payload });
+
+    const response = yield call(api.createSalary, params);
 
     if (response.status === 200) {
       yield put(actions.createSalarySuccess(response.data.data));
@@ -145,15 +136,13 @@ function* updateSalary(
   { payload, meta = {} } = { payload: {}, meta: {} }
 ) {
   try {
-    const response = yield call(api.updateSalary, payload);
+    const uuid = payload.uuid;
+    const params = qs.stringify({ salary: payload.params });
+
+    const response = yield call(api.updateSalary, { uuid, params });
 
     if (response.status === 200) {
-      yield put(
-        actions.updateSalarySuccess({
-          uuid: payload.uuid,
-          item: response.data.data
-        })
-      );
+      yield put(actions.updateSalarySuccess(response.data.data));
       if (meta.onSuccess) meta.onSuccess(response.data.data);
     } else {
       throw response;

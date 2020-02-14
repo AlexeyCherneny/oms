@@ -48,7 +48,7 @@ const SalariesAnalyticsContainer = compose(
 
         if (Array.isArray(salaries)) {
           salaries.forEach(salary => {
-            const userName = getFullName(getUserByUuid(salary.uuid));
+            const userName = getFullName(getUserByUuid(salary.userUuid));
 
             acc[date][userName] = salary.value;
           });

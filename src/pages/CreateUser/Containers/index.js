@@ -1,7 +1,7 @@
 import { compose, withHandlers, withProps } from "recompose";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { get, pick } from "lodash";
+import { get } from "lodash";
 
 import actions from "../../../store/actions";
 

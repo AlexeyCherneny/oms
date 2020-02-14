@@ -5,16 +5,16 @@ import ProjectForm from "../../Forms/Project";
 import ProjectWorkForm from "../../Forms/ProjectWork";
 import ProjectUser from "../../Forms/ProjectUser";
 import RenameModal from "../../Forms/RenameModal";
-import CustomSalary from "../../Forms/CustomSalary";
+import SalaryRange from "../../Forms/SalaryRange";
 
 export const MODAL_TYPES = {
-  project: 'project',
-  projectWork: 'projectWork',
-  projectUser: 'projectUser',
-  customSalary: 'customSalary',
-  rename: 'rename',
-  confirm: 'confirm'
-}
+  project: "project",
+  projectWork: "projectWork",
+  projectUser: "projectUser",
+  salaryRange: "salaryRange",
+  rename: "rename",
+  confirm: "confirm"
+};
 
 const ModalContent = props => {
   const { isLoading } = props;
@@ -25,7 +25,7 @@ const ModalContent = props => {
         <ProjectForm
           {...props.form}
           handleSubmit={props.handleSubmit}
-          handleReject={props.handleReject}
+          handleReject={() => props.handleReject()}
           isLoading={isLoading}
         />
       );
@@ -35,7 +35,7 @@ const ModalContent = props => {
         <ProjectWorkForm
           {...props.form}
           handleSubmit={props.handleSubmit}
-          handleReject={props.handleReject}
+          handleReject={() => props.handleReject()}
           isLoading={isLoading}
         />
       );
@@ -45,48 +45,50 @@ const ModalContent = props => {
         <ProjectUser
           {...props.form}
           handleSubmit={props.handleSubmit}
-          handleReject={props.handleReject}
+          handleReject={() => props.handleReject()}
           isLoading={isLoading}
         />
       );
     }
-    case MODAL_TYPES.customSalary: {
+    case MODAL_TYPES.salaryRange: {
       return (
-        <CustomSalary
+        <SalaryRange
           {...props.form}
-          handleSubmit={props.handleSubmit}
-          handleReject={props.handleReject}
+          onSubmit={props.handleSubmit}
+          handleReject={() => props.handleReject()}
           isLoading={isLoading}
         />
       );
     }
     case MODAL_TYPES.rename: {
       return (
-        <RenameModal 
+        <RenameModal
           {...props.form}
           isLoading={props.isLoading}
           handleSubmit={props.handleSubmit}
-          handleReject={props.handleReject}
+          handleReject={() => props.handleReject()}
         />
-      )
+      );
     }
     default:
-      return typeof props.content === 'object' 
-        ? props.content
-        : <span>{props.content}</span>;
+      return typeof props.content === "object" ? (
+        props.content
+      ) : (
+        <span>{props.content}</span>
+      );
   }
 };
 
 const getModalSettings = props => {
   const defaultProps = {
     afterClose: props.handleClose,
-    onCancel: props.handleReject,
+    onCancel: () => props.handleReject(),
     destroyOnClose: true,
-    closable: !props.isLoading,
-  }
+    closable: !props.isLoading
+  };
 
   switch (props.type) {
-    case MODAL_TYPES.confirm: 
+    case MODAL_TYPES.confirm:
       return {
         ...defaultProps,
         onOk: props.handleSubmit,
@@ -95,19 +97,19 @@ const getModalSettings = props => {
         title: props.title,
         content: props.content,
         okButtonProps: {
-          loading: props.isLoading,
+          loading: props.isLoading
         },
         cancelButtonProps: {
-          disabled: props.isLoading,
-        },
+          disabled: props.isLoading
+        }
       };
-    default: 
+    default:
       return {
         ...defaultProps,
-        footer: null,
-      }
+        footer: null
+      };
   }
-}
+};
 
 const CustomModal = props => {
   const modalSettings = getModalSettings(props);

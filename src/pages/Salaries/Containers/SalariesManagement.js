@@ -3,17 +3,17 @@ import { get } from "lodash";
 import { compose, withHandlers, lifecycle } from "recompose";
 import { withRouter } from "react-router-dom";
 import qs from "qs";
+import { sortBy, merge } from "lodash";
 import moment from "moment";
 
 import { BASE_URL } from "../constants";
 import SalariesManagement from "../Components/SalariesManagement";
 import actions from "../../../store/actions";
-import { programDateFormat } from "../../../services/formatters";
 import selectors from "../../../store/selectors";
+import { DATE_FORMATS } from "../../../services/constants";
 
 const mapState = state => ({
   projects: selectors.getProjects(state),
-  getProjectByUuid: selectors.getProjectByUuid(state),
   isLoading: selectors.isProjectsDownloading(state),
   salaries: selectors.getSalaries(state),
   users: selectors.getUsers(state)
@@ -33,14 +33,32 @@ const SalariesManagementContainer = compose(
     handleCreate: ({ openModal, match, salaries }) => () => {
       const userUuid = get(match, "params.userUuid");
 
-      const defaultValue = get(salaries, `[${salaries.length - 1}].value`, "");
+      const sortedSalaries = sortBy(salaries, s => s.date);
+      const lastSalary = get(sortedSalaries, `[${sortedSalaries.length - 1}]`);
 
-      const initialValues = {
-        user: userUuid,
-        dateFrom: moment().format(programDateFormat),
-        dateTo: moment().format(programDateFormat),
-        value: defaultValue
-      };
+      let initialValues = { userUuid };
+
+      if (lastSalary) {
+        const lastDate = moment(lastSalary.date, DATE_FORMATS.dashReverse);
+
+        initialValues = merge(initialValues, {
+          dateFrom: lastDate
+            .clone()
+            .add(1, "month")
+            .format(DATE_FORMATS.dashReverse),
+          dateTo: lastDate
+            .clone()
+            .add(1, "month")
+            .format(DATE_FORMATS.dashReverse),
+          value: lastSalary.value
+        });
+      } else {
+        initialValues = merge(initialValues, {
+          dateFrom: moment().format(DATE_FORMATS.dashReverse),
+          dateTo: moment().format(DATE_FORMATS.dashReverse),
+          value: 0
+        });
+      }
 
       return openModal({
         form: {
@@ -48,11 +66,10 @@ const SalariesManagementContainer = compose(
           submitTitle: "Создать",
           rejectTitle: "Отменить"
         },
-        type: "customSalary",
+        type: "salaryRange",
         meta: {
-          start: params => actions.createSalaryRangeRequest(params),
-          success: () => actions.createSalaryRangeSuccess(),
-          failure: () => actions.createSalaryRangeFailure()
+          start: actions.createSalaryRangeRequest,
+          failure: actions.createSalaryRangeFailure
         }
       });
     },

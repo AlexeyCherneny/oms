@@ -45,7 +45,7 @@ const create = (baseURL = `${hostURL}api/`) => {
     createSalary: params => api.put(`salary`, params),
     readSalary: uuid => api.get(`salary/${uuid}`),
     readSalaries: ({ search }) => api.get(`salary${search}`),
-    updateSalary: ({ uuid, params }) => api.put(`salary/${uuid}`, params),
+    updateSalary: ({ uuid, params }) => api.patch(`salary/${uuid}`, params),
     deleteSalary: uuid => api.delete(`salary/${uuid}`),
 
     fetchPayments: query => api.get(`payments${query ? query : ""}`),

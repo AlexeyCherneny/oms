@@ -27,7 +27,7 @@ const SalaryAnalytics = props => {
         </div>
       </Card>
 
-      <SalariesTable />
+      {/* <SalariesTable /> */}
     </div>
   );
 };
