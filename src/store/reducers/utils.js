@@ -101,7 +101,8 @@ const defaultOnUpdateDataMap = (data, payload) => {
   return updateItemInArray(
     data,
     payload,
-    (a, b) => String(a.uuid) === String(b.uuid) || String(a.uuid) === String(b.uuid)
+    (a, b) =>
+      String(a.uuid) === String(b.uuid) || String(a.uuid) === String(b.uuid)
   );
 };
 
@@ -119,13 +120,15 @@ export const createCRUDReducer = (
     onCreateDataMap = addItemToArray,
     onUpdateDataMap = defaultOnUpdateDataMap,
     onDeleteDataMap = defaultOnDeleteDataMap
-  } = {}
+  } = {},
+  customReducers
 ) => {
   const upperName = name.toUpperCase();
 
   const pluralizeUpperName = pluralize(upperName);
 
   return {
+    ...customReducers,
     // CREATE ENTITY ------------------------------------
     // --------------------------------------------------
     //

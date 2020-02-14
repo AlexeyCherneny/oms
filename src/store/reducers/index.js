@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import { createReducer } from "redux-act";
-import { reducer as formReducer } from 'redux-form'
+import { reducer as formReducer } from "redux-form";
 
 import { createCRUDReducer, CRUDState } from "./utils";
 
@@ -14,13 +14,18 @@ import documentReducer from "./documents";
 import modalReducer from "./modal";
 import documentAccessReducer from "./documentAccesses";
 import projectWorkReducer from "./projectWork";
+import salaryReducer from "./salaries";
 
 const userReducer = createReducer(createCRUDReducer("user"), CRUDState);
-const salaryReducer = createReducer(createCRUDReducer("salary"), CRUDState);
-const projectReducer = createReducer(createCRUDReducer("project", {
-  onUpdateDataMap: (data, payload) => data.map(item => item.uuid === payload.uuid ? payload : item),
-  onDeleteDataMap: (data, payload) => data.filter(item => item.uuid !== payload),
-}), CRUDState);
+const projectReducer = createReducer(
+  createCRUDReducer("project", {
+    onUpdateDataMap: (data, payload) =>
+      data.map(item => (item.uuid === payload.uuid ? payload : item)),
+    onDeleteDataMap: (data, payload) =>
+      data.filter(item => item.uuid !== payload)
+  }),
+  CRUDState
+);
 
 const createRootReducer = history =>
   combineReducers({

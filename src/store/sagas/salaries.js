@@ -5,6 +5,7 @@ import qs from "qs";
 import { splitRange } from "../../services/chartUtils";
 import Notification from "../../services/notification";
 import { programDateFormat } from "../../services/formatters";
+import { DATE_FORMATS } from "../../services/constants";
 import { handleSagaError } from "./utils";
 import actions from "../actions";
 import selectors from "../selectors";
@@ -67,8 +68,8 @@ function* deleteSalaryRange(
     Object.keys(range).forEach(date => {
       const existedSalary = salaries.find(
         salary =>
-          moment(salary.date, programDateFormat).format("YYYY-MM") ===
-          moment(date, programDateFormat).format("YYYY-MM")
+          moment(salary.date, DATE_FORMATS.dashReverse).format("YYYY-MM") ===
+          moment(date, DATE_FORMATS.dashReverse).format("YYYY-MM")
       );
       if (!existedSalary) {
         debugger;
@@ -190,11 +191,46 @@ function* deleteSalary(
   }
 }
 
+function* readMySalary(
+  api,
+  { payload, meta = {} } = { payload: {}, meta: {} }
+) {
+  try {
+    const params = {
+      search:
+        "?" +
+        qs.stringify({
+          dateFrom: moment().format(DATE_FORMATS.dashReverse),
+          dateTo: moment().format(DATE_FORMATS.dashReverse)
+        })
+    };
+
+    const response = yield call(api.readSalaries, params);
+
+    if (response.status === 200) {
+      yield put(actions.readMySalarySuccess(response.data.data[0]));
+
+      if (meta.onSuccess) meta.onSuccess(response.data.data[0]);
+    } else {
+      throw response;
+    }
+  } catch (error) {
+    const errorMessage = "Error while deleting salary";
+
+    if (meta.onFailure) meta.onFailure(error);
+    yield handleSagaError(error, errorMessage, actions.readMySalaryFailure);
+
+    Notification.error(notificationTitle, "Ошибка удаления зарплаты.");
+  } finally {
+  }
+}
+
 export default {
   createSalary,
   readSalaries,
   updateSalary,
   deleteSalary,
   createSalaryRange,
-  deleteSalaryRange
+  deleteSalaryRange,
+  readMySalary
 };

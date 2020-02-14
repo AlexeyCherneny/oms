@@ -39,6 +39,7 @@ function* initializeApplication(api, action) {
       yield put(actions.setUser({ user: response.data.data }));
 
       yield put(actions.usersRequest());
+      yield put(actions.readMySalaryRequest());
 
       const settings = loadSettings();
       yield put(actions.setUserSettings(settings));
