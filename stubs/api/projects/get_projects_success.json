@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "uuid": 0,
+      "title": "OMS",
+      "start_date": "2020-01-01",
+      "end_date": "2020-12-31",
+      "attachments": [
+        {
+          "uuid": 0,
+          "path": "/path/document_0.pdf"
+        },
+        {
+          "uuid": 1,
+          "path": "/path/document_1.pdf"
+        },
+        {
+          "uuid": 2,
+          "path": "/path/document_2.pdf"
+        }
+      ]
+    },
+    {
+      "uuid": 1,
+      "title": "STACKLEVEL",
+      "start_date": "2019-06-07",
+      "end_date": "2020-05-31",
+      "attachments": [
+        {
+          "uuid": 3,
+          "path": "/path/document_0.pdf"
+        },
+        {
+          "uuid": 4,
+          "path": "/path/document_1.pdf"
+        },
+        {
+          "uuid": 5,
+          "path": "/path/document_2.pdf"
+        },
+        {
+          "uuid": 6,
+          "path": "/path/document_2.pdf"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "data": {
+    "uuid": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+    "email": "email0@gmail.com",
+    "roles": [
+      "ROLE_USER"
+    ],
+    "firstName": "Dean",
+    "lastName": "Wunsch",
+    "middleName": "Kraig",
+    "birthday": "13/02/2003",
+    "skype": "brekke.alexandrea",
+    "telegram": "twisoky",
+    "github": null,
+    "phone": "579-961-2844 x6437",
+    "photo": null
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269684
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "uuid": 11,
+      "userId": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+      "documentId": 3,
+      "access": "member"
+    },
+    {
+      "uuid": 12,
+      "userId": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
+      "documentId": 3,
+      "access": "member"
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

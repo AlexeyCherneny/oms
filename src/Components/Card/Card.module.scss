@@ -1,0 +1,45 @@
+.card {
+  background-color: #fff;
+  padding: 8px 20px;
+  min-height: 170px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  margin-top: 12px;
+  position: relative;
+  padding-right: 20px;
+
+  .tooltip {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.main {
+  margin-bottom: 12px;
+
+  .title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 38px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.footer {
+  margin-top: auto;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 9px;
+}
+
+
+.resetPadding {
+  padding: 0;
+}

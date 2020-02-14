@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+import { Router } from "react-router-dom";
+import moment from "moment";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import history from "./services/history";
+import { store } from "./store";
+import Navigation from "./Navigation/App";
+
+// import "./services/firebase";
+
+import "antd/dist/antd.css";
+// import "ant-design-pro/dist/ant-design-pro.css";
+
+moment.locale("ru");
+
+const App = () => (
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <Router history={history}>
+        <Navigation />
+      </Router>
+    </ConnectedRouter>
+  </Provider>
+);
 
 export default App;

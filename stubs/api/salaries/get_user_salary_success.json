@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": 1,
+    "userId": 2,
+    "value": 100,
+    "currency": "USD",
+    "date": "2019-01-01"
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

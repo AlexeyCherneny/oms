@@ -1,0 +1,17 @@
+{
+  "data": {
+    "uuid": 4,
+    "title": "Документ 4",
+    "content": "<p>Тело документа 4</p>",
+    "access": "admin",
+    "private": false,
+    "parentDocument": 1,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

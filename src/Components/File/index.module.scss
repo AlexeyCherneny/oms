@@ -1,0 +1,9 @@
+.title {
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.65);
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

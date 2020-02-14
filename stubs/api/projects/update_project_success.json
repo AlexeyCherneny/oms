@@ -1,0 +1,30 @@
+{
+  "data": {
+    "uuid": 0,
+    "title": "UPDATED PROJECT",
+    "users": [
+      "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "35786a62-700a-49de-9c35-e5dd96e831e4"
+    ],
+    "attachments": [
+      {
+        "uuid": 0,
+        "path": "/path/document_0.pdf"
+      },
+      {
+        "uuid": 1,
+        "path": "/path/document_1.pdf"
+      },
+      {
+        "uuid": 2,
+        "path": "/path/document_2.pdf"
+      }
+    ]
+  },
+
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269976
+  }
+}

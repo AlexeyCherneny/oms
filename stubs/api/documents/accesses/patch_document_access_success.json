@@ -1,0 +1,13 @@
+{
+  "data": {
+    "uuid": 1,
+    "userId": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+    "documentId": 3,
+    "access": "admin"
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

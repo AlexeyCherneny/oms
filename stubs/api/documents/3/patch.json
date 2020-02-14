@@ -1,0 +1,17 @@
+{
+  "data": {
+    "uuid": 3,
+    "title": "Документ 3 изм",
+    "content": "<p>Измененное тело документа 3</p>",
+    "access": "admin",
+    "private": false,
+    "parentDocument": null,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}

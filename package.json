@@ -3,18 +3,45 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@fullcalendar/core": "^4.3.1",
+    "@fullcalendar/daygrid": "^4.3.0",
+    "@fullcalendar/interaction": "^4.3.0",
+    "@fullcalendar/react": "^4.3.0",
+    "antd": "^3.26.6",
+    "apisauce": "^1.1.1",
+    "classnames": "^2.2.6",
+    "connected-react-router": "^6.6.1",
+    "firebase": "^7.6.0",
+    "http-proxy-middleware": "^0.20.0",
+    "inputmask-core": "^2.2.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "node-sass": "^4.13.0",
+    "pluralize": "^8.0.0",
+    "qs": "^6.9.1",
     "react": "^16.12.0",
+    "react-cropper": "^1.3.0",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-input-mask": "^2.0.4",
+    "react-quill": "1.3.3",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.0",
+    "recharts": "^2.0.0-beta.1",
+    "recompose": "^0.30.0",
+    "redux-act": "^1.7.7",
+    "redux-form": "^8.3.0",
+    "redux-saga": "^1.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:stub": "concurrently \"npm run stub\"  \"npm run start -- --stubs\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stub": "stubby --watch -d stubs/config.yaml -s 3100 -a 3101"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +57,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "dotenv": "^8.2.0",
+    "stubby": "^4.1.1"
   }
 }

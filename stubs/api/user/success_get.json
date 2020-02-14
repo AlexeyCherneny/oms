@@ -1,0 +1,69 @@
+{
+  "data": [
+    {
+      "uuid": "004d42cf-339b-4af4-b9f7-008033ad9a1a",
+      "email": "email2@gmail.com",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "firstName": "Emmanuelle",
+      "lastName": "Bechtelar",
+      "middleName": "Coy",
+      "birthday": "30/08/1988",
+      "photo": "123"
+    },
+    {
+      "uuid": "35786a62-700a-49de-9c35-e5dd96e831e4",
+      "email": "hr@gmail.com",
+      "roles": [
+        "ROLE_HR"
+      ],
+      "firstName": "Angelita",
+      "lastName": "Luettgen",
+      "middleName": "Luis",
+      "birthday": "03/11/1981",
+      "photo": null
+    },
+    {
+      "uuid": "74523e04-debe-47f1-a90a-5fec3f0cc75c",
+      "email": "email1@gmail.com",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "firstName": "Abel",
+      "lastName": "Wolf",
+      "middleName": "Thad",
+      "birthday": "28/11/1984",
+      "photo": null
+    },
+    {
+      "uuid": "c4397d7c-8f8d-4b61-a760-f05f983b7144",
+      "email": "email0@gmail.com",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "firstName": "Dean",
+      "lastName": "Wunsch",
+      "middleName": "Kraig",
+      "birthday": "13/02/2003",
+      "photo": null
+    },
+    {
+      "uuid": "d0e93a07-b99c-4f69-8af9-3cfdba5229ca",
+      "email": "email3@gmail.com",
+      "roles": [
+        "ROLE_USER"
+      ],
+      "firstName": "Charlotte",
+      "lastName": "Medhurst",
+      "middleName": "Abe",
+      "birthday": "30/07/1989",
+      "photo": null
+    }
+  ],
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579265570
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "data": {
+    "uuid": 5,
+    "title": "Созданный документ изменен",
+    "content": "<p>If you are reading this text, creating document was completed successful.</p>",
+    "access": "admin",
+    "private": false,
+    "parentDocument": null,
+    "createdAt": "",
+    "updatedAt": ""
+  },
+  "errors": [],
+  "error": null,
+  "meta": {
+    "generated": 1579269887
+  }
+}
