@@ -69,6 +69,9 @@ const rootSaga = function* root() {
   yield all([
     takeEvery(actions.deleteSalaryRequest, salariesSagas.deleteSalary, api)
   ]);
+  yield all([
+    takeEvery(actions.readMySalaryRequest, salariesSagas.readMySalary, api)
+  ]);
 
   // PAYMENTS ACTIONS
   yield all([

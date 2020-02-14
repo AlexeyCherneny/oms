@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import Dashboard from "../Components/Dashboard";
 import selectors from "../../../store/selectors";
 
-const mapState = ({ authorization, events, ...state }) => ({
+const mapState = ({ authorization, events, salaries, ...state }) => ({
   roles: authorization.user?.roles || [],
-  salary: authorization.user && authorization.user.salary,
+  salary: salaries.mySalary && salaries.mySalary.value,
   currentSalary: 900,
   nextSalary: 1200,
   nextSalaryDate: "2020-02-01",

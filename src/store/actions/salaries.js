@@ -4,6 +4,33 @@ import { createCRUDActions } from "./utils";
 
 const salariesActions = createCRUDActions("salary");
 
+const setMySalary = createAction(
+  `SET_MY_SALARY`,
+  payload => payload,
+  (_, meta) => meta
+);
+const resetMySalary = createAction(
+  `RESET_MY_SALARY`,
+  payload => payload,
+  (_, meta) => meta
+);
+
+const readMySalaryRequest = createAction(
+  `READ_MY_SALARY_REQUEST`,
+  payload => payload,
+  (_, meta) => meta
+);
+const readMySalarySuccess = createAction(
+  `READ_MY_SALARY_SUCCESS`,
+  payload => payload,
+  (_, meta) => meta
+);
+const readMySalaryFailure = createAction(
+  `READ_MY_SALARY_FAILURE`,
+  payload => payload,
+  (_, meta) => meta
+);
+
 const createSalaryRangeRequest = createAction(
   `CREATE_SALARY_RANGE_REQUEST`,
   payload => payload,
@@ -43,5 +70,10 @@ export default {
   createSalaryRangeFailure,
   deleteSalaryRangeRequest,
   deleteSalaryRangeSuccess,
-  deleteSalaryRangeFailure
+  deleteSalaryRangeFailure,
+  readMySalaryRequest,
+  readMySalarySuccess,
+  readMySalaryFailure,
+  setMySalary,
+  resetMySalary
 };

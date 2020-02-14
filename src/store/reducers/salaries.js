@@ -1,25 +1,32 @@
+import { createCRUDReducer, CRUDState } from "./utils";
 import { createReducer } from "redux-act";
 
 import actions from "../actions";
-import { requestHandler, successHandler, failureHandler } from "./utils";
-
-const initialState = {
-  salariesList: {
-    data: [],
-
-    isLoading: false,
-    isLoaded: false,
-    isError: false
-  }
-};
 
 const reducer = createReducer(
-  {
-    [actions.salariesListRequest]: requestHandler("salariesList"),
-    [actions.salariesListSuccess]: successHandler("salariesList"),
-    [actions.salariesListFailure]: failureHandler("salariesList")
-  },
-  initialState
+  createCRUDReducer("salary", undefined, {
+    [actions.readMySalarySuccess]: state => state,
+    [actions.readMySalarySuccess]: (state, payload) => {
+      return {
+        ...state,
+        mySalary: payload
+      };
+    },
+    [actions.readMySalaryFailure]: state => ({
+      ...state,
+      mySalary: null
+    }),
+
+    [actions.setMySalary]: (state, payload) => ({
+      ...state,
+      mySalary: payload
+    }),
+    [actions.resetMySalary]: state => ({
+      ...state,
+      mySalary: null
+    })
+  }),
+  CRUDState
 );
 
 export default reducer;
